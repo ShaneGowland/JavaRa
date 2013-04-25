@@ -26,7 +26,7 @@ Public Class UI
 
 #Region "Opening/Closing JavaRa"
     'Form closing/saving event
-    Private Sub UI_FormClosing(sender As Object, e As System.Windows.Forms.FormClosingEventArgs) Handles Me.FormClosing
+    Private Sub UI_FormClosing(ByVal sender As Object, ByVal e As System.Windows.Forms.FormClosingEventArgs) Handles Me.FormClosing
         'Save the settins to config.ini
         Try
             'Remove the previous instance
@@ -116,59 +116,85 @@ Public Class UI
             Call translate_strings()
         End If
 
-        'Get commandline arguments
-        Dim arguments As New List(Of String)
-
-        Try
-
-            'Iterate through all of the arguments presented
-            For Each arg As String In System.Environment.GetCommandLineArgs()
-                arguments.Add(arg)
+        'Decide if UI should be displayed
+        If My.Application.CommandLineArgs.Count > 0 Then
+            For Each value As String In My.Application.CommandLineArgs
+                'Check for the presense of the /Silent option
+                If value = "/Silent" Then
+                    Me.Visible = False
+                    Me.Opacity = 0
+                    Me.ShowInTaskbar = False
+                    stay_silent = True
+                End If
             Next
-
-        Catch ex As IndexOutOfRangeException
-        End Try
-
-        'Determine if user has specified a commandline argument
-        If arguments.Count = 1 Or arguments.Count = 0 Then
-            Call render_ui()
-
-            'Decide if UI should be displayed
-        ElseIf arguments.Contains("/SILENT") = True Then
-            Me.Visible = False
-            Me.Opacity = 0
-            Me.ShowInTaskbar = False
-            stay_silent = True
-
+            If stay_silent = False Then
+                'Render the ui if no /Silent tag is detected
+                Call render_ui()
+            End If
+            'Parse command line arguements
+            Select Case My.Application.CommandLineArgs(0).ToString
+                Case "/Purge"
+                    If stay_silent = True Then
+                        Call purge_jre()
+                        Me.Close()
+                    Else
+                        Call purge_jre()
+                    End If
+                Case "/Clean"
+                    If stay_silent = True Then
+                        Call cleanup_old_jre()
+                        Me.Close()
+                    Else
+                        Call cleanup_old_jre()
+                    End If
+                Case "/Uninstallall"
+                    If stay_silent = True Then
+                        Call uninstall_all(stay_silent)
+                        Me.Close()
+                    Else
+                        Call uninstall_all()
+                    End If                    
+                Case "/Updatedefs"
+                    If stay_silent = True Then
+                        download_defs()
+                        Me.Close()
+                    Else
+                        btnUpdateDefs.PerformClick()
+                    End If
+                Case "/Silent"
+                    MessageBox.Show("Syntax Error. /Silent is a secondary option to be used in combination with other command line options." _
+                                    & "It should not be the first option used, nor should it be used alone. use /? for more information.", "Syntax Error.")
+                    Me.Close()
+                Case "/?"
+                    MessageBox.Show("/Purge -" & vbTab & vbTab & "Removes all JRE related registry keys, files and directories." & vbCrLf _
+                                    & "/Clean -" & vbTab & vbTab & "Removes only JRE registry keys from previous version." & vbCrLf _
+                                    & "/Uninstallall -" & vbTab & "Run the built-in uninstaller for all versions of JRE detected." & vbCrLf _
+                                    & "/Updatedefs -" & vbTab & "Downloads a new copy of the JavaRa definitions." & vbCrLf _
+                                    & "/Silent -" & vbTab & vbTab & "Hides the graphical user interface and suppresses all dialog" & vbCrLf _
+                                    & vbTab & vbTab & "messages and error reports." & vbCrLf _
+                                    & "/? -" & vbTab & vbTab & "Displays this help dialog" & vbCrLf & vbCrLf _
+                                    & " Example: Javara /Updatedefs /Silent" & vbCrLf _
+                                    & " Example: Javara /Uninstallall /Silent" & vbCrLf, "Command Line Parameters")
+                    Me.Close()
+                Case Else
+                    MessageBox.Show("Unsupported argument. Please use /Purge, /Clean, /Uninstallall, or /Updatedefs" & vbCrLf _
+                                    & "with, or without /Silent.", "Option Not Supported.")
+                    Me.Close()
+            End Select
         Else
-            'Render the UI if silent not specified
+            'Render the UI if no command line arguments were used
             Call render_ui()
         End If
 
-        'Decide if program should be in automatic mode
-        If arguments.Contains("/PURGE") = True Then
-            Call purge_jre()
-        End If
-        If arguments.Contains("/CLEAN") = True Then
-            Call cleanup_old_jre()
-        End If
-        If arguments.Contains("/UNINSTALLALL") Then
-            Call uninstall_all()
-        End If
-        If arguments.Contains("/UPDATEDEFS") Then
-            btnUpdateDefs.PerformClick()
-        End If
+            'Check silently for updates
+            If boxUpdateCheck.Checked Then
+                Dim trd As Threading.Thread = New Threading.Thread(AddressOf check_for_update)
+                trd.IsBackground = True
+                trd.Start()
+            End If
 
-
-        'Check silently for updates
-        If boxUpdateCheck.Checked Then
-            Dim trd As Threading.Thread = New Threading.Thread(AddressOf check_for_update)
-            trd.IsBackground = True
-            trd.Start()
-        End If
-
-        'Let's write a log file; should the user desire it
-        write_log(get_string("JavaRa 2.0 loaded without incident. Checking system..."))
+            'Let's write a log file; should the user desire it
+            write_log(get_string("JavaRa 2.0 loaded without incident. Checking system..."))
     End Sub
     'Render the grid of icons on the main GUI
     Private Sub render_ui()
@@ -229,7 +255,7 @@ Public Class UI
         Me.Close()
     End Sub
     'After the form has closed, reboot it
-    Private Sub UI_FormClosed(sender As Object, e As System.Windows.Forms.FormClosedEventArgs) Handles Me.FormClosed
+    Private Sub UI_FormClosed(ByVal sender As Object, ByVal e As System.Windows.Forms.FormClosedEventArgs) Handles Me.FormClosed
         'Allow for a reboot
         If reboot = True Then
             Process.Start(System.Reflection.Assembly.GetExecutingAssembly. _
@@ -403,26 +429,7 @@ Public Class UI
     End Sub
     'Update the JavaRa definitions
     Private Sub btnUpdateDefs_click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles btnUpdateDefs.Click
-        Me.Cursor = Cursors.WaitCursor
-        'Confirm the connection to the server  
-        Try
-            theRequest = WebRequest.Create("http://content.thewebatom.net/files/confirm.txt")
-            theResponse = theRequest.GetResponse
-            'Set the path to the rules
-            txtFileName.Text = "http://content.thewebatom.net/updates/javara/JavaRa.def"
-        Catch ex As Exception
-            MessageBox.Show(get_string("Could not make a connection to download server. Please see our online help for assistance.") & Environment.NewLine & get_string("This error can be caused by incorrect proxy settings or a security product conflict."), get_string("An error was encountered."), MessageBoxButtons.OK, MessageBoxIcon.Error)
-            Me.Cursor = Cursors.Default
-            btnDownload.Enabled = False
-            Exit Sub
-        End Try
-
-        'Set some paths and variables
-        Me.whereToSave = System.IO.Path.GetDirectoryName(System.Reflection.Assembly.GetEntryAssembly().Location) & "\JavaRa.def"
-        Me.txtFileName.Enabled = False
-        Me.btnUpdateDefs.Enabled = False
-        Me.btnDownload.Enabled = False
-        Me.BackgroundWorker1.RunWorkerAsync() 'Start download
+        download_defs()
     End Sub
 #End Region
 
@@ -470,7 +477,6 @@ Public Class UI
 
                         End If
                     End If
-
                 Next
             End Using
         Catch ex As Exception
@@ -479,7 +485,7 @@ Public Class UI
 
     End Sub
     'Launch the appropriate method for checking the JRE version installed.
-    Private Sub btnUpdateNext_Click(sender As System.Object, e As System.EventArgs) Handles btnUpdateNext.Click
+    Private Sub btnUpdateNext_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles btnUpdateNext.Click
         'Decide which method the user wishes to check for updates with
         If boxOnlineCheck.Checked = True Then
             If MessageBox.Show(get_string("Would you like to open the Oracle online JRE version checker?"), get_string("Launch online check"), MessageBoxButtons.YesNo, MessageBoxIcon.Question, MessageBoxDefaultButton.Button2) = Windows.Forms.DialogResult.Yes Then
@@ -633,7 +639,7 @@ Public Class UI
         Next
     End Sub
     'Load support page in web browser control.
-    Private Sub txtSupport_Click(sender As System.Object, e As System.EventArgs) Handles txtSupport.Click
+    Private Sub txtSupport_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles txtSupport.Click
         show_panel(pnlBrowser)
         WebBrowser1.DocumentText = My.Resources.credits
     End Sub
@@ -675,7 +681,7 @@ Public Class UI
         show_panel(Step1)
     End Sub
     'Show the settings panel in the UI
-    Private Sub btnSettings_Click(sender As System.Object, e As System.EventArgs) Handles btnSettings.Click
+    Private Sub btnSettings_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles btnSettings.Click
         show_panel(PanelSettings)
     End Sub
     'Return to the home page whenever a back button is pressed
@@ -683,21 +689,21 @@ Public Class UI
         Call return_home()
     End Sub
     'Load the about page
-    Private Sub btnAbout_Click_1(sender As System.Object, e As System.EventArgs) Handles btnAbout.Click
+    Private Sub btnAbout_Click_1(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles btnAbout.Click
         show_panel(pnlBrowser)
         WebBrowser1.DocumentText = My.Resources.about
     End Sub
-    Private Sub Button3_Click(sender As System.Object, e As System.EventArgs) Handles Button3.Click
+    Private Sub Button3_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles Button3.Click
         show_panel(pnlUpdateJRE)
     End Sub
-    Private Sub Button5_Click(sender As System.Object, e As System.EventArgs) Handles Button5.Click
+    Private Sub Button5_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles Button5.Click
         show_panel(pnlCompleted)
     End Sub
 #End Region
 
 #Region "Configuration & Updating"
     'Change the current language selection
-    Private Sub btnSaveLang_Click(sender As System.Object, e As System.EventArgs) Handles btnSaveLang.Click
+    Private Sub btnSaveLang_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles btnSaveLang.Click
         'Temporarily store the previous language
         Dim initial_lang As String = language
 
@@ -725,7 +731,7 @@ Public Class UI
         End If
     End Sub
     'Prevent the language settings from doing dumb stuff.
-    Private Sub boxLanguage_SelectedIndexChanged(sender As System.Object, e As System.EventArgs) Handles boxLanguage.SelectedIndexChanged
+    Private Sub boxLanguage_SelectedIndexChanged(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles boxLanguage.SelectedIndexChanged
         If boxLanguage.Text <> language Then
             btnSaveLang.Enabled = True
         Else
@@ -799,9 +805,41 @@ Public Class UI
         End Try
 
     End Sub
+
+    Private Sub download_defs()
+        Me.Cursor = Cursors.WaitCursor
+        'Confirm the connection to the server 
+        Dim webclient As New WebClient, sFilename As String, sURI As String
+        Try
+            theRequest = WebRequest.Create("http://content.thewebatom.net/files/confirm.txt")
+            theResponse = theRequest.GetResponse
+            'Set the path to the rules
+            sURI = "http://content.thewebatom.net/updates/javara/"
+            sFilename = "JavaRa.def"
+            txtFileName.Text = sURI & sFilename
+        Catch ex As Exception
+            MessageBox.Show(get_string("Could not make a connection to download server. Please see our online help for assistance.") & Environment.NewLine & get_string("This error can be caused by incorrect proxy settings or a security product conflict."), get_string("An error was encountered."), MessageBoxButtons.OK, MessageBoxIcon.Error)
+            Me.Cursor = Cursors.Default
+            btnDownload.Enabled = False
+            Exit Sub
+        End Try
+
+        'Set some paths and variables
+        Me.whereToSave = System.IO.Path.GetDirectoryName(System.Reflection.Assembly.GetEntryAssembly().Location) & "\JavaRa.def"
+        Me.txtFileName.Enabled = False
+        Me.btnUpdateDefs.Enabled = False
+        Me.btnDownload.Enabled = False
+        If stay_silent = True Then
+            webclient.DownloadFile(txtFileName.Text, Me.whereToSave)
+        Else
+            Me.BackgroundWorker1.RunWorkerAsync() 'Start download               
+        End If
+    End Sub
+
 #End Region
 
-    Private Sub lvTools_SelectedIndexChanged(sender As Object, e As EventArgs) Handles lvTools.SelectedIndexChanged
+    Private Sub lvTools_SelectedIndexChanged(ByVal sender As Object, ByVal e As EventArgs) Handles lvTools.SelectedIndexChanged
 
     End Sub
 End Class
+

@@ -105,7 +105,7 @@ Module ui_routines
         End Try
     End Sub
     'Uninstall all JRE's with their uninstallers
-    Public Sub uninstall_all()
+    Public Sub uninstall_all(Optional ByVal silent As Boolean = False)
         Try
             Dim Software As String = Nothing
             Dim SoftwareKey As String = "SOFTWARE\Microsoft\Windows\CurrentVersion\Installer\UserData\S-1-5-18\Products"
@@ -113,26 +113,29 @@ Module ui_routines
                 For Each skName In rk.GetSubKeyNames
                     Dim name = Registry.LocalMachine.OpenSubKey(SoftwareKey).OpenSubKey(skName).OpenSubKey("InstallProperties").GetValue("DisplayName")
                     Dim uninstallString = Registry.LocalMachine.OpenSubKey(SoftwareKey).OpenSubKey(skName).OpenSubKey("InstallProperties").GetValue("UninstallString")
-
+                    'Check for /SILENT and add appropriate options to uninstallstring
+                    If silent = True Then
+                        uninstallString = uninstallString & " /qn /Norestart"
+                    End If
                     'Check if entry is for Java 6
-                        If name.ToString.StartsWith("Java(TM) 6") Or name.ToString.StartsWith("Java 6 Update") = True Then
-                            Try
+                    If name.ToString.StartsWith("Java(TM) 6") Or name.ToString.StartsWith("Java 6 Update") = True Then
+                        Try
                             Shell(uninstallString, AppWinStyle.NormalFocus, True)
                         Catch ex As Exception
                             write_log(ex.Message)
                         End Try
-                        End If
+                    End If
 
                     'Check if entry is for Java 7
-                        If name.ToString.StartsWith("Java(TM) 7") Or name.ToString.StartsWith("Java 7") Then
+                    If name.ToString.StartsWith("Java(TM) 7") Or name.ToString.StartsWith("Java 7") Then
 
-                            Try
-                                Shell(uninstallString, AppWinStyle.NormalFocus, True)
-                            Catch ex As Exception
+                        Try
+                            Shell(uninstallString, AppWinStyle.NormalFocus, True)
+                        Catch ex As Exception
                             write_log(ex.Message)
-                            End Try
+                        End Try
 
-                        End If
+                    End If
 
                 Next
             End Using
