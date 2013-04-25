@@ -1,0 +1,63 @@
+﻿//* translated by: Igor Rückert
+//* email: igorruckert@yahoo.com.br
+
+Update Java Runtime|Atualizar Java Runtime
+Remove JRE|Remover JRE
+Update JavaRa Definitions|Atualizar Definições do JavaRa
+update JavaRa definitions|atualizar definições do JavaRa
+Additional Tasks|Tarefas Adicionais
+Remove startup entry|Remover entrada de inicialização
+Check Java version|Verificar versão do Java
+Remove Outdated JRE Firefox Extensions|Remover extensões desatualizadas do JRE no Firefox
+JavaRa 2.0 loaded without incident. Checking system...|JavaRa 2.0 carregado com sucesso. Verificando sistema...
+Operating System:|Sistema Operacional:
+Save|Salvar
+Save Settings|Salvar Configurações
+Back|Voltar
+Program Language|Idioma do Programa
+Create a log file|Criar arquivo de log
+program settings|Configurações do Programa
+Use Jucheck.exe tool|Usar ferramenta Jucheck.exe
+Previous|Anterior
+Next|Próximo
+Download and install latest version|Baixar e instalar última versão
+Perform online version check|Realizar verificação online
+JavaRa can update JRE by either performing an online version check, or|O JavaRa pode atualizar o JRE realizando uma verificação online, 
+downloading and re-installing the program - regardless of version.|ou baixando e reinstalando o programa - independente da versão.
+step 1 - select update method|passo 1 - selecione o método de atualização
+step 1 - run the uninstaller|passo 1 - executar desinstalador
+step 2 - download new version|passo 2 - baixar nova versão
+step 2 - perform removal routine|passo 2 - executar rotina de remoção
+step 2 - completed.|passo 2 - completado.
+step 3 - download new version|passo 3 - baixar nova versão
+step 3 - completed.|passo 3 - completado.
+step 4 - completed.|passo 4 - completado.
+Back|Voltar
+Download|Baixar
+Would you like to download and install the latest version of the JavaRa |Deseja baixar e instalar a última versão das definições do JavaRa?
+definitions? These are used to find and remove every last trace of JRE.|Estas são usadas para encontrar e remover qualquer traço restante do JRE.
+update JavaRa definitions|atualizar deninições do JavaRa
+Run|Executar
+Finish|Finalizar
+Exit JavaRa|Sair do JavaRa
+Close this wizard|Fechar assistente
+The process is complete. Select an option to continue.|Processo completado. Selecione uma opção para continuar.
+Java Manual Download|Download Manual do Java
+Would you like to download and install the latest version of JRE? |Deseja baixar e instalar a última versão do JRE?
+Use this interface.|Usa esta interface.
+Perform Removal Routine|Executar Remoção
+Perform Cleanup Routine|Executar Limpeza
+The removal routine will delete files, folder and registry entries that are known|A rotina de remoção irá apagar arquivos, pastas e entradas do registro conhecidos por
+to be associated with the Java Runtime Environment. It is recommended you |serem associados com versões antigas do Java Runtime Environment. É recomendável
+update the program definitions prior to running.|atualizar as definições do programa antes de executar.
+Only complete this step if you want to remove the newest JRE version|Somente complete este passo se você deseja remover a última versão do JRE
+Run Uninstaller|Executar Desinstalador
+We recommend that you try running the Java Runtime Environment's built-in|Recomendamos que você execute o desinstalador incluso
+uninstaller before you continue.|do Java Runtime Environment antes de continuar.
+Would you like to open the Oracle online JRE version checker?|Deseja abrir a verificação online do JRE da Oracle?
+Launch online check|Executar verificação online
+version 2.0 beta 3|versão 2.0 beta 3
+JavaRa|JavaRa
+Settings|Configurações
+Support|Suporte
+About JavaRa|Sobre o JavaRa

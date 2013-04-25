@@ -1,0 +1,66 @@
+﻿//* Traduction par : Pierre (aka Terdef)
+//* http://assiste.com
+//* email: pp@assiste.com
+//*
+About JavaRa|A propos de JavaRa
+Additional Tasks|Tâches complémentaires
+Back|< Retour
+Check Java version|Vérifer la version de Java
+Close this wizard|Fermer cet assistant et retourner à JavaRa.
+Create a log file|Créer un fichier journal
+definitions? These are used to find and remove every last trace of JRE.|Elles sont utilisées pour rechercher et supprimer toute trace de JRE.
+Download and install latest version|Télécharger et installer la dernière version
+Download|Télécharger
+downloading and re-installing the program - regardless of version.|téléchargeant et réinstallant le programme - quelle que soit la version.
+Exit JavaRa|Quitter JavaRa
+Finish|Finir
+Java Manual Download|Téléchargement manuel de Java
+JavaRa 2.0 loaded without incident. Checking system...|JavaRa 2.0 chargé correctement. Analyse du système…
+JavaRa can update JRE by either performing an online version check, or|JavaRa peux mettre à jour Java JRE, soit en exécutant une vérification en ligne, soit en
+JavaRa|JavaRa
+Launch online check|Lancer la vérification en ligne
+Next|Suivant >
+Only complete this step if you want to remove newest JRE version|N'exécuter cette étape que si vous voulez supprimer la plus récente version de JRE.
+Operating System:|Système d'exploitation :
+Perform Cleanup Routine|Nettoyer
+Perform online version check|Exécuter la vérification de version en ligne
+Perform Removal Routine|Nettoyer
+Previous|< Retour
+Program Language|Langue
+program settings|Paramétrage
+Remove JRE|Effacer JRE
+Remove Outdated JRE Firefox Extensions|Supprimer les extensions JRE pour firefox obsolètes
+Remove startup entry|Supprimer les entrées inutiles dans la liste de démarrage de Windows
+Run Uninstaller|Désinstaller
+Run|Lancer
+Save Settings|Sauvegarder les paramètres
+Save|Sauvegarder
+Settings|Paramètres
+step 1 - run the uninstaller|Étape 1 - Désinstalleur la/les anciennes versions.
+step 1 - select update method|Étape 1 - Sélectionner la méthode de mise à jour.
+step 2 - completed.|Étape 2 - Terminé.
+step 2 - download new version|Étape 2 - Télécharger la nouvelle version de Java JRE.
+step 2 - perform removal routine|Étape 2 - Exécuter la procédure d'effacement.
+step 3 - completed.|Étape 3 - Terminé.
+step 3 - download new version|Étape 3 - Télécharger la nouvelle version.
+step 4 - completed.|Étape 4 - Terminé.
+Support|Aide
+The process is complete. Select an option to continue.|La procédure est terminée. Sélectionner une option pour continuer.
+The removal routine will delete files, folder and registry entries that are known|La routine de nettoyage supprimera les fichiers, répertoires et entrées de la base de registre connues
+to be associated with the Java Runtime Environment. It is recommended you |pour être associés à JRE (l'Environnement d'exécution de Java). 
+uninstaller before you continue.|à JRE (Java Runtime Environment) avant de poursuivre.
+Update Java Runtime|Mettre à jour Java JRE 
+Update JavaRa Definitions|MàJ signatures de JavaRa
+update JavaRa definitions|Mise à jour de la base de signatures de JavaRa
+
+update the program definitions prior to running.|Mettre à jour la base de signatures de JavaRa avant d'utiliser la procédure de nettoyage.
+Use Jucheck.exe tool|Utiliser le programme Jucheck.exe
+Use this interface.|Utilisation de cette interface.
+version 2.0 beta 3|Version 2.0 beta 3
+We recommend that you try running the Java Runtime Environment's built-in|Nous vous recommandons d'exécuter le désinstalleur intégré
+Would you like to download and install the latest version of JRE? |Voulez vous télécharger et installer la dernière version de JRE ?
+Would you like to download and install the latest version of the JavaRa |Voulez vous télécharger et installer la dernière version de la base de signatures de JavaRa ?
+Would you like to open the Oracle online JRE version checker?|Voulez vous utiliser le vérificateur en ligne d'Oracle afin de vérifier vôtre version de JRE ?
+
+You didn't select any tasks to be performed.|Vous n'avez sélectionné aucune tâche à exécuter.
+Your changes will take effect when JavaRa is restarted.|Vos modifications prendront effet après le redémarrage de JavaRa.

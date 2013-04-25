@@ -1,0 +1,50 @@
+﻿About JavaRa|O JavaRa
+Additional Tasks|Dodatkowe zadania
+Back|Wstecz
+Check Java version|Sprawdź wersję Java
+Close this wizard|Zamknij kreator
+Download and install latest version|Pobierz i zainstaluj najnowszą wersję
+Download|Pobierz
+Exit JavaRa|Zamknij JavaRa
+Finish|Zakończ
+Java Manual Download|Ręczne pobieranie JRE
+JavaRa can update JRE by either performing an online version check, or downloading and re-installing  the program - regardless of version.|JavaRa może zaktualizować JRE przez sprawdzenie wersji online lub pobranie i ponowne zainstalowanie programu - niezależnie od wersji.
+JavaRa support is available at the following locations:|Wsparcie techniczne dla JavaRa jest dostępne w następujących miejscach:
+language settings|Ustawienia języka
+Launch online check|Rozpocznij sprawdzanie online
+Next|Dalej
+Only complete this step if you want to remove newest JRE version|Wykonaj ten krok, jeśli chcesz usunąć najnowszą wersję JRE
+Perform online version check|Sprawdź wersję online
+Perform Removal Routine|Wykonaj procedurę usuwania
+Previous|Wstecz
+Remove Older Versions|Usuń starsze wersje
+Remove Outdated JRE Firefox Extensions|Usuń przestarzałe rozszerzenia JRE Firefoxa
+Remove startup entery|Usuń element autostartu
+Run Uninstaller|Uruchom deinstalator
+Run|Uruchom
+Save Settings|Zapisz ustawienia
+Selected tasks completed successfully.|Wybrane zadania zostały pomyślnie ukończone.
+Selected tasks|Wykonaj wybrane
+Settings|Ustawienia
+step 1 - run the uninstaller|krok 1 - uruchom deinstalator
+step 1 - select update method|krok 1 - wybierz metodę aktualizacji
+step 2 - completed.|krok 2 - zakończony.
+step 2 - completed|krok 2 - zakończony
+step 2 - download new version|krok 2 - pobierz nową wersję
+step 2 - perform removal routine|krok 2 - wykonaj procedurę usuwania
+step 3 - completed.|krok 3 - zakończony.
+step 3 - download new version|krok 3 - pobierz nową wersję
+step 4 - completed.|krok 4 - zakończony.
+Support|Wsparcie
+The process is complete. Select an option to continue.|Zakończono proces aktualizacji. By kontynuować, proszę wybrać jedną z poniższych opcji.
+The removal routine will delete files, folder and registry entries that are known to be associated with the Java Runtime Environment. It is recommended you ipdate the program definitions prior to running.|Procedura usuwania usunie wszystkie pliki, foldery i wpisy rejestru związane z Java Runtime Environment. Przed rozpoczęciem usuwania zalecamy aktualizację reguł programu.
+Update Java Runtime|Aktualizuj Java Runtime
+Update JavaRa Definitions|Aktualizuj reguły JavaRa
+update JavaRa definitions|zaktualizuj reguły JavaRa
+update JavaRa defintions|zaktualizuj reguły JavaRa
+Use Jucheck.exe tool|Użyj programu Jucheck.exe
+We recommend that you try running the Java Runtime Environment's built-in unistaller before you continue.|Przed kontynuowaniem zalecamy uruchomić deinstaler pakietu Java Runtime Environment. 
+Would you like to download and install the latest version of JavaRa definitions? These are used to find and remove every last trace of JRE.|Czy chcesz pobrać i zainstalować najnowsze reguły JavaRa? Są one niezbędne w procesie wyszukiwania i usuwania najmniejszych śladów po JRE.
+Would you like to download and install the latest version of JRE? Use this interface.|Czy chcesz pobrać i zainstalować najnowszą wersję JRE?
+Would you like to download and install the latest version of JRE?|Czy chcesz pobrać i zainstalować najnowszą wersję JRE?
+Would you like to open the Oracle online JRE version checker?|Czy chcesz otworzyć stronę Oracle do sprawdzenia wersji JRE?

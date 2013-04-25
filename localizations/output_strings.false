@@ -1,0 +1,1 @@
+Rename this file to 'output_strings.true' to force JavaRa to generate a list of any untranslated strings when using a non-English language. It will be contained in the same directory as JavaRa.exe

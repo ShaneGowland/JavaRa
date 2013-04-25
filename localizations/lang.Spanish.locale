@@ -1,0 +1,51 @@
+﻿About JavaRa|Sobre JavaRa
+Additional Tasks|Tareas adicionales
+Back|Atrás
+Check Java version|Comprobar la versión de Java
+Close this wizard|Cerrar este asistente
+Download and install latest version|Descargar e instalar la ultima versión
+Download|Descargar
+Exit JavaRa|Salir de JavaRa
+Finish|Terminar
+Java Manual Download|Descarga manual de Java
+JavaRa can update JRE by either performing an online version check, or downloading and re-installing  the program - regardless of version.|JavaRa le permite actualizar el entorno de ejecución de Java (JRE) bien comparando la versión instalada con la versión en línea, o bien descargando e instalando el programa de nuevo. Ambos independientemente de la versión.
+JavaRa support is available at the following locations:|Obtendra asistencia técnica para JavaRa en:
+language settings|Ajustes de idiomas
+Launch online check|Ejecutar la comprobación en línea
+Next|Proceder
+Only complete this step if you want to remove newest JRE version| Complete este paso, unicamente si realmente desea purgar la versión más actual instalada del entorno de ejecución de Java (JRE)
+Perform online version check|Realizar la comprobación de la versión en linea
+Perform Removal Routine|Llevar a cabo la desinstalación
+Previous|Anterior
+Remove Older Versions|Eliminar versiones antiguas
+Remove Outdated JRE Firefox Extensions|Eliminar las extensiones obsoletas del entorno de ejecución de Java (JRE) para Firefox
+Remove startup entry|Desactivar el inicio del entorno de ejecución de Java (JRE) con el arranque del sistema operantivo
+Remove JRE|Purgar el entorno de ejecución de Java (JRE)
+Run Uninstaller|Purgar
+Run|Finalizar
+Save Settings|Guardar ajustes
+Selected tasks completed successfully.|Las tareas seleccionadas fueron llevadas a cabo satisfactoriamente.
+Selected tasks|Tareas seleccionadas
+Settings|Ajustes
+step 1 - run the uninstaller|Primer paso - Ejecutar el desinstalador
+step 1 - select update method|Primer paso - Selección del método de actualización
+step 2 - completed.|Segundo paso - Completado.
+step 2 - completed|Segundo paso - Completado
+step 2 - download new version|Segundo paso - Descarga de la nueva versión
+step 2 - perform removal routine|Segundo paso - Llevar a cabo la purgación
+step 3 - completed.|Tercer paso - Completado
+step 3 - download new version|Tercer paso - Descarga de la nueva versión
+step 4 - completed.|Cuarto paso - Completado
+Support|Asistencia técnica
+Save|Guardar
+The process is complete. Select an option to continue.|El proceso ha concluido. Seleccione una opción con la cual continuar.
+The removal routine will delete files, folder and registry entries that are known to be associated with the Java Runtime Environment. It is recommended you update the program definitions prior to running.|La purgación eliminará los archivos, carpetas y entradas del registro que estén asociados con el entorno de ejecución de Java (JRE). Le recomendamos encarecidamente que actualice las definiciones de JavaRa antes de proceder.
+Update Java Runtime|Actualizar el entorno de ejecución de Java (JRE)
+Update JavaRa Definitions|Actualizar las definiciones de JavaRa
+update JavaRa definitions|Actualizar las definiciones de JavaRa
+Use Jucheck.exe tool|Usar el comprobador propio de JRE (Jucheck.exe)
+We recommend that you try running the Java Runtime Environment's built-in uninstaller before you continue.|Le recomendamos que intente ejecutar el programa de desinstalación propio del entorno de ejecución de Java (JRE) antes de proceder.
+Would you like to download and install the latest version of JavaRa definitions? These are used to find and remove every last trace of JRE.|¿Desea descargar e instalar la última versión de las definiciones de JavaRa? Son necesarias para encontrar y eliminar cualquier rastro del ejecución de Java (JRE).
+Would you like to download and install the latest version of JRE? Use this interface.|¿Desea descargar e instalar la última versión del entorno de ejecución de Java (JRE)? Utilice esta interfaz.
+Would you like to download and install the latest version of JRE?|¿Desea descargar e instalar la última versión del entorno de ejecución de Java (JRE)?
+Would you like to open the Oracle online JRE version checker?|¿Desea abrir el comprobador de versión en línea del entorno de ejecución de Java (JRE) proporcionado por Oracle?
