@@ -160,7 +160,6 @@ Public Class UI
                         Call uninstall_all()
                     End If
                 Case "/UPDATEDEFS"
-                    MsgBox("Upper case supported")
                     If stay_silent = True Then
                         download_defs()
                         Me.Close()
@@ -168,23 +167,23 @@ Public Class UI
                         btnUpdateDefs.PerformClick()
                     End If
                 Case "/SILENT"
-                    MessageBox.Show("Syntax Error. /Silent is a secondary option to be used in combination with other command line options." _
-                                    & "It should not be the first option used, nor should it be used alone. use /? for more information.", "Syntax Error.")
+                    MessageBox.Show(get_string("Syntax Error. /SILENT is a secondary option to be used in combination with other command line options.") _
+                                    & get_string("It should not be the first option used, nor should it be used alone. Use /? for more information."), get_string("Syntax Error."))
                     Me.Close()
                 Case "/?"
-                    MessageBox.Show("/Purge -" & vbTab & vbTab & "Removes all JRE related registry keys, files and directories." & vbCrLf _
-                                    & "/Clean -" & vbTab & vbTab & "Removes only JRE registry keys from previous version." & vbCrLf _
-                                    & "/Uninstallall -" & vbTab & "Run the built-in uninstaller for all versions of JRE detected." & vbCrLf _
-                                    & "/Updatedefs -" & vbTab & "Downloads a new copy of the JavaRa definitions." & vbCrLf _
-                                    & "/Silent -" & vbTab & vbTab & "Hides the graphical user interface and suppresses all dialog" & vbCrLf _
-                                    & vbTab & vbTab & "messages and error reports." & vbCrLf _
-                                    & "/? -" & vbTab & vbTab & "Displays this help dialog" & vbCrLf & vbCrLf _
-                                    & " Example: Javara /Updatedefs /Silent" & vbCrLf _
-                                    & " Example: Javara /Uninstallall /Silent" & vbCrLf, "Command Line Parameters")
+                    MessageBox.Show("/PURGE -" & vbTab & vbTab & get_string("Removes all JRE related registry keys, files and directories.") & vbCrLf _
+                                    & "/CLEAN -" & vbTab & vbTab & get_string("Removes only JRE registry keys from previous version.") & vbCrLf _
+                                    & "/UNINSTALLALL -" & vbTab & get_string("Run the built-in uninstaller for all versions of JRE detected.") & vbCrLf _
+                                    & "/UPDATEDEFS -" & vbTab & get_string("Downloads a new copy of the JavaRa definitions.") & vbCrLf _
+                                    & "/SILENT -" & vbTab & vbTab & get_string("Hides the graphical user interface and suppresses all dialog") & vbCrLf _
+                                    & vbTab & vbTab & get_string("messages and error reports.") & vbCrLf _
+                                    & "/? -" & vbTab & vbTab & get_string("Displays this help dialog") & vbCrLf & vbCrLf _
+                                    & " " & get_string("Example: JavaRa /UPDATEDEFS /SILENT") & vbCrLf _
+                                    & " " & get_string("Example: JavaRa /UNINSTALLALL /SILENT") & vbCrLf, get_string("Command Line Parameters"))
                     Me.Close()
                 Case Else
-                    MessageBox.Show("Unsupported argument. Please use /Purge, /Clean, /Uninstallall, or /Updatedefs" & vbCrLf _
-                                    & "with, or without /Silent.", "Option Not Supported.")
+                    MessageBox.Show(get_string("Unsupported argument. Please use /PURGE, /CLEAN, /UNINSTALLALL, or /UPDATEDEFS") & vbCrLf _
+                                    & get_string("with, or without /SILENT."), get_string("Option Not Supported."))
                     Me.Close()
             End Select
         Else
