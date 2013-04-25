@@ -1,6 +1,6 @@
 ﻿Imports Microsoft.Win32
 
-Module ui_routines
+Module routines_interface
     'Shared routine to bring a panel to the front
     Public Sub show_panel(ByVal pnl As Panel, Optional ByVal scrollbar As Boolean = False)
         'Load the correct panel

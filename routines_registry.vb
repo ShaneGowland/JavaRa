@@ -1,6 +1,6 @@
 ﻿Option Strict Off
 Imports Microsoft.Win32
-Module registry_routines
+Module routines_registry
     Public Sub delete_key(ByVal key As String)
         'Check if the key exists first, reducing processing time and potential for errors.
         If RegKeyExists(key) = True Then

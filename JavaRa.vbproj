@@ -101,7 +101,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Functions.vb" />
-    <Compile Include="registry_routines.vb" />
+    <Compile Include="routines_registry.vb" />
     <Compile Include="routines_locales.vb" />
     <Compile Include="UI.vb">
       <SubType>Form</SubType>
@@ -125,7 +125,7 @@
       <DependentUpon>Settings.settings</DependentUpon>
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
     </Compile>
-    <Compile Include="ui_routines.vb" />
+    <Compile Include="routines_interface.vb" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="UI.resx">

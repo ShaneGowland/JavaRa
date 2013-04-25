@@ -22,6 +22,7 @@ Public Class UI
 
     'Variable to count the number of removed items
     Friend removal_count As Integer = 0
+
 #End Region
 
 #Region "Opening/Closing JavaRa"
@@ -119,8 +120,12 @@ Public Class UI
         'Decide if UI should be displayed
         If My.Application.CommandLineArgs.Count > 0 Then
             For Each value As String In My.Application.CommandLineArgs
+
+                'Make value uppercase
+                value = value.ToUpper
+
                 'Check for the presense of the /Silent option
-                If value = "/Silent" Then
+                If value = "/SILENT" Then
                     Me.Visible = False
                     Me.Opacity = 0
                     Me.ShowInTaskbar = False
@@ -132,36 +137,37 @@ Public Class UI
                 Call render_ui()
             End If
             'Parse command line arguements
-            Select Case My.Application.CommandLineArgs(0).ToString
-                Case "/Purge"
+            Select Case My.Application.CommandLineArgs(0).ToString.ToUpper
+                Case "/PURGE"
                     If stay_silent = True Then
                         Call purge_jre()
                         Me.Close()
                     Else
                         Call purge_jre()
                     End If
-                Case "/Clean"
+                Case "/CLEAN"
                     If stay_silent = True Then
                         Call cleanup_old_jre()
                         Me.Close()
                     Else
                         Call cleanup_old_jre()
                     End If
-                Case "/Uninstallall"
+                Case "/UNINSTALLALL"
                     If stay_silent = True Then
                         Call uninstall_all(stay_silent)
                         Me.Close()
                     Else
                         Call uninstall_all()
-                    End If                    
-                Case "/Updatedefs"
+                    End If
+                Case "/UPDATEDEFS"
+                    MsgBox("Upper case supported")
                     If stay_silent = True Then
                         download_defs()
                         Me.Close()
                     Else
                         btnUpdateDefs.PerformClick()
                     End If
-                Case "/Silent"
+                Case "/SILENT"
                     MessageBox.Show("Syntax Error. /Silent is a secondary option to be used in combination with other command line options." _
                                     & "It should not be the first option used, nor should it be used alone. use /? for more information.", "Syntax Error.")
                     Me.Close()
@@ -193,8 +199,6 @@ Public Class UI
                 trd.Start()
             End If
 
-            'Let's write a log file; should the user desire it
-            write_log(get_string("JavaRa 2.0 loaded without incident. Checking system..."))
     End Sub
     'Render the grid of icons on the main GUI
     Private Sub render_ui()
