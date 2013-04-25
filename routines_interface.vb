@@ -37,7 +37,7 @@ Module routines_interface
                 End If
             Next
         Catch ex As Exception
-            write_log(ex.Message)
+            write_error(ex)
         End Try
 
         'Insert a blank space into the log
@@ -101,7 +101,7 @@ Module routines_interface
             Next
 
         Catch ex As Exception
-            write_log(ex.Message)
+            write_error(ex)
         End Try
     End Sub
     'Uninstall all JRE's with their uninstallers
@@ -122,7 +122,7 @@ Module routines_interface
                         Try
                             Shell(uninstallString, AppWinStyle.NormalFocus, True)
                         Catch ex As Exception
-                            write_log(ex.Message)
+                            write_error(ex)
                         End Try
                     End If
 
@@ -132,7 +132,7 @@ Module routines_interface
                         Try
                             Shell(uninstallString, AppWinStyle.NormalFocus, True)
                         Catch ex As Exception
-                            write_log(ex.Message)
+                            write_error(ex)
                         End Try
 
                     End If
@@ -140,7 +140,7 @@ Module routines_interface
                 Next
             End Using
         Catch ex As Exception
-            write_log(ex.Message)
+            write_error(ex)
         End Try
     End Sub
     'Cleanup old JRE registry keys
@@ -212,7 +212,7 @@ Module routines_interface
             End If
 
         Catch ex As Exception
-            write_log(ex.Message)
+            write_error(ex)
         End Try
 
         'Close the program if in silent mode
@@ -311,7 +311,7 @@ Module routines_interface
             End If
 
         Catch ex As Exception
-            write_log(ex.Message)
+            write_error(ex)
         End Try
 
         'Close the program if in silent mode
@@ -396,7 +396,7 @@ Module routines_interface
                     IO.File.Delete(foundFile)
                 End If
             Catch ex As Exception
-                write_log(ex.Message)
+                write_error(ex)
             End Try
         Next
     End Sub

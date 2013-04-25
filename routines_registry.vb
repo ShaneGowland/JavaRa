@@ -85,7 +85,7 @@ Module routines_registry
                 regKey.Close()
 
             Catch ex As Exception
-                write_log(ex.Message)
+                write_error(ex)
             End Try
         Else
             'Registry key doesn't exist
@@ -167,7 +167,7 @@ Module routines_registry
             Process.Start(version_output_path)
 
         Catch ex As Exception
-            write_log(ex.Message)
+            write_error(ex)
         End Try
     End Sub
     Public Sub delete_jre_startup_entries()

@@ -95,6 +95,7 @@ Module Functions
             Return False
         End Try
     End Function
+    'Method for logging important events
     Public Sub write_log(ByVal message As String)
         If UI.boxSaveLog.Checked Then
             Try
@@ -106,6 +107,23 @@ Module Functions
             Catch ex As Exception
             End Try
         End If
+    End Sub
+    'Method that logs exceptions 
+    Public Sub write_error(ByVal error_object As Exception)
+
+        Try
+            'Get the exception data
+            Dim source As String = Reflection.Assembly.GetCallingAssembly.GetName.Name
+            Dim message As String = error_object.Message
+            Dim stack As String = error_object.StackTrace
+
+            'Write it
+            Dim exception_text As String = ("Exception encountered in module [" & source & "]" & _
+                         Environment.NewLine & "Message: " & message & _
+                         Environment.NewLine & stack & Environment.NewLine)
+            write_log(exception_text)
+        Catch ex As Exception
+        End Try
     End Sub
     Public Function sanitze_str(ByVal filename As String, Optional ByVal allowSpaces As Boolean = False) As String
         filename = filename.Replace("[", "")

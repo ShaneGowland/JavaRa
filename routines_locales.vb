@@ -57,7 +57,7 @@
             UI.lblStep1.Text = get_string("We recommend that you try running the Java Runtime Environment's built-in") & Environment.NewLine & get_string("uninstaller before you continue.")
 
         Catch ex As Exception
-            write_log(ex.Message)
+            write_error(ex)
         End Try
     End Sub
     Public Sub TranslateControl(ByVal Ctrl As Control)

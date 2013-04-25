@@ -83,7 +83,7 @@ Public Class UI
                 Loop
                 r.Close()
             Catch ex As Exception
-                write_log(ex.Message)
+                write_error(ex)
             End Try
         End If
 
@@ -105,7 +105,7 @@ Public Class UI
                 End If
             Next
         Catch ex As Exception
-            write_log(ex.Message)
+            write_error(ex)
         End Try
 
         'Define the language JavaRa should load in
@@ -191,12 +191,12 @@ Public Class UI
             Call render_ui()
         End If
 
-            'Check silently for updates
-            If boxUpdateCheck.Checked Then
-                Dim trd As Threading.Thread = New Threading.Thread(AddressOf check_for_update)
-                trd.IsBackground = True
-                trd.Start()
-            End If
+        'Check silently for updates
+        If boxUpdateCheck.Checked Then
+            Dim trd As Threading.Thread = New Threading.Thread(AddressOf check_for_update)
+            trd.IsBackground = True
+            trd.Start()
+        End If
 
     End Sub
     'Render the grid of icons on the main GUI
@@ -242,7 +242,7 @@ Public Class UI
             lbTasks.Items.Add(get_string("Clean JRE Temp Files"))
 
         Catch ex As Exception
-            write_log(ex.Message)
+            write_error(ex)
         End Try
 
         'Set the user interface
@@ -483,7 +483,7 @@ Public Class UI
                 Next
             End Using
         Catch ex As Exception
-            write_log(ex.Message)
+            write_error(ex)
         End Try
 
     End Sub
@@ -560,7 +560,7 @@ Public Class UI
 
                 'Catch any errors 
             Catch ex As Exception
-                write_log(ex.Message)
+                write_error(ex)
             End Try
         End If
     End Sub
