@@ -5,7 +5,7 @@ Public Class UI
 #Region "Global Variables/Declarations"
 
     'Store the version number
-    Dim version_number As String = "020100"
+    Dim version_number As String = "020200"
 
     'Downloader variables
     Dim whereToSave As String 'Where the program save the file
