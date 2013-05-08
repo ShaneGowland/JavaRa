@@ -641,11 +641,6 @@ Public Class UI
             End If
         Next
     End Sub
-    'Load support page in web browser control.
-    Private Sub txtSupport_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles txtSupport.Click
-        show_panel(pnlBrowser)
-        WebBrowser1.DocumentText = My.Resources.credits
-    End Sub
     'Navigate to step #2 of removal process.
     Private Sub btnStep1_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles btnStep1.Click
         show_panel(pnlRemoval)
@@ -693,8 +688,7 @@ Public Class UI
     End Sub
     'Load the about page
     Private Sub btnAbout_Click_1(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles btnAbout.Click
-        show_panel(pnlBrowser)
-        WebBrowser1.DocumentText = My.Resources.about
+        show_panel(pnlAbout)
     End Sub
     Private Sub Button3_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles Button3.Click
         show_panel(pnlUpdateJRE)
@@ -808,11 +802,12 @@ Public Class UI
         End Try
 
     End Sub
-
+    '
     Private Sub download_defs()
         Me.Cursor = Cursors.WaitCursor
+
         'Confirm the connection to the server 
-        Dim webclient As New WebClient, sFilename As String, sURI As String
+        Dim sFilename As String, sURI As String
         Try
             theRequest = WebRequest.Create("http://content.thewebatom.net/files/confirm.txt")
             theResponse = theRequest.GetResponse
@@ -832,8 +827,11 @@ Public Class UI
         Me.txtFileName.Enabled = False
         Me.btnUpdateDefs.Enabled = False
         Me.btnDownload.Enabled = False
+
+        'If running silently, the background worker does not work correctly.
+        'Use a standard WebClient downloader instaed
         If stay_silent = True Then
-            webclient.DownloadFile(txtFileName.Text, Me.whereToSave)
+            My.Computer.Network.DownloadFile(txtFileName.Text, Me.whereToSave)
         Else
             Me.BackgroundWorker1.RunWorkerAsync() 'Start download               
         End If
@@ -841,8 +839,5 @@ Public Class UI
 
 #End Region
 
-    Private Sub lvTools_SelectedIndexChanged(ByVal sender As Object, ByVal e As EventArgs) Handles lvTools.SelectedIndexChanged
-
-    End Sub
 End Class
 

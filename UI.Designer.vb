@@ -46,8 +46,9 @@ Partial Class UI
         Me.Label6 = New System.Windows.Forms.Label()
         Me.Label8 = New System.Windows.Forms.Label()
         Me.Label5 = New System.Windows.Forms.Label()
-        Me.pnlBrowser = New System.Windows.Forms.Panel()
-        Me.WebBrowser1 = New System.Windows.Forms.WebBrowser()
+        Me.pnlAbout = New System.Windows.Forms.Panel()
+        Me.Label10 = New System.Windows.Forms.Label()
+        Me.Label4 = New System.Windows.Forms.Label()
         Me.Panel9 = New System.Windows.Forms.Panel()
         Me.Button12 = New System.Windows.Forms.Button()
         Me.Label11 = New System.Windows.Forms.Label()
@@ -103,7 +104,6 @@ Partial Class UI
         Me.Label21 = New System.Windows.Forms.Label()
         Me.ToolStrip1 = New System.Windows.Forms.ToolStrip()
         Me.btnSettings = New System.Windows.Forms.ToolStripButton()
-        Me.txtSupport = New System.Windows.Forms.ToolStripButton()
         Me.btnAbout = New System.Windows.Forms.ToolStripButton()
         Me.Panel7 = New System.Windows.Forms.Panel()
         Me.pnlTopDock = New System.Windows.Forms.Panel()
@@ -119,7 +119,7 @@ Partial Class UI
         Me.Panel3.SuspendLayout()
         Me.pnlRemoval.SuspendLayout()
         Me.Panel2.SuspendLayout()
-        Me.pnlBrowser.SuspendLayout()
+        Me.pnlAbout.SuspendLayout()
         Me.Panel9.SuspendLayout()
         Me.pnlDownload.SuspendLayout()
         Me.Panel5.SuspendLayout()
@@ -391,38 +391,51 @@ Partial Class UI
         Me.Label5.Text = "The removal routine will delete files, folder and registry entries that are known" & _
     "" & Global.Microsoft.VisualBasic.ChrW(13) & Global.Microsoft.VisualBasic.ChrW(10) & "to be associated with the older versions of the Java Runtime Environment" & Global.Microsoft.VisualBasic.ChrW(13) & Global.Microsoft.VisualBasic.ChrW(10)
         '
-        'pnlBrowser
+        'pnlAbout
         '
-        Me.pnlBrowser.AutoScroll = True
-        Me.pnlBrowser.BackColor = System.Drawing.Color.White
-        Me.pnlBrowser.Controls.Add(Me.WebBrowser1)
-        Me.pnlBrowser.Controls.Add(Me.Panel9)
-        Me.pnlBrowser.Controls.Add(Me.Label11)
-        Me.pnlBrowser.Location = New System.Drawing.Point(12, 260)
-        Me.pnlBrowser.Name = "pnlBrowser"
-        Me.pnlBrowser.Size = New System.Drawing.Size(379, 205)
-        Me.pnlBrowser.TabIndex = 18
+        Me.pnlAbout.AutoScroll = True
+        Me.pnlAbout.BackColor = System.Drawing.Color.White
+        Me.pnlAbout.Controls.Add(Me.Label10)
+        Me.pnlAbout.Controls.Add(Me.Label4)
+        Me.pnlAbout.Controls.Add(Me.Panel9)
+        Me.pnlAbout.Controls.Add(Me.Label11)
+        Me.pnlAbout.Location = New System.Drawing.Point(12, 260)
+        Me.pnlAbout.Name = "pnlAbout"
+        Me.pnlAbout.Size = New System.Drawing.Size(379, 205)
+        Me.pnlAbout.TabIndex = 18
         '
-        'WebBrowser1
+        'Label10
         '
-        Me.WebBrowser1.Dock = System.Windows.Forms.DockStyle.Fill
-        Me.WebBrowser1.Location = New System.Drawing.Point(0, 0)
-        Me.WebBrowser1.MinimumSize = New System.Drawing.Size(20, 20)
-        Me.WebBrowser1.Name = "WebBrowser1"
-        Me.WebBrowser1.Size = New System.Drawing.Size(379, 173)
-        Me.WebBrowser1.TabIndex = 28
+        Me.Label10.AutoSize = True
+        Me.Label10.Font = New System.Drawing.Font("Segoe UI", 9.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.Label10.Location = New System.Drawing.Point(9, 37)
+        Me.Label10.MaximumSize = New System.Drawing.Size(445, 0)
+        Me.Label10.Name = "Label10"
+        Me.Label10.Size = New System.Drawing.Size(445, 105)
+        Me.Label10.TabIndex = 10
+        Me.Label10.Text = resources.GetString("Label10.Text")
+        '
+        'Label4
+        '
+        Me.Label4.AutoSize = True
+        Me.Label4.Font = New System.Drawing.Font("Segoe UI Light", 18.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.Label4.Location = New System.Drawing.Point(3, 3)
+        Me.Label4.Name = "Label4"
+        Me.Label4.Size = New System.Drawing.Size(148, 32)
+        Me.Label4.TabIndex = 11
+        Me.Label4.Text = "about JavaRa"
         '
         'Panel9
         '
         Me.Panel9.BackColor = System.Drawing.Color.White
         Me.Panel9.Controls.Add(Me.Button12)
         Me.Panel9.Dock = System.Windows.Forms.DockStyle.Bottom
-        Me.Panel9.Location = New System.Drawing.Point(0, 173)
+        Me.Panel9.Location = New System.Drawing.Point(0, 156)
         Me.Panel9.MaximumSize = New System.Drawing.Size(0, 32)
         Me.Panel9.MinimumSize = New System.Drawing.Size(0, 32)
         Me.Panel9.Name = "Panel9"
         Me.Panel9.Padding = New System.Windows.Forms.Padding(6, 1, 6, 7)
-        Me.Panel9.Size = New System.Drawing.Size(379, 32)
+        Me.Panel9.Size = New System.Drawing.Size(454, 32)
         Me.Panel9.TabIndex = 27
         '
         'Button12
@@ -690,7 +703,7 @@ Partial Class UI
         '
         Me.btnSave.Anchor = CType((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.btnSave.Font = New System.Drawing.Font("Segoe UI", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.btnSave.Location = New System.Drawing.Point(5895, 2)
+        Me.btnSave.Location = New System.Drawing.Point(8927, 2)
         Me.btnSave.Name = "btnSave"
         Me.btnSave.Size = New System.Drawing.Size(166, 24)
         Me.btnSave.TabIndex = 29
@@ -996,7 +1009,7 @@ Partial Class UI
         '
         Me.ToolStrip1.Dock = System.Windows.Forms.DockStyle.Bottom
         Me.ToolStrip1.GripStyle = System.Windows.Forms.ToolStripGripStyle.Hidden
-        Me.ToolStrip1.Items.AddRange(New System.Windows.Forms.ToolStripItem() {Me.btnSettings, Me.txtSupport, Me.btnAbout})
+        Me.ToolStrip1.Items.AddRange(New System.Windows.Forms.ToolStripItem() {Me.btnSettings, Me.btnAbout})
         Me.ToolStrip1.Location = New System.Drawing.Point(0, 691)
         Me.ToolStrip1.Name = "ToolStrip1"
         Me.ToolStrip1.Size = New System.Drawing.Size(1714, 25)
@@ -1012,16 +1025,6 @@ Partial Class UI
         Me.btnSettings.Size = New System.Drawing.Size(53, 22)
         Me.btnSettings.Text = "Settings"
         Me.btnSettings.TextImageRelation = System.Windows.Forms.TextImageRelation.TextBeforeImage
-        '
-        'txtSupport
-        '
-        Me.txtSupport.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text
-        Me.txtSupport.Image = CType(resources.GetObject("txtSupport.Image"), System.Drawing.Image)
-        Me.txtSupport.ImageTransparentColor = System.Drawing.Color.Magenta
-        Me.txtSupport.Name = "txtSupport"
-        Me.txtSupport.Size = New System.Drawing.Size(53, 22)
-        Me.txtSupport.Text = "Support"
-        Me.txtSupport.TextImageRelation = System.Windows.Forms.TextImageRelation.TextBeforeImage
         '
         'btnAbout
         '
@@ -1140,7 +1143,7 @@ Partial Class UI
         Me.Controls.Add(Me.ToolStrip1)
         Me.Controls.Add(Me.pnlUpdateJRE)
         Me.Controls.Add(Me.pnlUpdate)
-        Me.Controls.Add(Me.pnlBrowser)
+        Me.Controls.Add(Me.pnlAbout)
         Me.Controls.Add(Me.PanelExtra)
         Me.Controls.Add(Me.PanelSettings)
         Me.Controls.Add(Me.pnlCompleted)
@@ -1160,8 +1163,8 @@ Partial Class UI
         Me.pnlRemoval.ResumeLayout(False)
         Me.pnlRemoval.PerformLayout()
         Me.Panel2.ResumeLayout(False)
-        Me.pnlBrowser.ResumeLayout(False)
-        Me.pnlBrowser.PerformLayout()
+        Me.pnlAbout.ResumeLayout(False)
+        Me.pnlAbout.PerformLayout()
         Me.Panel9.ResumeLayout(False)
         Me.pnlDownload.ResumeLayout(False)
         Me.pnlDownload.PerformLayout()
@@ -1209,7 +1212,7 @@ Partial Class UI
     Friend WithEvents btnStep1 As System.Windows.Forms.Button
     Friend WithEvents btnPrev1 As System.Windows.Forms.Button
     Friend WithEvents ProgressBar1 As System.Windows.Forms.ProgressBar
-    Friend WithEvents pnlBrowser As System.Windows.Forms.Panel
+    Friend WithEvents pnlAbout As System.Windows.Forms.Panel
     Friend WithEvents Label11 As System.Windows.Forms.Label
     Friend WithEvents pnlDownload As System.Windows.Forms.Panel
     Friend WithEvents ProgressBar2 As System.Windows.Forms.ProgressBar
@@ -1261,8 +1264,6 @@ Partial Class UI
     Friend WithEvents Label21 As System.Windows.Forms.Label
     Friend WithEvents ToolStrip1 As System.Windows.Forms.ToolStrip
     Friend WithEvents btnSettings As System.Windows.Forms.ToolStripButton
-    Friend WithEvents txtSupport As System.Windows.Forms.ToolStripButton
-    Friend WithEvents WebBrowser1 As System.Windows.Forms.WebBrowser
     Friend WithEvents Panel7 As System.Windows.Forms.Panel
     Friend WithEvents pnlTopDock As System.Windows.Forms.Panel
     Friend WithEvents btnAbout As System.Windows.Forms.ToolStripButton
@@ -1280,5 +1281,7 @@ Partial Class UI
     Friend WithEvents btnCleanup As System.Windows.Forms.Button
     Friend WithEvents Label9 As System.Windows.Forms.Label
     Friend WithEvents boxUpdateCheck As System.Windows.Forms.CheckBox
+    Friend WithEvents Label4 As System.Windows.Forms.Label
+    Friend WithEvents Label10 As System.Windows.Forms.Label
 
 End Class

@@ -43,7 +43,6 @@
 
             'Translate the top menu of UI form.
             UI.btnSettings.Text = get_string("Settings")
-            UI.txtSupport.Text = get_string("Support")
             UI.btnAbout.Text = get_string("About JavaRa")
 
             'Translate checkedlistbox items
