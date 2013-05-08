@@ -45,14 +45,13 @@
             UI.btnSettings.Text = get_string("Settings")
             UI.btnAbout.Text = get_string("About JavaRa")
 
-            'Translate checkedlistbox items
+            'Translate the version string
+            UI.lblVersion.Text = get_string("version") & " " & Application.ProductVersion.Replace(".0.0", "")
 
             'Translate multi-line text labels
-            UI.Label8.Text = get_string("The removal routine will delete files, folder and registry entries that are known") & Environment.NewLine & get_string("to be associated with the Java Runtime Environment. It is recommended you ") & Environment.NewLine & get_string("update the program definitions prior to running.")
             UI.Label5.Text = get_string("The removal routine will delete files, folder and registry entries that are known" & Environment.NewLine & get_string("to be associated with the older versions of the Java Runtime Environment"))
             UI.Label12.Text = get_string("Would you like to download and install the latest version of JRE? ") & Environment.NewLine & get_string("Use this interface.")
-            UI.Label17.Text = get_string("Would you like to download and install the latest version of the JavaRa ") & Environment.NewLine & get_string("definitions? These are used to find and remove every last trace of JRE.")
-            UI.Label1.Text = get_string("JavaRa can update JRE by either performing an online version check, or") & Environment.NewLine & get_string("downloading and re-installing the program - regardless of version.")
+            UI.lblUpdateDefs.Text = get_string("Would you like to download and install the latest version of the JavaRa ") & Environment.NewLine & get_string("definitions? These are used to find and remove every last trace of JRE.")
             UI.lblStep1.Text = get_string("We recommend that you try running the Java Runtime Environment's built-in") & Environment.NewLine & get_string("uninstaller before you continue.")
 
         Catch ex As Exception

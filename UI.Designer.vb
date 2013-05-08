@@ -27,7 +27,7 @@ Partial Class UI
         Me.lvTools = New System.Windows.Forms.ListView()
         Me.ExecutableImages = New System.Windows.Forms.ImageList(Me.components)
         Me.Panel1 = New System.Windows.Forms.Panel()
-        Me.Label2 = New System.Windows.Forms.Label()
+        Me.lblVersion = New System.Windows.Forms.Label()
         Me.lblTitle = New System.Windows.Forms.Label()
         Me.Step1 = New System.Windows.Forms.Panel()
         Me.Panel3 = New System.Windows.Forms.Panel()
@@ -44,7 +44,7 @@ Partial Class UI
         Me.ProgressBar1 = New System.Windows.Forms.ProgressBar()
         Me.btnRemoveKeys = New System.Windows.Forms.Button()
         Me.Label6 = New System.Windows.Forms.Label()
-        Me.Label8 = New System.Windows.Forms.Label()
+        Me.lblStep2 = New System.Windows.Forms.Label()
         Me.Label5 = New System.Windows.Forms.Label()
         Me.pnlAbout = New System.Windows.Forms.Panel()
         Me.Label10 = New System.Windows.Forms.Label()
@@ -90,7 +90,7 @@ Partial Class UI
         Me.Button2 = New System.Windows.Forms.Button()
         Me.ProgressBar3 = New System.Windows.Forms.ProgressBar()
         Me.btnUpdateDefs = New System.Windows.Forms.Button()
-        Me.Label17 = New System.Windows.Forms.Label()
+        Me.lblUpdateDefs = New System.Windows.Forms.Label()
         Me.Label19 = New System.Windows.Forms.Label()
         Me.ToolTip1 = New System.Windows.Forms.ToolTip(Me.components)
         Me.pnlUpdateJRE = New System.Windows.Forms.Panel()
@@ -100,11 +100,9 @@ Partial Class UI
         Me.btnUpdateNext = New System.Windows.Forms.Button()
         Me.boxDownloadJRE = New System.Windows.Forms.RadioButton()
         Me.boxOnlineCheck = New System.Windows.Forms.RadioButton()
-        Me.Label1 = New System.Windows.Forms.Label()
+        Me.lblStepOne = New System.Windows.Forms.Label()
         Me.Label21 = New System.Windows.Forms.Label()
         Me.ToolStrip1 = New System.Windows.Forms.ToolStrip()
-        Me.btnSettings = New System.Windows.Forms.ToolStripButton()
-        Me.btnAbout = New System.Windows.Forms.ToolStripButton()
         Me.Panel7 = New System.Windows.Forms.Panel()
         Me.pnlTopDock = New System.Windows.Forms.Panel()
         Me.pnlCleanup = New System.Windows.Forms.Panel()
@@ -114,6 +112,8 @@ Partial Class UI
         Me.ProgressBar4 = New System.Windows.Forms.ProgressBar()
         Me.btnCleanup = New System.Windows.Forms.Button()
         Me.Label9 = New System.Windows.Forms.Label()
+        Me.btnSettings = New System.Windows.Forms.ToolStripButton()
+        Me.btnAbout = New System.Windows.Forms.ToolStripButton()
         Me.Panel1.SuspendLayout()
         Me.Step1.SuspendLayout()
         Me.Panel3.SuspendLayout()
@@ -168,7 +168,7 @@ Partial Class UI
         'Panel1
         '
         Me.Panel1.BackColor = System.Drawing.Color.DeepSkyBlue
-        Me.Panel1.Controls.Add(Me.Label2)
+        Me.Panel1.Controls.Add(Me.lblVersion)
         Me.Panel1.Controls.Add(Me.lblTitle)
         Me.Panel1.Dock = System.Windows.Forms.DockStyle.Top
         Me.Panel1.Location = New System.Drawing.Point(0, 0)
@@ -180,17 +180,17 @@ Partial Class UI
         Me.Panel1.Size = New System.Drawing.Size(1714, 40)
         Me.Panel1.TabIndex = 15
         '
-        'Label2
+        'lblVersion
         '
-        Me.Label2.AutoSize = True
-        Me.Label2.BackColor = System.Drawing.Color.Transparent
-        Me.Label2.Font = New System.Drawing.Font("Segoe UI Light", 9.75!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.Label2.ForeColor = System.Drawing.Color.White
-        Me.Label2.Location = New System.Drawing.Point(105, 18)
-        Me.Label2.Name = "Label2"
-        Me.Label2.Size = New System.Drawing.Size(66, 17)
-        Me.Label2.TabIndex = 8
-        Me.Label2.Text = "version 2.1"
+        Me.lblVersion.AutoSize = True
+        Me.lblVersion.BackColor = System.Drawing.Color.Transparent
+        Me.lblVersion.Font = New System.Drawing.Font("Segoe UI Light", 9.75!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.lblVersion.ForeColor = System.Drawing.Color.White
+        Me.lblVersion.Location = New System.Drawing.Point(105, 18)
+        Me.lblVersion.Name = "lblVersion"
+        Me.lblVersion.Size = New System.Drawing.Size(68, 17)
+        Me.lblVersion.TabIndex = 8
+        Me.lblVersion.Text = "version 2.2"
         '
         'lblTitle
         '
@@ -301,7 +301,7 @@ Partial Class UI
         Me.pnlRemoval.Controls.Add(Me.ProgressBar1)
         Me.pnlRemoval.Controls.Add(Me.btnRemoveKeys)
         Me.pnlRemoval.Controls.Add(Me.Label6)
-        Me.pnlRemoval.Controls.Add(Me.Label8)
+        Me.pnlRemoval.Controls.Add(Me.lblStep2)
         Me.pnlRemoval.Location = New System.Drawing.Point(397, 260)
         Me.pnlRemoval.Name = "pnlRemoval"
         Me.pnlRemoval.Size = New System.Drawing.Size(430, 205)
@@ -345,7 +345,7 @@ Partial Class UI
         '
         'ProgressBar1
         '
-        Me.ProgressBar1.Location = New System.Drawing.Point(186, 85)
+        Me.ProgressBar1.Location = New System.Drawing.Point(186, 87)
         Me.ProgressBar1.Name = "ProgressBar1"
         Me.ProgressBar1.Size = New System.Drawing.Size(235, 29)
         Me.ProgressBar1.TabIndex = 9
@@ -353,7 +353,7 @@ Partial Class UI
         'btnRemoveKeys
         '
         Me.btnRemoveKeys.Font = New System.Drawing.Font("Segoe UI", 9.75!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.btnRemoveKeys.Location = New System.Drawing.Point(12, 85)
+        Me.btnRemoveKeys.Location = New System.Drawing.Point(12, 87)
         Me.btnRemoveKeys.Name = "btnRemoveKeys"
         Me.btnRemoveKeys.Size = New System.Drawing.Size(167, 29)
         Me.btnRemoveKeys.TabIndex = 7
@@ -370,15 +370,16 @@ Partial Class UI
         Me.Label6.TabIndex = 5
         Me.Label6.Text = "step 2 - perform removal routine"
         '
-        'Label8
+        'lblStep2
         '
-        Me.Label8.AutoSize = True
-        Me.Label8.Font = New System.Drawing.Font("Segoe UI", 9.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.Label8.Location = New System.Drawing.Point(11, 37)
-        Me.Label8.Name = "Label8"
-        Me.Label8.Size = New System.Drawing.Size(416, 45)
-        Me.Label8.TabIndex = 6
-        Me.Label8.Text = resources.GetString("Label8.Text")
+        Me.lblStep2.AutoSize = True
+        Me.lblStep2.Font = New System.Drawing.Font("Segoe UI", 9.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.lblStep2.Location = New System.Drawing.Point(11, 37)
+        Me.lblStep2.MaximumSize = New System.Drawing.Size(445, 0)
+        Me.lblStep2.Name = "lblStep2"
+        Me.lblStep2.Size = New System.Drawing.Size(442, 45)
+        Me.lblStep2.TabIndex = 6
+        Me.lblStep2.Text = resources.GetString("lblStep2.Text")
         '
         'Label5
         '
@@ -703,7 +704,7 @@ Partial Class UI
         '
         Me.btnSave.Anchor = CType((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.btnSave.Font = New System.Drawing.Font("Segoe UI", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.btnSave.Location = New System.Drawing.Point(8927, 2)
+        Me.btnSave.Location = New System.Drawing.Point(9306, 2)
         Me.btnSave.Name = "btnSave"
         Me.btnSave.Size = New System.Drawing.Size(166, 24)
         Me.btnSave.TabIndex = 29
@@ -830,7 +831,7 @@ Partial Class UI
         Me.pnlUpdate.Controls.Add(Me.Panel11)
         Me.pnlUpdate.Controls.Add(Me.ProgressBar3)
         Me.pnlUpdate.Controls.Add(Me.btnUpdateDefs)
-        Me.pnlUpdate.Controls.Add(Me.Label17)
+        Me.pnlUpdate.Controls.Add(Me.lblUpdateDefs)
         Me.pnlUpdate.Controls.Add(Me.Label19)
         Me.pnlUpdate.Location = New System.Drawing.Point(1269, 49)
         Me.pnlUpdate.Name = "pnlUpdate"
@@ -878,15 +879,15 @@ Partial Class UI
         Me.btnUpdateDefs.Text = "Download" & Global.Microsoft.VisualBasic.ChrW(13) & Global.Microsoft.VisualBasic.ChrW(10)
         Me.btnUpdateDefs.UseVisualStyleBackColor = True
         '
-        'Label17
+        'lblUpdateDefs
         '
-        Me.Label17.AutoSize = True
-        Me.Label17.Font = New System.Drawing.Font("Segoe UI", 9.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.Label17.Location = New System.Drawing.Point(9, 37)
-        Me.Label17.Name = "Label17"
-        Me.Label17.Size = New System.Drawing.Size(380, 30)
-        Me.Label17.TabIndex = 6
-        Me.Label17.Text = "Would you like to download and install the latest version of the JavaRa " & Global.Microsoft.VisualBasic.ChrW(13) & Global.Microsoft.VisualBasic.ChrW(10) & "definit" & _
+        Me.lblUpdateDefs.AutoSize = True
+        Me.lblUpdateDefs.Font = New System.Drawing.Font("Segoe UI", 9.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.lblUpdateDefs.Location = New System.Drawing.Point(9, 37)
+        Me.lblUpdateDefs.Name = "lblUpdateDefs"
+        Me.lblUpdateDefs.Size = New System.Drawing.Size(380, 30)
+        Me.lblUpdateDefs.TabIndex = 6
+        Me.lblUpdateDefs.Text = "Would you like to download and install the latest version of the JavaRa " & Global.Microsoft.VisualBasic.ChrW(13) & Global.Microsoft.VisualBasic.ChrW(10) & "definit" & _
     "ions? These are used to find and remove every last trace of JRE."
         '
         'Label19
@@ -906,7 +907,7 @@ Partial Class UI
         Me.pnlUpdateJRE.Controls.Add(Me.Panel12)
         Me.pnlUpdateJRE.Controls.Add(Me.boxDownloadJRE)
         Me.pnlUpdateJRE.Controls.Add(Me.boxOnlineCheck)
-        Me.pnlUpdateJRE.Controls.Add(Me.Label1)
+        Me.pnlUpdateJRE.Controls.Add(Me.lblStepOne)
         Me.pnlUpdateJRE.Controls.Add(Me.Label21)
         Me.pnlUpdateJRE.Location = New System.Drawing.Point(1269, 260)
         Me.pnlUpdateJRE.Name = "pnlUpdateJRE"
@@ -984,16 +985,17 @@ Partial Class UI
         Me.boxOnlineCheck.Text = "Perform online version check"
         Me.boxOnlineCheck.UseVisualStyleBackColor = True
         '
-        'Label1
+        'lblStepOne
         '
-        Me.Label1.AutoSize = True
-        Me.Label1.Font = New System.Drawing.Font("Segoe UI", 9.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.Label1.Location = New System.Drawing.Point(9, 37)
-        Me.Label1.Name = "Label1"
-        Me.Label1.Size = New System.Drawing.Size(380, 30)
-        Me.Label1.TabIndex = 6
-        Me.Label1.Text = "JavaRa can update JRE by either performing an online version check, or" & Global.Microsoft.VisualBasic.ChrW(13) & Global.Microsoft.VisualBasic.ChrW(10) & "downloadi" & _
-    "ng and re-installing the program - regardless of version." & Global.Microsoft.VisualBasic.ChrW(13) & Global.Microsoft.VisualBasic.ChrW(10)
+        Me.lblStepOne.AutoSize = True
+        Me.lblStepOne.Font = New System.Drawing.Font("Segoe UI", 9.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.lblStepOne.Location = New System.Drawing.Point(9, 37)
+        Me.lblStepOne.MaximumSize = New System.Drawing.Size(445, 0)
+        Me.lblStepOne.Name = "lblStepOne"
+        Me.lblStepOne.Size = New System.Drawing.Size(383, 30)
+        Me.lblStepOne.TabIndex = 6
+        Me.lblStepOne.Text = "JavaRa can update JRE by either performing an online version check, or downloadin" & _
+    "g and re-installing the program - regardless of version." & Global.Microsoft.VisualBasic.ChrW(13) & Global.Microsoft.VisualBasic.ChrW(10)
         '
         'Label21
         '
@@ -1015,25 +1017,6 @@ Partial Class UI
         Me.ToolStrip1.Size = New System.Drawing.Size(1714, 25)
         Me.ToolStrip1.TabIndex = 33
         Me.ToolStrip1.Text = "ToolStrip1"
-        '
-        'btnSettings
-        '
-        Me.btnSettings.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text
-        Me.btnSettings.Image = CType(resources.GetObject("btnSettings.Image"), System.Drawing.Image)
-        Me.btnSettings.ImageTransparentColor = System.Drawing.Color.Magenta
-        Me.btnSettings.Name = "btnSettings"
-        Me.btnSettings.Size = New System.Drawing.Size(53, 22)
-        Me.btnSettings.Text = "Settings"
-        Me.btnSettings.TextImageRelation = System.Windows.Forms.TextImageRelation.TextBeforeImage
-        '
-        'btnAbout
-        '
-        Me.btnAbout.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text
-        Me.btnAbout.Image = CType(resources.GetObject("btnAbout.Image"), System.Drawing.Image)
-        Me.btnAbout.ImageTransparentColor = System.Drawing.Color.Magenta
-        Me.btnAbout.Name = "btnAbout"
-        Me.btnAbout.Size = New System.Drawing.Size(82, 22)
-        Me.btnAbout.Text = "About JavaRa"
         '
         'Panel7
         '
@@ -1132,6 +1115,25 @@ Partial Class UI
         Me.Label9.TabIndex = 5
         Me.Label9.Text = "step 2 - perform cleanup routine"
         '
+        'btnSettings
+        '
+        Me.btnSettings.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text
+        Me.btnSettings.Image = CType(resources.GetObject("btnSettings.Image"), System.Drawing.Image)
+        Me.btnSettings.ImageTransparentColor = System.Drawing.Color.Magenta
+        Me.btnSettings.Name = "btnSettings"
+        Me.btnSettings.Size = New System.Drawing.Size(53, 22)
+        Me.btnSettings.Text = "Settings"
+        Me.btnSettings.TextImageRelation = System.Windows.Forms.TextImageRelation.TextBeforeImage
+        '
+        'btnAbout
+        '
+        Me.btnAbout.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text
+        Me.btnAbout.Image = CType(resources.GetObject("btnAbout.Image"), System.Drawing.Image)
+        Me.btnAbout.ImageTransparentColor = System.Drawing.Color.Magenta
+        Me.btnAbout.Name = "btnAbout"
+        Me.btnAbout.Size = New System.Drawing.Size(82, 22)
+        Me.btnAbout.Text = "About JavaRa"
+        '
         'UI
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
@@ -1153,8 +1155,9 @@ Partial Class UI
         Me.Controls.Add(Me.Panel1)
         Me.Icon = CType(resources.GetObject("$this.Icon"), System.Drawing.Icon)
         Me.MaximizeBox = False
+        Me.MinimumSize = New System.Drawing.Size(150, 150)
         Me.Name = "UI"
-        Me.Text = "JavaRa 2.1"
+        Me.Text = "JavaRa"
         Me.Panel1.ResumeLayout(False)
         Me.Panel1.PerformLayout()
         Me.Step1.ResumeLayout(False)
@@ -1196,7 +1199,7 @@ Partial Class UI
     Friend WithEvents lvTools As System.Windows.Forms.ListView
     Friend WithEvents ExecutableImages As System.Windows.Forms.ImageList
     Friend WithEvents Panel1 As System.Windows.Forms.Panel
-    Friend WithEvents Label2 As System.Windows.Forms.Label
+    Friend WithEvents lblVersion As System.Windows.Forms.Label
     Friend WithEvents lblTitle As System.Windows.Forms.Label
     Friend WithEvents Step1 As System.Windows.Forms.Panel
     Friend WithEvents btnRunUninstaller As System.Windows.Forms.Button
@@ -1250,7 +1253,7 @@ Partial Class UI
     Friend WithEvents Panel11 As System.Windows.Forms.Panel
     Friend WithEvents Button2 As System.Windows.Forms.Button
     Friend WithEvents btnUpdateDefs As System.Windows.Forms.Button
-    Friend WithEvents Label17 As System.Windows.Forms.Label
+    Friend WithEvents lblUpdateDefs As System.Windows.Forms.Label
     Friend WithEvents Label19 As System.Windows.Forms.Label
     Friend WithEvents cboVersion As System.Windows.Forms.ComboBox
     Friend WithEvents ToolTip1 As System.Windows.Forms.ToolTip
@@ -1260,7 +1263,7 @@ Partial Class UI
     Friend WithEvents Panel12 As System.Windows.Forms.Panel
     Friend WithEvents btnUpdateJavaPrevious As System.Windows.Forms.Button
     Friend WithEvents btnUpdateNext As System.Windows.Forms.Button
-    Friend WithEvents Label1 As System.Windows.Forms.Label
+    Friend WithEvents lblStepOne As System.Windows.Forms.Label
     Friend WithEvents Label21 As System.Windows.Forms.Label
     Friend WithEvents ToolStrip1 As System.Windows.Forms.ToolStrip
     Friend WithEvents btnSettings As System.Windows.Forms.ToolStripButton
@@ -1272,7 +1275,7 @@ Partial Class UI
     Friend WithEvents Label7 As System.Windows.Forms.Label
     Friend WithEvents btnSaveLang As System.Windows.Forms.Button
     Friend WithEvents btnSave As System.Windows.Forms.Button
-    Friend WithEvents Label8 As System.Windows.Forms.Label
+    Friend WithEvents lblStep2 As System.Windows.Forms.Label
     Friend WithEvents pnlCleanup As System.Windows.Forms.Panel
     Friend WithEvents Panel13 As System.Windows.Forms.Panel
     Friend WithEvents Button3 As System.Windows.Forms.Button

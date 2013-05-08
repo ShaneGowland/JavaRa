@@ -120,10 +120,8 @@
   <metadata name="ExecutableImages.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
     <value>102, 1</value>
   </metadata>
-  <data name="Label8.Text" xml:space="preserve">
-    <value>The removal routine will delete files, folder and registry entries that are known
-to be associated with the Java Runtime Environment. It is recommended you 
-update the program definitions prior to running.</value>
+  <data name="lblStep2.Text" xml:space="preserve">
+    <value>The removal routine will delete files, folder and registry entries that are known to be associated with the Java Runtime Environment. It is recommended you  update the program definitions prior to running.</value>
   </data>
   <data name="Label10.Text" xml:space="preserve">
     <value>JavaRa is designed to simplify the process of deploying, updating and removing the Oracle Java Runtime Environment. The program is developed by SingularLabs and released for free under the liberal GNU General Public License version 2 or later.
