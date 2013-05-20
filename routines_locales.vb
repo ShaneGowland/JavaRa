@@ -51,7 +51,6 @@
             'Translate multi-line text labels
             UI.Label5.Text = get_string("The removal routine will delete files, folder and registry entries that are known" & Environment.NewLine & get_string("to be associated with the older versions of the Java Runtime Environment"))
             UI.Label12.Text = get_string("Would you like to download and install the latest version of JRE? ") & Environment.NewLine & get_string("Use this interface.")
-            UI.lblUpdateDefs.Text = get_string("Would you like to download and install the latest version of the JavaRa ") & Environment.NewLine & get_string("definitions? These are used to find and remove every last trace of JRE.")
             UI.lblStep1.Text = get_string("We recommend that you try running the Java Runtime Environment's built-in") & Environment.NewLine & get_string("uninstaller before you continue.")
 
         Catch ex As Exception

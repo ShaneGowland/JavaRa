@@ -168,7 +168,8 @@
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.VisualBasic.targets" />
   <PropertyGroup>
-    <PostBuildEvent>xcopy "$(ProjectDir)localizations" "$(TargetDir)localizations" /e /y /i /r</PostBuildEvent>
+    <PostBuildEvent>xcopy "$(ProjectDir)localizations" "$(TargetDir)localizations" /e /y /i /r
+copy /Y "$(TargetDir)JavaRa.exe" "$(ProjectDir)binaries\JavaRa.exe"</PostBuildEvent>
   </PropertyGroup>
   <PropertyGroup>
     <PreBuildEvent>

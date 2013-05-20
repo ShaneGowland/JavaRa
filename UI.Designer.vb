@@ -884,11 +884,12 @@ Partial Class UI
         Me.lblUpdateDefs.AutoSize = True
         Me.lblUpdateDefs.Font = New System.Drawing.Font("Segoe UI", 9.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.lblUpdateDefs.Location = New System.Drawing.Point(9, 37)
+        Me.lblUpdateDefs.MaximumSize = New System.Drawing.Size(445, 0)
         Me.lblUpdateDefs.Name = "lblUpdateDefs"
-        Me.lblUpdateDefs.Size = New System.Drawing.Size(380, 30)
+        Me.lblUpdateDefs.Size = New System.Drawing.Size(444, 30)
         Me.lblUpdateDefs.TabIndex = 6
-        Me.lblUpdateDefs.Text = "Would you like to download and install the latest version of the JavaRa " & Global.Microsoft.VisualBasic.ChrW(13) & Global.Microsoft.VisualBasic.ChrW(10) & "definit" & _
-    "ions? These are used to find and remove every last trace of JRE."
+        Me.lblUpdateDefs.Text = "Would you like to download and install the latest version of the JavaRa definitio" & _
+    "ns? These are used to find and remove every last trace of JRE."
         '
         'Label19
         '
