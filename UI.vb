@@ -23,6 +23,9 @@ Public Class UI
     'Variable to count the number of removed items
     Friend removal_count As Integer = 0
 
+    'Variable to store the location of the config file
+    Dim config_file As String = System.IO.Path.GetDirectoryName(System.Reflection.Assembly.GetEntryAssembly().Location) & "\config.ini"
+
 #End Region
 
 #Region "Opening/Closing JavaRa"
@@ -31,13 +34,13 @@ Public Class UI
         'Save the settins to config.ini
         Try
             'Remove the previous instance
-            If My.Computer.FileSystem.FileExists(System.IO.Path.GetDirectoryName(System.Reflection.Assembly.GetEntryAssembly().Location) & "\config.ini") Then
-                My.Computer.FileSystem.DeleteFile(System.IO.Path.GetDirectoryName(System.Reflection.Assembly.GetEntryAssembly().Location) & "\config.ini")
+            If My.Computer.FileSystem.FileExists(config_file) Then
+                My.Computer.FileSystem.DeleteFile(config_file)
             End If
 
             'Declare the textwriter
             Dim SW As IO.TextWriter
-            SW = IO.File.AppendText(System.IO.Path.GetDirectoryName(System.Reflection.Assembly.GetEntryAssembly().Location) & "\config.ini")
+            SW = IO.File.AppendText(config_file)
 
             'Do not save log if language is English
             If language = "English" = False Then : SW.WriteLine("Language:" & language) : End If
@@ -50,6 +53,14 @@ Public Class UI
 
             'Close the textwriter
             SW.Close()
+
+            'Delete the file if nothing was written to it. This is pretty much a hack job.
+            If IO.File.Exists(config_file) = True Then
+                Dim fileDetail = My.Computer.FileSystem.GetFileInfo(config_file)
+                If fileDetail.Length = 0 Then
+                    My.Computer.FileSystem.DeleteFile(config_file)
+                End If
+            End If
         Catch ex As Exception
         End Try
     End Sub
@@ -57,11 +68,11 @@ Public Class UI
     Private Sub Form1_Load(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles MyBase.Load
 
         'read config.ini to acquire settings
-        If My.Computer.FileSystem.FileExists(System.IO.Path.GetDirectoryName(System.Reflection.Assembly.GetEntryAssembly().Location) & "\config.ini") = True Then
+        If My.Computer.FileSystem.FileExists(config_file) Then
             Dim r As IO.StreamReader
             Dim rule As String
             Try
-                r = New IO.StreamReader(System.IO.Path.GetDirectoryName(System.Reflection.Assembly.GetEntryAssembly().Location) & "\config.ini")
+                r = New IO.StreamReader(config_file)
                 Do While (r.Peek() > -1)
                     rule = (r.ReadLine.ToString)
 

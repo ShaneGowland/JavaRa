@@ -103,6 +103,8 @@ Partial Class UI
         Me.lblStepOne = New System.Windows.Forms.Label()
         Me.Label21 = New System.Windows.Forms.Label()
         Me.ToolStrip1 = New System.Windows.Forms.ToolStrip()
+        Me.btnSettings = New System.Windows.Forms.ToolStripButton()
+        Me.btnAbout = New System.Windows.Forms.ToolStripButton()
         Me.Panel7 = New System.Windows.Forms.Panel()
         Me.pnlTopDock = New System.Windows.Forms.Panel()
         Me.pnlCleanup = New System.Windows.Forms.Panel()
@@ -112,8 +114,6 @@ Partial Class UI
         Me.ProgressBar4 = New System.Windows.Forms.ProgressBar()
         Me.btnCleanup = New System.Windows.Forms.Button()
         Me.Label9 = New System.Windows.Forms.Label()
-        Me.btnSettings = New System.Windows.Forms.ToolStripButton()
-        Me.btnAbout = New System.Windows.Forms.ToolStripButton()
         Me.Panel1.SuspendLayout()
         Me.Step1.SuspendLayout()
         Me.Panel3.SuspendLayout()
@@ -386,11 +386,12 @@ Partial Class UI
         Me.Label5.AutoSize = True
         Me.Label5.Font = New System.Drawing.Font("Segoe UI", 9.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.Label5.Location = New System.Drawing.Point(11, 46)
+        Me.Label5.MaximumSize = New System.Drawing.Size(445, 0)
         Me.Label5.Name = "Label5"
-        Me.Label5.Size = New System.Drawing.Size(416, 30)
+        Me.Label5.Size = New System.Drawing.Size(433, 30)
         Me.Label5.TabIndex = 6
         Me.Label5.Text = "The removal routine will delete files, folder and registry entries that are known" & _
-    "" & Global.Microsoft.VisualBasic.ChrW(13) & Global.Microsoft.VisualBasic.ChrW(10) & "to be associated with the older versions of the Java Runtime Environment" & Global.Microsoft.VisualBasic.ChrW(13) & Global.Microsoft.VisualBasic.ChrW(10)
+    " to be associated with the older versions of the Java Runtime Environment" & Global.Microsoft.VisualBasic.ChrW(13) & Global.Microsoft.VisualBasic.ChrW(10)
         '
         'pnlAbout
         '
@@ -704,7 +705,7 @@ Partial Class UI
         '
         Me.btnSave.Anchor = CType((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.btnSave.Font = New System.Drawing.Font("Segoe UI", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.btnSave.Location = New System.Drawing.Point(9306, 2)
+        Me.btnSave.Location = New System.Drawing.Point(9685, 2)
         Me.btnSave.Name = "btnSave"
         Me.btnSave.Size = New System.Drawing.Size(166, 24)
         Me.btnSave.TabIndex = 29
@@ -1019,6 +1020,25 @@ Partial Class UI
         Me.ToolStrip1.TabIndex = 33
         Me.ToolStrip1.Text = "ToolStrip1"
         '
+        'btnSettings
+        '
+        Me.btnSettings.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text
+        Me.btnSettings.Image = CType(resources.GetObject("btnSettings.Image"), System.Drawing.Image)
+        Me.btnSettings.ImageTransparentColor = System.Drawing.Color.Magenta
+        Me.btnSettings.Name = "btnSettings"
+        Me.btnSettings.Size = New System.Drawing.Size(53, 22)
+        Me.btnSettings.Text = "Settings"
+        Me.btnSettings.TextImageRelation = System.Windows.Forms.TextImageRelation.TextBeforeImage
+        '
+        'btnAbout
+        '
+        Me.btnAbout.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text
+        Me.btnAbout.Image = CType(resources.GetObject("btnAbout.Image"), System.Drawing.Image)
+        Me.btnAbout.ImageTransparentColor = System.Drawing.Color.Magenta
+        Me.btnAbout.Name = "btnAbout"
+        Me.btnAbout.Size = New System.Drawing.Size(82, 22)
+        Me.btnAbout.Text = "About JavaRa"
+        '
         'Panel7
         '
         Me.Panel7.BackColor = System.Drawing.Color.DimGray
@@ -1115,25 +1135,6 @@ Partial Class UI
         Me.Label9.Size = New System.Drawing.Size(345, 32)
         Me.Label9.TabIndex = 5
         Me.Label9.Text = "step 2 - perform cleanup routine"
-        '
-        'btnSettings
-        '
-        Me.btnSettings.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text
-        Me.btnSettings.Image = CType(resources.GetObject("btnSettings.Image"), System.Drawing.Image)
-        Me.btnSettings.ImageTransparentColor = System.Drawing.Color.Magenta
-        Me.btnSettings.Name = "btnSettings"
-        Me.btnSettings.Size = New System.Drawing.Size(53, 22)
-        Me.btnSettings.Text = "Settings"
-        Me.btnSettings.TextImageRelation = System.Windows.Forms.TextImageRelation.TextBeforeImage
-        '
-        'btnAbout
-        '
-        Me.btnAbout.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text
-        Me.btnAbout.Image = CType(resources.GetObject("btnAbout.Image"), System.Drawing.Image)
-        Me.btnAbout.ImageTransparentColor = System.Drawing.Color.Magenta
-        Me.btnAbout.Name = "btnAbout"
-        Me.btnAbout.Size = New System.Drawing.Size(82, 22)
-        Me.btnAbout.Text = "About JavaRa"
         '
         'UI
         '
