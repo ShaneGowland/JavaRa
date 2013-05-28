@@ -1,4 +1,7 @@
-Windows application to simplify the process of updating, removing or deploying the Oracle Java Runtime Environment.
+JavaRa
+-----------
+
+JavaRa is a Windows application to simplify the process of updating, removing or deploying the Oracle Java Runtime Environment.
 
 Pre-compiled builds can be downloaded at http://singularlabs.com/software/javara/
 
