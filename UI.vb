@@ -331,6 +331,7 @@ Public Class UI
 #Region "Update Java Downloader/Backgroundworker"
     'Downloads the specified file in a thread.
     Private Sub BackgroundWorker1_DoWork(ByVal sender As System.Object, ByVal e As System.ComponentModel.DoWorkEventArgs) Handles BackgroundWorker1.DoWork
+
         'Creating the request and getting the response
         Dim theResponse As HttpWebResponse
         Dim theRequest As HttpWebRequest
@@ -343,9 +344,15 @@ Public Class UI
                            get_string("2) Remote server error"), get_string("Error"), MessageBoxButtons.OK, MessageBoxIcon.Error)
             Dim cancelDelegate As New DownloadCompleteSafe(AddressOf DownloadComplete)
             Me.Invoke(cancelDelegate, True)
-
             Exit Sub
         End Try
+
+        'Delete the existing file
+        If IO.File.Exists(Me.whereToSave) Then
+            IO.File.Delete(Me.whereToSave)
+        End If
+
+
         Dim length As Long = theResponse.ContentLength 'Size of the response (in bytes)
         Dim safedelegate As New ChangeTextsSafe(AddressOf ChangeTexts)
         Me.Invoke(safedelegate, length, 0, 0, 0) 'Invoke the TreadsafeDelegate
@@ -401,7 +408,7 @@ Public Class UI
         Me.ProgressBar1.Value = 0 : Me.ProgressBar3.Value = 0
         'Just in case of a minor exception
         Me.lblStep1.Text = ""
-        Me.txtFileName.Enabled = True
+
 
         'Call the exe on completion
         If Me.whereToSave = My.Computer.FileSystem.SpecialDirectories.Temp & "\java-installer.exe" Then
@@ -842,7 +849,7 @@ Public Class UI
         'If running silently, the background worker does not work correctly.
         'Use a standard WebClient downloader instaed
         If stay_silent = True Then
-            My.Computer.Network.DownloadFile(txtFileName.Text, Me.whereToSave)
+            My.Computer.Network.DownloadFile(txtFileName.Text, Me.whereToSave, "", "", False, 100, True)
         Else
             Me.BackgroundWorker1.RunWorkerAsync() 'Start download               
         End If
