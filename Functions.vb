@@ -97,16 +97,13 @@ Module Functions
     End Function
     'Method for logging important events
     Public Sub write_log(ByVal message As String)
-        If UI.boxSaveLog.Checked Then
             Try
                 Dim SW As IO.TextWriter
-
                 SW = IO.File.AppendText(System.IO.Path.GetDirectoryName(System.Reflection.Assembly.GetEntryAssembly().Location) & "\JavaRa-" & sanitze_str(CStr(Date.Today)) & ".log")
                 SW.WriteLine(message)
                 SW.Close()
             Catch ex As Exception
             End Try
-        End If
     End Sub
     'Method that logs exceptions 
     Public Sub write_error(ByVal error_object As Exception)

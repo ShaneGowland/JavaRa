@@ -76,7 +76,6 @@ Partial Class UI
         Me.btnSave = New System.Windows.Forms.Button()
         Me.Button11 = New System.Windows.Forms.Button()
         Me.Label7 = New System.Windows.Forms.Label()
-        Me.boxSaveLog = New System.Windows.Forms.CheckBox()
         Me.Label16 = New System.Windows.Forms.Label()
         Me.boxLanguage = New System.Windows.Forms.ComboBox()
         Me.PanelExtra = New System.Windows.Forms.Panel()
@@ -114,6 +113,7 @@ Partial Class UI
         Me.ProgressBar4 = New System.Windows.Forms.ProgressBar()
         Me.btnCleanup = New System.Windows.Forms.Button()
         Me.Label9 = New System.Windows.Forms.Label()
+        Me.boxPreserveUISize = New System.Windows.Forms.CheckBox()
         Me.Panel1.SuspendLayout()
         Me.Step1.SuspendLayout()
         Me.Panel3.SuspendLayout()
@@ -190,7 +190,7 @@ Partial Class UI
         Me.lblVersion.Name = "lblVersion"
         Me.lblVersion.Size = New System.Drawing.Size(68, 17)
         Me.lblVersion.TabIndex = 8
-        Me.lblVersion.Text = "version 2.2"
+        Me.lblVersion.Text = "version 2.3"
         '
         'lblTitle
         '
@@ -651,11 +651,11 @@ Partial Class UI
         'PanelSettings
         '
         Me.PanelSettings.BackColor = System.Drawing.Color.White
+        Me.PanelSettings.Controls.Add(Me.boxPreserveUISize)
         Me.PanelSettings.Controls.Add(Me.boxUpdateCheck)
         Me.PanelSettings.Controls.Add(Me.btnSaveLang)
         Me.PanelSettings.Controls.Add(Me.Panel8)
         Me.PanelSettings.Controls.Add(Me.Label7)
-        Me.PanelSettings.Controls.Add(Me.boxSaveLog)
         Me.PanelSettings.Controls.Add(Me.Label16)
         Me.PanelSettings.Controls.Add(Me.boxLanguage)
         Me.PanelSettings.Location = New System.Drawing.Point(12, 471)
@@ -669,7 +669,7 @@ Partial Class UI
         Me.boxUpdateCheck.Checked = True
         Me.boxUpdateCheck.CheckState = System.Windows.Forms.CheckState.Checked
         Me.boxUpdateCheck.Font = New System.Drawing.Font("Segoe UI", 9.0!)
-        Me.boxUpdateCheck.Location = New System.Drawing.Point(12, 57)
+        Me.boxUpdateCheck.Location = New System.Drawing.Point(12, 37)
         Me.boxUpdateCheck.Name = "boxUpdateCheck"
         Me.boxUpdateCheck.Size = New System.Drawing.Size(197, 19)
         Me.boxUpdateCheck.TabIndex = 30
@@ -680,7 +680,7 @@ Partial Class UI
         '
         Me.btnSaveLang.Enabled = False
         Me.btnSaveLang.Font = New System.Drawing.Font("Segoe UI", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.btnSaveLang.Location = New System.Drawing.Point(238, 96)
+        Me.btnSaveLang.Location = New System.Drawing.Point(238, 95)
         Me.btnSaveLang.Name = "btnSaveLang"
         Me.btnSaveLang.Size = New System.Drawing.Size(75, 21)
         Me.btnSaveLang.TabIndex = 29
@@ -705,7 +705,7 @@ Partial Class UI
         '
         Me.btnSave.Anchor = CType((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.btnSave.Font = New System.Drawing.Font("Segoe UI", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.btnSave.Location = New System.Drawing.Point(10064, 2)
+        Me.btnSave.Location = New System.Drawing.Point(10443, 2)
         Me.btnSave.Name = "btnSave"
         Me.btnSave.Size = New System.Drawing.Size(166, 24)
         Me.btnSave.TabIndex = 29
@@ -727,22 +727,11 @@ Partial Class UI
         '
         Me.Label7.AutoSize = True
         Me.Label7.Font = New System.Drawing.Font("Segoe UI", 9.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.Label7.Location = New System.Drawing.Point(9, 78)
+        Me.Label7.Location = New System.Drawing.Point(9, 77)
         Me.Label7.Name = "Label7"
         Me.Label7.Size = New System.Drawing.Size(108, 15)
         Me.Label7.TabIndex = 11
         Me.Label7.Text = "Program Language"
-        '
-        'boxSaveLog
-        '
-        Me.boxSaveLog.AutoSize = True
-        Me.boxSaveLog.Font = New System.Drawing.Font("Segoe UI", 9.0!)
-        Me.boxSaveLog.Location = New System.Drawing.Point(12, 36)
-        Me.boxSaveLog.Name = "boxSaveLog"
-        Me.boxSaveLog.Size = New System.Drawing.Size(108, 19)
-        Me.boxSaveLog.TabIndex = 28
-        Me.boxSaveLog.Text = "Create a log file"
-        Me.boxSaveLog.UseVisualStyleBackColor = True
         '
         'Label16
         '
@@ -760,7 +749,7 @@ Partial Class UI
         Me.boxLanguage.Font = New System.Drawing.Font("Segoe UI", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.boxLanguage.FormattingEnabled = True
         Me.boxLanguage.Items.AddRange(New Object() {"English"})
-        Me.boxLanguage.Location = New System.Drawing.Point(12, 96)
+        Me.boxLanguage.Location = New System.Drawing.Point(12, 95)
         Me.boxLanguage.Name = "boxLanguage"
         Me.boxLanguage.Size = New System.Drawing.Size(220, 21)
         Me.boxLanguage.TabIndex = 4
@@ -1136,6 +1125,17 @@ Partial Class UI
         Me.Label9.TabIndex = 5
         Me.Label9.Text = "step 2 - perform cleanup routine"
         '
+        'boxPreserveUISize
+        '
+        Me.boxPreserveUISize.AutoSize = True
+        Me.boxPreserveUISize.Font = New System.Drawing.Font("Segoe UI", 9.0!)
+        Me.boxPreserveUISize.Location = New System.Drawing.Point(12, 57)
+        Me.boxPreserveUISize.Name = "boxPreserveUISize"
+        Me.boxPreserveUISize.Size = New System.Drawing.Size(189, 19)
+        Me.boxPreserveUISize.TabIndex = 31
+        Me.boxPreserveUISize.Text = "Preserve Window height/width"
+        Me.boxPreserveUISize.UseVisualStyleBackColor = True
+        '
         'UI
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
@@ -1273,7 +1273,6 @@ Partial Class UI
     Friend WithEvents pnlTopDock As System.Windows.Forms.Panel
     Friend WithEvents btnAbout As System.Windows.Forms.ToolStripButton
     Friend WithEvents boxJucheck As System.Windows.Forms.RadioButton
-    Friend WithEvents boxSaveLog As System.Windows.Forms.CheckBox
     Friend WithEvents Label7 As System.Windows.Forms.Label
     Friend WithEvents btnSaveLang As System.Windows.Forms.Button
     Friend WithEvents btnSave As System.Windows.Forms.Button
@@ -1288,5 +1287,6 @@ Partial Class UI
     Friend WithEvents boxUpdateCheck As System.Windows.Forms.CheckBox
     Friend WithEvents Label4 As System.Windows.Forms.Label
     Friend WithEvents Label10 As System.Windows.Forms.Label
+    Friend WithEvents boxPreserveUISize As System.Windows.Forms.CheckBox
 
 End Class

@@ -45,11 +45,13 @@ Public Class UI
             'Do not save log if language is English
             If language = "English" = False Then : SW.WriteLine("Language:" & language) : End If
 
-            'Save the "save log" setting
-            If boxSaveLog.Checked = True Then : SW.WriteLine("SaveLog:True") : End If
-
             'Save the update check settings
             If boxUpdateCheck.Checked = False Then : SW.WriteLine("UpdateCheck:False") : End If
+
+            'Save the window size
+            If boxPreserveUISize.Checked = True Then
+                SW.WriteLine("WindowHeight:" & Me.Height) : SW.WriteLine("WindowWidth:" & Me.Width)
+            End If
 
             'Close the textwriter
             SW.Close()
@@ -81,14 +83,18 @@ Public Class UI
                         language = rule.Replace("Language:", "")
                     End If
 
-                    'Read the "save log" settings
-                    If rule = ("SaveLog:True") Then
-                        boxSaveLog.Checked = True
-                    End If
-
                     'Update check
                     If rule = ("UpdateCheck:False") Then
                         boxUpdateCheck.Checked = False
+                    End If
+
+                    'Window size
+                    If (rule.StartsWith("WindowHeight:")) Then
+                        boxPreserveUISize.Checked = True
+                        Me.Height = CInt(rule.Replace("WindowHeight:", ""))
+                    ElseIf (rule.StartsWith("WindowWidth:")) Then
+                        boxPreserveUISize.Checked = True
+                        Me.Width = CInt(rule.Replace("WindowWidth:", ""))
                     End If
 
                 Loop
@@ -257,8 +263,11 @@ Public Class UI
         End Try
 
         'Set the user interface
-        Me.Width = 510
-        Me.Height = 260
+        If boxPreserveUISize.Checked = False Then
+            Me.Width = 460
+            Me.Height = 260
+        End If
+
         Call return_home() 'Sets the GUI to the start position
 
 
@@ -856,6 +865,5 @@ Public Class UI
     End Sub
 
 #End Region
-
 End Class
 
