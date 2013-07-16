@@ -8,7 +8,7 @@ Download|Descargar
 Exit JavaRa|Salir de JavaRa
 Finish|Terminar
 Java Manual Download|Descarga manual de Java
-JavaRa can update JRE by either performing an online version check, or downloading and re-installing  the program - regardless of version.|JavaRa le permite actualizar el entorno de ejecución de Java (JRE) bien comparando la versión instalada con la versión en línea, o bien descargando e instalando el programa de nuevo. Ambos independientemente de la versión.
+JavaRa can update JRE by either performing an online version check, or downloading and re-installing the program - regardless of version.|JavaRa le permite actualizar el entorno de ejecución de Java (JRE) bien comparando la versión instalada con la versión en línea, o bien descargando e instalando el programa de nuevo. Ambos independientemente de la versión.
 JavaRa support is available at the following locations:|Obtendra asistencia técnica para JavaRa en:
 language settings|Ajustes de idiomas
 Launch online check|Ejecutar la comprobación en línea
@@ -19,7 +19,7 @@ Perform Removal Routine|Llevar a cabo la desinstalación
 Previous|Anterior
 Remove Older Versions|Eliminar versiones antiguas
 Remove Outdated JRE Firefox Extensions|Eliminar las extensiones obsoletas del entorno de ejecución de Java (JRE) para Firefox
-Remove startup entry|Desactivar el inicio del entorno de ejecución de Java (JRE) con el arranque del sistema operantivo
+Remove startup entry|Desactivar el inicio del entorno de ejecución de Java (JRE) con el arranque del sistema operativo
 Remove JRE|Purgar el entorno de ejecución de Java (JRE)
 Run Uninstaller|Purgar
 Run|Finalizar
