@@ -19,7 +19,7 @@ Next|Další
 Save Settings|Uložit nastavení
 Program Language|Jazyk
 step 1 - select update method|krok 1 - vyberte režim aktualizace
-JavaRa can update JRE by either performing an online version check, or|JavaRa může aktualizovat JRE ověřením dostupnosti nové verze
+JavaRa can update JRE by either performing an online version check, or |JavaRa může aktualizovat JRE ověřením dostupnosti nové verze
 downloading and re-installing the program - regardless of version.|nebo stažením a přeinstalováním aplikace v nejnovější verzi.
 Use Jucheck.exe tool|Použít nástroj jucheck.exe
 Perform online version check|Provést online kontrolu
@@ -44,6 +44,8 @@ Only complete this step if you want to remove the newest JRE version|Dokončete 
 step 2 - perform removal routine|krok 2 - odstranění JRE
 step 2 - perform cleanup routine|krok 2 - vyčištění systému
 Perform Cleanup Routine|Provést vyčištění
+The removal routine will delete files, folder and registry entries that are known to be associated with the older versions of the Java Runtime Environment|Čištění vymaže soubory, složky a záznamy z registru související se starší verzí JRE
+The removal routine will delete files, folder and registry entries that are known to be associated with the Java Runtime Environment. It is recommended youupdate the program definitions prior to running.|Čištění vymaže soubory, složky a záznamy z registru související se starší verzí JRE. Před pokračováním doporučujeme aktualizovat programové definice.
 The removal routine will delete files, folder and registry entries that are known|Čištění vymaže soubory, složky a záznamy z registru
 to be associated with the older versions of the Java Runtime Environment|související se staršími verzemi JRE.
 to be associated with the Java Runtime Environment. It is recommended you |související s JRE. Před zahájením této akce
@@ -88,8 +90,17 @@ Example: JavaRa /UNINSTALLALL /SILENT|Příklad: JavaRa /UNINSTALLALL /SILENT
 Command Line Parameters| Parametry příkazové řádky
 Unsupported argument. Please use /PURGE, /CLEAN, /UNINSTALLALL, or /UPDATEDEFS|Nepodporovaný argument, prosím použijte /PURGE, /CLEAN, /UNINSTALLALL nebo /UPDATEDEFS
 with, or without /SILENT.|s možností /SILENT.
-Option Not Supported.|Nepodporovaná možnost
+Option Not Supported.|Nepodporovaná možnost.
 Clean JRE Temp Files|Vymazat dočasné soubory JRE
 No uninstaller found. Please press 'next' to continue|Nenalezen žádný odinstalátor. Prosím klikněte na 'Další' pro pokračování
+version 2.2|verze 2.2
+JavaRa|JavaRa
+version|verze
+Icons: Origami Colored Pencil by Double-J Design.|Ikony: Origami Colored Pencil by Double-J Design.
+Original Idea: Fred De Vries. |Původní nápad: Fred De Vries.
+Developer: Shane Gowland at SingularLabs.|Autor: Shane Gowland at SingularLabs.
+about JavaRa|o aplikaci JavaRa
+Czech|Čeština
+The process is complete. Select an option to continue.|Proces je kompletní. Vyberte možnost pro pokračování.
+ToolStrip1|ToolStrip1
 Download|Stáhnout
-version 2.1|verze 2.1
