@@ -1,76 +1,89 @@
-﻿//* translated by: Phobos
+//* translated by: Phobos
 //* email: jdphobos@gmail.com
 
-Clean JRE Temp Files|Удалить временные файлы JRE
-JavaRa definitions updated successfully|База успешно обновлена
-Automatically check for updates|Автоматически проверять обновления
-Could not locate jucheck.exe|Не обнаружено jucheck.exe
-Java Update Checking Utility (jucheck.exe) could not be found on your system.|Средство Проверки Обновлений Java (jucheck.exe) не найдено в Вашей системе.
-Remove JRE|Удалить JRE
-Update Java Runtime|Обновить Java
-Remove Older Versions|Удалить старую версию
-Update JavaRa Definitions|Обновить базу JavaRa
-Additional Tasks|Дополнительные задания
-Settings|Настройки
-Support|Поддержка
 About JavaRa|О программе
+Additional Tasks|Дополнительные задания
+Automatically check for updates|Автоматически проверять обновления
 Back|Назад
-Previous|Назад
-Next|Дальше
-Save Settings|Сохранить настройки
-Program Language|Выбор языка
-step 1 - select update method|шаг 1 - выбор метода обновления
-JavaRa can update JRE by either performing an online version check, or|JavaRa может обновить JRE выполнив проверку версии с сайта, или
-downloading and re-installing the program - regardless of version.|загрузив и переустановив программу – независимо от версии.
-Use Jucheck.exe tool|Использовать инструмент Jucheck.exe
-Perform online version check|Выполнить проверку версии с веб-сайта
-Download and install latest version|Загрузить и установить последнюю версию
-Would you like to open the Oracle online JRE version checker?|Открыть сайт Oracle для проверки версии JRE?
-Launch online check|Запуск онлайн проверки
-step 2 - completed|шаг 2 - завершение
-step 2 - completed.|шаг 2 - завершение.
-step 2 - download new version|шаг 2 - загрузка новой версии
-step 3 - completed.|шаг 3 - завершение.
-Would you like to download and install the latest version of JRE? |Выполнить загрузку и установку новой версии JRE? 
-Use this interface.|Используйте кнопку загрузки.
-The process is complete. Select an option to continue.|Процесс завершен. Выберите, что делать дальше.
+Check Java version|Проверить версию Java
+Clean JRE Temp Files|Удалить временные файлы JRE
 Close this wizard|Закрыть мастер
+Command Line Parameters|Параметры командной строки
+Could not locate jucheck.exe|Не обнаружено jucheck.exe
+Create a log file|Создать лог
+Displays this help dialog|Показать справку
+Download and install latest version|Загрузить и установить последнюю версию
+Download|Загрузить
+Downloads a new copy of the JavaRa definitions.|Загрузка новой версии баз JavaRa.
+Example: JavaRa /UNINSTALLALL /SILENT|Пример: JavaRa /UNINSTALLALL /SILENT
+Example: JavaRa /UPDATEDEFS /SILENT|Пример: JavaRa /UPDATEDEFS /SILENT
 Exit JavaRa|Закрыть JavaRa
 Finish|ОК
-step 1 - run the uninstaller|шаг 1 - запуск деинсталлятора
-We recommend that you try running the Java Runtime Environment's built-in|Мы рекомендуем сначала использовать встроенный деинсталлятор JRE
-uninstaller before you continue.|прежде, чем продолжить.
-Run Uninstaller|Деинсталляция
-Only complete this step if you want to remove the newest JRE version|Этого шага достаточно для удаления последних версий JRE
-step 2 - perform removal routine|шаг 2 - процедура удаления
-step 2 - perform cleanup routine|шаг 2 - процедура удаления
-Perform Cleanup Routine|Начать удаление
-The removal routine will delete files, folder and registry entries that are known|Во время процедуры удаления, будут удалены файлы, папки и записи в реестре
-to be associated with the older versions of the Java Runtime Environment|которые связаны с Java Runtime Environment.
-to be associated with the Java Runtime Environment. It is recommended you |Java Runtime Environment. Рекомендуется сначала обновить
-update the program definitions prior to running.|базы JavaRa.
-Perform Removal Routine|Произвести удаление
-step 3 - download new version|шаг 3 - загрузка новой версии
-Download|Загрузить
-Java Manual Download|Скачать Руководство по Java
-step 4 - completed.|шаг 4 - завершение.
-update JavaRa definitions|Обновить базу JavaRa
-Would you like to download and install the latest version of the JavaRa |Выполнить загрузку и установку новой версии базы JavaRa? 
-definitions? These are used to find and remove every last trace of JRE.|Она используется для тщательного удаления следов JRE.
-Remove startup entry|Удалить из автозагрузки
-Check Java version|Проверить версию Java
-Remove Outdated JRE Firefox Extensions|Удалить устаревшие JRE расширения для Firefox
-Run|Запустить
-Selected tasks completed successfully.|Выбранные задачи успешно выполнены.
-About JavaRa|О программе
-Create a log file|Создать лог
-program settings|Настройки программы
-You didn't select any tasks to be performed.|Не выбрана ни одна задача.
-JavaRa 2.0 loaded without incident. Checking system...|JavaRa 2.1 загружена без ошибок. Определение системы...
-Operating System:|ОС:
-Save|Сохранить
-Please select a version of JRE to remove.|Пожалуйста, выберите из списка свою версию JRE.
-Your changes will take effect when JavaRa is restarted.|Изменения вступят в силу после перезапуска JavaRa.
-Removal routine completed successfully.|Процедура удаления завершена успешно.
+Hides the graphical user interface and suppresses all dialog|Скрывает графический интерфейс и подавляет все
+It should not be the first option used, nor should it be used alone. Use /? for more information.| Не должна использоваться как первая команда или единственная. Используйте параметр /? для получения дополнительной информации.
 items have been deleted.|записей было удалено.
+JavaRa is designed to simplify the process of deploying, updating and removing the Oracle Java Runtime Environment. The program is developed by SingularLabs and released for free under the liberal GNU General Public License version 2 or later.|JavaRa предназначен для упрощения процесса развертывания, обновления и удаления Oracle Java Runtime Environment. Программа разработана и выпущена SingularLabs бесплатно под либеральной лицензией GNU General Public License версии 2 или более поздней.
+Java Manual Download|Скачать Руководство по Java
+Java Update Checking Utility (jucheck.exe) could not be found on your system.|Средство Проверки Обновлений Java (jucheck.exe) не найдено в Вашей системе.
+JavaRa 2.0 loaded without incident. Checking system...|JavaRa 2.1 загружена без ошибок. Определение системы...
+JavaRa can update JRE by either performing an online version check, or downloading and re-installing the program - regardless of version.|JavaRa может обновить JRE выполнив проверку версии с сайта, или загрузив и переустановив программу – независимо от версии.
+JavaRa definitions updated successfully|База успешно обновлена
+Launch online check|Запуск онлайн проверки
+messages and error reports.|уведомления и сообщения об ошибках.
+Next|Дальше
+Only complete this step if you want to remove the newest JRE version|Этого шага достаточно для удаления последних версий JRE
+Operating System:|ОС:
+Option Not Supported.|Неподдерживаемый вариант.
+Perform Cleanup Routine|Начать удаление
+Perform online version check|Выполнить проверку версии с веб-сайта
+Perform Removal Routine|Произвести удаление
+Please select a version of JRE to remove.|Пожалуйста, выберите из списка свою версию JRE.
+Previous|Назад
+Program Language|Выбор языка
+program settings|Настройки программы
 Removal Routine Complete|Удаление завершено
+Removal routine completed successfully.|Процедура удаления завершена успешно.
+Remove JRE|Удалить JRE
+Remove Older Versions|Удалить старую версию
+Remove Outdated JRE Firefox Extensions|Удалить устаревшие JRE расширения для Firefox
+Remove startup entry|Удалить из автозагрузки
+Removes all JRE related registry keys, files and directories.|Удаляет все связанные с JRE ключи реестра, файлы и каталоги
+Removes only JRE registry keys from previous version.|Удаляет ключи реестра JRE только от предыдущей версии.
+Run the built-in uninstaller for all versions of JRE detected.|Запустить деинсталлятор для всех обнаруженных версий JRE
+Run Uninstaller|Деинсталляция
+Run|Запустить
+Save Settings|Сохранить настройки
+Save|Сохранить
+Selected tasks completed successfully.|Выбранные задачи успешно выполнены.
+Settings|Настройки
+step 1 - run the uninstaller|шаг 1 - запуск деинсталлятора
+step 1 - select update method|шаг 1 - выбор метода обновления
+step 2 - completed.|шаг 2 - завершение.
+step 2 - completed|шаг 2 - завершение
+step 2 - download new version|шаг 2 - загрузка новой версии
+step 2 - perform cleanup routine|шаг 2 - процедура удаления
+step 2 - perform removal routine|шаг 2 - процедура удаления
+step 3 - completed.|шаг 3 - завершение.
+step 3 - download new version|шаг 3 - загрузка новой версии
+step 4 - completed.|шаг 4 - завершение.
+Support|Поддержка
+Syntax Error. /SILENT is a secondary option to be used in combination with other command line options.|Синтаксическая ошибка. /SILENT является сопутствующей командой и используется в сочетании с другими параметрами командной строки.
+Syntax Error.|Синтаксическая ошибка
+The process is complete. Select an option to continue.|Процесс завершен. Выберите, что делать дальше.
+The removal routine will delete files, folder and registry entries that are known to be associated with the Java Runtime Environment. It is recommended youupdate the program definitions prior to running.|Во время процедуры удаления Java Runtime Environment, будут удалены файлы, папки и записи в реестре. Рекомендуется сначала обновить базы JavaRa.
+The removal routine will delete files, folder and registry entries that are known|Во время процедуры удаления будут удалены файлы, папки и записи в реестре
+to be associated with the older versions of the Java Runtime Environment|которые связаны с Java Runtime Environment.
+uninstaller before you continue.|прежде, чем продолжить.
+Unsupported argument. Please use /PURGE, /CLEAN, /UNINSTALLALL, or /UPDATEDEFS|Неподдерживаемый аргумент. Пожалуйста, используйте /PURGE, /CLEAN, /UNINSTALLALL, или /UPDATEDEFS вместе или без /SILENT
+Update Java Runtime|Обновить Java
+update JavaRa definitions|Обновить базу JavaRa
+Update JavaRa Definitions|Обновить базу JavaRa
+Use Jucheck.exe tool|Использовать инструмент Jucheck.exe
+Use this interface.|Используйте кнопку загрузки.
+We recommend that you try running the Java Runtime Environment's built-in|Мы рекомендуем сначала использовать встроенный деинсталлятор JRE
+with, or without /SILENT.|
+Would you like to download and install the latest version of JRE? |Выполнить загрузку и установку новой версии JRE? 
+Would you like to download and install the latest version of the JavaRa definitions? These are used to find and remove every last trace of JRE.|Выполнить загрузку и установку новой версии базы JavaRa? Она используется для тщательного удаления следов JRE.
+Would you like to open the Oracle online JRE version checker?|Открыть сайт Oracle для проверки версии JRE?
+You didn't select any tasks to be performed.|Не выбрана ни одна задача.
+Your changes will take effect when JavaRa is restarted.|Изменения вступят в силу после перезапуска JavaRa.
