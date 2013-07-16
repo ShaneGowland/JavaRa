@@ -543,7 +543,7 @@ Partial Class UI
         Me.btnDownload.Name = "btnDownload"
         Me.btnDownload.Size = New System.Drawing.Size(87, 29)
         Me.btnDownload.TabIndex = 7
-        Me.btnDownload.Text = "Download" & Global.Microsoft.VisualBasic.ChrW(13) & Global.Microsoft.VisualBasic.ChrW(10)
+        Me.btnDownload.Text = "Download"
         Me.btnDownload.UseVisualStyleBackColor = True
         '
         'Label12
@@ -636,7 +636,7 @@ Partial Class UI
         Me.Label14.Name = "Label14"
         Me.Label14.Size = New System.Drawing.Size(292, 15)
         Me.Label14.TabIndex = 6
-        Me.Label14.Text = "The process is complete. Select an option to continue." & Global.Microsoft.VisualBasic.ChrW(13) & Global.Microsoft.VisualBasic.ChrW(10)
+        Me.Label14.Text = "The process is complete. Select an option to continue."
         '
         'lblCompleted
         '
@@ -705,7 +705,7 @@ Partial Class UI
         '
         Me.btnSave.Anchor = CType((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.btnSave.Font = New System.Drawing.Font("Segoe UI", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.btnSave.Location = New System.Drawing.Point(9685, 2)
+        Me.btnSave.Location = New System.Drawing.Point(10064, 2)
         Me.btnSave.Name = "btnSave"
         Me.btnSave.Size = New System.Drawing.Size(166, 24)
         Me.btnSave.TabIndex = 29
@@ -900,7 +900,7 @@ Partial Class UI
         Me.Label19.Name = "Label19"
         Me.Label19.Size = New System.Drawing.Size(269, 32)
         Me.Label19.TabIndex = 5
-        Me.Label19.Text = "update JavaRa definitions" & Global.Microsoft.VisualBasic.ChrW(13) & Global.Microsoft.VisualBasic.ChrW(10)
+        Me.Label19.Text = "update JavaRa definitions"
         '
         'pnlUpdateJRE
         '
