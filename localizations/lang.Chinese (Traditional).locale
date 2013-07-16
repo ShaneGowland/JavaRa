@@ -1,0 +1,94 @@
+//* translated by: Danfong Hsieh
+//* blog: blog.yam.com/danfong
+JavaRa definitions updated successfully|JavaRa 定義更新成功
+Automatically check for updates|自動檢查更新
+Could not locate jucheck.exe|找不到 jucheck.exe
+Java Update Checking Utility (jucheck.exe) could not be found on your system.|您的系統上找不到 Java 更新檢查工具(jucheck.exe)。
+Remove JRE|移除 JRE
+Update Java Runtime|更新 Java Runtime
+Remove Older Versions|移除舊版本
+Update JavaRa Definitions|更新 JavaRa 定義
+Additional Tasks|其餘任務
+Settings|設定
+Support|支援
+About JavaRa|關於 JavaRa
+Back|上一步
+Previous|上一步
+Next|下一步
+Save Settings|儲存設定
+Program Language|程式語言
+step 1 - select update method|步驟 1 - 選擇更新方法
+JavaRa can update JRE by either performing an online version check, or|JavaRa 可以藉由執行線上版本檢查或
+downloading and re-installing the program - regardless of version.|下載並重新安裝程式(與版本無關)來更新 JRE。
+Use Jucheck.exe tool|使用 jucheck.exe 工具
+Perform online version check|執行線上版本檢查
+Download and install latest version|下載並安裝最新版本
+Would you like to open the Oracle online JRE version checker?|您要開啟 Oracle 線上 JRE 版本檢查程式嗎?
+Launch online check|啟動線上檢查
+step 2 - completed|步驟 2 - 完成
+step 2 - completed.|步驟 2 - 完成。
+step 2 - download new version|步驟 2 - 下載新版本
+step 3 - completed.|步驟 3 - 完成。
+Would you like to download and install the latest version of JRE? |您要下載並安裝最新版本的 JRE 嗎? 
+Use this interface.|使用此介面。
+The process is complete. Select an option to continue.|程序完成。請選擇選項後繼續。
+Close this wizard|關閉此精靈
+Exit JavaRa|結束 JavaRa
+Finish|完成
+step 1 - run the uninstaller|步驟 1 - 執行解除安裝程式
+We recommend that you try running the Java Runtime Environment's built-in|在您繼續前，我們建議您試著執行 Java Runtime Environment 的
+uninstaller before you continue.|內建解除安裝程式。
+Run Uninstaller|執行解除安裝程式
+Only complete this step if you want to remove the newest JRE version|如果您想移除最新的 JRE 版本，僅完成此步驟
+step 2 - perform removal routine|步驟 2 - 執行移除程序
+step 2 - perform cleanup routine|步驟 2 - 執行清除程序
+Perform Cleanup Routine|執行清除程序
+The removal routine will delete files, folder and registry entries that are known|移除程序將刪除檔案、資料夾和登錄機碼(已知與
+to be associated with the older versions of the Java Runtime Environment|舊版本 Java Runtime Environment 相關聯)
+to be associated with the Java Runtime Environment. It is recommended you |Java Runtime Environment 相關聯)。建議您
+update the program definitions prior to running.|執行前先更新程式定義。
+Perform Removal Routine|執行移除程序
+step 3 - download new version|步驟 3 - 下載新版本
+Download|下載
+Java Manual Download|Java 手動下載
+step 4 - completed.|步驟 4 - 完成。
+update JavaRa definitions|更新 JavaRa 定義
+Would you like to download and install the latest version of the JavaRa |您要下載並安裝最新版本的 JavaRa 
+definitions? These are used to find and remove every last trace of JRE.|定義嗎?這些用來尋找並移除每個 JRE 的最後痕跡。
+Remove startup entry|移除啟動項
+Check Java version|檢查 Java 版本
+Remove Outdated JRE Firefox Extensions|移除過時的 JRE Firefox 擴充套件
+Run|執行
+Selected tasks completed successfully.|所選的任務已成功完成。
+About JavaRa|關於 JavaRa
+Create a log file|建立記錄檔
+program settings|程式設定
+You didn't select any tasks to be performed.|您沒有選擇任何任務供執行。
+JavaRa 2.0 loaded without incident. Checking system...|JAVARa 2.0 載入沒有發生任何事件。正在檢查系統...
+Operating System:|作業系統:
+Save|儲存
+Please select a version of JRE to remove.|請選擇要移除的 JRE 版本。
+Your changes will take effect when JavaRa is restarted.|您的變更將在 JavaRa 重新啟動後生效。
+Removal routine completed successfully.|移除程序已成功完成。
+items have been deleted.|項目已刪除。
+Removal Routine Complete|移除程序完成
+Syntax Error. /SILENT is a secondary option to be used in combination with other command line options.|語法錯誤。 /SILENT 是次要選項，與其他命令列選項組合使用。
+It should not be the first option used, nor should it be used alone. Use /? for more information|它不應是第一個使用的選項，也不應單獨使用。使用 /? 取得更多資訊
+Syntax Error.|語法錯誤。
+Removes all JRE related registry keys, files and directories|移除所有 JRE 相關的登錄機碼、檔案和目錄
+Removes only JRE registry keys from previous version.|僅移除先前版本的 JRE 登錄機碼。
+Run the built-in uninstaller for all versions of JRE detected|執行所有偵測到的 JRE 版本其內建解除安裝程式
+Downloads a new copy of the JavaRa definitions.|下載新的 JavaRa 定義副本。
+Hides the graphical user interface and suppresses all dialog|隱藏圖形化使用者介面，並禁止顯示所有對話方塊
+messages and error reports.|訊息和錯誤報告。
+Displays this help dialog|顯示此說明對話方塊
+Example: JavaRa /UPDATEDEFS /SILENT|範例: JavaRa /UPDATEDEFS /SILENT
+Example: JavaRa /UNINSTALLALL /SILENT|範例: JavaRa /UNINSTALLALL /SILENT
+Command Line Parameters|命令列參數
+Unsupported argument. Please use /PURGE, /CLEAN, /UNINSTALLALL, or /UPDATEDEFS|不支援的引數。請使用 /PURGE, /CLEAN, /UNINSTALLALL 或 /UPDATEDEFS
+with, or without /SILENT.|用或不用 /SILENT。
+Option Not Supported.|選項不支援。
+Clean JRE Temp Files|清除 JRE 暫存檔
+No uninstaller found. Please press 'next' to continue|找不到解除安裝程式。請按 [下一步] 繼續
+Download|下載
+version 2.2|版本 2.2
