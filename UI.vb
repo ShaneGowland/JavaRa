@@ -340,29 +340,29 @@ Public Class UI
 #Region "Update Java Downloader/Backgroundworker"
     'Downloads the specified file in a thread.
     Private Sub BackgroundWorker1_DoWork(ByVal sender As System.Object, ByVal e As System.ComponentModel.DoWorkEventArgs) Handles BackgroundWorker1.DoWork
-
-        'Creating the request and getting the response
+    'Creating the request and getting the response
         Dim theResponse As HttpWebResponse
-        Dim theRequest As HttpWebRequest
+        Dim theRequest As HttpWebRequest = WebRequest.Create(Me.txtFileName.Text)
+
         Try 'Checks if the file exist
-            theRequest = WebRequest.Create(Me.txtFileName.Text)
+
             theResponse = theRequest.GetResponse
         Catch ex As Exception
-            MessageBox.Show(get_string("An error occurred while downloading file. Possible causes:") & ControlChars.CrLf & _
-                            get_string("1) File doesn't exist") & ControlChars.CrLf & _
-                           get_string("2) Remote server error"), get_string("Error"), MessageBoxButtons.OK, MessageBoxIcon.Error)
+                MessageBox.Show(get_string("An error occurred while downloading file. Possible causes:") & ControlChars.CrLf & _
+                                  get_string("1) File doesn't exist") & ControlChars.CrLf & _
+                                  get_string("2) Remote server error"), get_string("Error"), MessageBoxButtons.OK, MessageBoxIcon.Error)
             Dim cancelDelegate As New DownloadCompleteSafe(AddressOf DownloadComplete)
             Me.Invoke(cancelDelegate, True)
+
             Exit Sub
         End Try
+        Dim length As Long = theResponse.ContentLength 'Size of the response (in bytes)
 
-        'Delete the existing file
-        If IO.File.Exists(Me.whereToSave) Then
-            IO.File.Delete(Me.whereToSave)
+        'Hack to prevent negative length exploding shit
+        If length < 1 Then
+            length = 450560
         End If
 
-
-        Dim length As Long = theResponse.ContentLength 'Size of the response (in bytes)
         Dim safedelegate As New ChangeTextsSafe(AddressOf ChangeTexts)
         Me.Invoke(safedelegate, length, 0, 0, 0) 'Invoke the TreadsafeDelegate
         Dim writeStream As New IO.FileStream(Me.whereToSave, IO.FileMode.Create)
@@ -386,7 +386,7 @@ Public Class UI
             writeStream.Write(readBytes, 0, bytesread)
             speedtimer.Stop()
             readings += 1
-            If readings >= 5 Then 'For increase precision, the speed it's calculated only every five cycles
+            If readings >= 5 Then 'For increase precision, the speed it's calculated only every five cicles
                 currentspeed = 20480 / (speedtimer.ElapsedMilliseconds / 1000)
                 speedtimer.Reset()
                 readings = 0
@@ -401,9 +401,8 @@ Public Class UI
             Me.Invoke(cancelDelegate, True)
             Exit Sub
         End If
-        Try
-            Dim completeDelegate As New DownloadCompleteSafe(AddressOf DownloadComplete)
-            Me.Invoke(completeDelegate, False) : Catch ex As Exception : End Try
+        Dim completeDelegate As New DownloadCompleteSafe(AddressOf DownloadComplete)
+        Me.Invoke(completeDelegate, False)
     End Sub
     'Code that runs when background worker has completed.
     Public Sub DownloadComplete(ByVal cancelled As Boolean)
@@ -834,14 +833,11 @@ Public Class UI
         Me.Cursor = Cursors.WaitCursor
 
         'Confirm the connection to the server 
-        Dim sFilename As String, sURI As String
         Try
             theRequest = WebRequest.Create("http://content.thewebatom.net/files/confirm.txt")
             theResponse = theRequest.GetResponse
             'Set the path to the rules
-            sURI = "http://content.thewebatom.net/updates/javara/"
-            sFilename = "JavaRa.def"
-            txtFileName.Text = sURI & sFilename
+            txtFileName.Text = "http://content.thewebatom.net/updates/javara/JavaRa.def"
         Catch ex As Exception
             MessageBox.Show(get_string("Could not make a connection to download server. Please see our online help for assistance.") & Environment.NewLine & get_string("This error can be caused by incorrect proxy settings or a security product conflict."), get_string("An error was encountered."), MessageBoxButtons.OK, MessageBoxIcon.Error)
             Me.Cursor = Cursors.Default
@@ -856,12 +852,14 @@ Public Class UI
         Me.btnDownload.Enabled = False
 
         'If running silently, the background worker does not work correctly.
-        'Use a standard WebClient downloader instaed
+        'Use a standard WebClient downloader instead
         If stay_silent = True Then
             My.Computer.Network.DownloadFile(txtFileName.Text, Me.whereToSave, "", "", False, 100, True)
         Else
             Me.BackgroundWorker1.RunWorkerAsync() 'Start download               
         End If
+
+        Me.Cursor = Cursors.Default
     End Sub
 
 #End Region
