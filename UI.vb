@@ -441,8 +441,15 @@ Public Class UI
         Try
             theRequest = WebRequest.Create("http://content.thewebatom.net/files/confirm.txt")
             theResponse = theRequest.GetResponse
-            'Set the path to the rules
-            txtFileName.Text = "http://javadl.sun.com/webapps/download/AutoDL?BundleId=49024"
+
+            'Set the path to the corrrect JRE url
+            If IO.Directory.Exists("C:\Program Files (x86)") Then
+                txtFileName.Text = "http://javadl.sun.com/webapps/download/AutoDL?BundleId=80814"
+            Else
+                txtFileName.Text = "http://javadl.sun.com/webapps/download/AutoDL?BundleId=80812"
+            End If
+
+
         Catch ex As Exception
             MessageBox.Show(get_string("Could not make a connection to download server. Please see our online help for assistance.") & Environment.NewLine & get_string("This error can be caused by incorrect proxy settings or a security product conflict."), get_string("An error was encountered."), MessageBoxButtons.OK, MessageBoxIcon.Error)
             Me.Cursor = Cursors.Default
