@@ -70,6 +70,7 @@ Partial Class UI
         Me.Label14 = New System.Windows.Forms.Label()
         Me.lblCompleted = New System.Windows.Forms.Label()
         Me.PanelSettings = New System.Windows.Forms.Panel()
+        Me.boxPreserveUISize = New System.Windows.Forms.CheckBox()
         Me.boxUpdateCheck = New System.Windows.Forms.CheckBox()
         Me.btnSaveLang = New System.Windows.Forms.Button()
         Me.Panel8 = New System.Windows.Forms.Panel()
@@ -113,7 +114,6 @@ Partial Class UI
         Me.ProgressBar4 = New System.Windows.Forms.ProgressBar()
         Me.btnCleanup = New System.Windows.Forms.Button()
         Me.Label9 = New System.Windows.Forms.Label()
-        Me.boxPreserveUISize = New System.Windows.Forms.CheckBox()
         Me.Panel1.SuspendLayout()
         Me.Step1.SuspendLayout()
         Me.Panel3.SuspendLayout()
@@ -663,6 +663,17 @@ Partial Class UI
         Me.PanelSettings.Size = New System.Drawing.Size(379, 205)
         Me.PanelSettings.TabIndex = 20
         '
+        'boxPreserveUISize
+        '
+        Me.boxPreserveUISize.AutoSize = True
+        Me.boxPreserveUISize.Font = New System.Drawing.Font("Segoe UI", 9.0!)
+        Me.boxPreserveUISize.Location = New System.Drawing.Point(12, 57)
+        Me.boxPreserveUISize.Name = "boxPreserveUISize"
+        Me.boxPreserveUISize.Size = New System.Drawing.Size(189, 19)
+        Me.boxPreserveUISize.TabIndex = 31
+        Me.boxPreserveUISize.Text = "Preserve Window height/width"
+        Me.boxPreserveUISize.UseVisualStyleBackColor = True
+        '
         'boxUpdateCheck
         '
         Me.boxUpdateCheck.AutoSize = True
@@ -705,7 +716,7 @@ Partial Class UI
         '
         Me.btnSave.Anchor = CType((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.btnSave.Font = New System.Drawing.Font("Segoe UI", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.btnSave.Location = New System.Drawing.Point(10443, 2)
+        Me.btnSave.Location = New System.Drawing.Point(10822, 2)
         Me.btnSave.Name = "btnSave"
         Me.btnSave.Size = New System.Drawing.Size(166, 24)
         Me.btnSave.TabIndex = 29
@@ -1000,6 +1011,7 @@ Partial Class UI
         '
         'ToolStrip1
         '
+        Me.ToolStrip1.BackColor = System.Drawing.Color.White
         Me.ToolStrip1.Dock = System.Windows.Forms.DockStyle.Bottom
         Me.ToolStrip1.GripStyle = System.Windows.Forms.ToolStripGripStyle.Hidden
         Me.ToolStrip1.Items.AddRange(New System.Windows.Forms.ToolStripItem() {Me.btnSettings, Me.btnAbout})
@@ -1125,26 +1137,15 @@ Partial Class UI
         Me.Label9.TabIndex = 5
         Me.Label9.Text = "step 2 - perform cleanup routine"
         '
-        'boxPreserveUISize
-        '
-        Me.boxPreserveUISize.AutoSize = True
-        Me.boxPreserveUISize.Font = New System.Drawing.Font("Segoe UI", 9.0!)
-        Me.boxPreserveUISize.Location = New System.Drawing.Point(12, 57)
-        Me.boxPreserveUISize.Name = "boxPreserveUISize"
-        Me.boxPreserveUISize.Size = New System.Drawing.Size(189, 19)
-        Me.boxPreserveUISize.TabIndex = 31
-        Me.boxPreserveUISize.Text = "Preserve Window height/width"
-        Me.boxPreserveUISize.UseVisualStyleBackColor = True
-        '
         'UI
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
         Me.ClientSize = New System.Drawing.Size(1714, 716)
-        Me.Controls.Add(Me.pnlCleanup)
-        Me.Controls.Add(Me.pnlTopDock)
         Me.Controls.Add(Me.Panel7)
         Me.Controls.Add(Me.ToolStrip1)
+        Me.Controls.Add(Me.pnlCleanup)
+        Me.Controls.Add(Me.pnlTopDock)
         Me.Controls.Add(Me.pnlUpdateJRE)
         Me.Controls.Add(Me.pnlUpdate)
         Me.Controls.Add(Me.pnlAbout)
