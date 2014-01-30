@@ -5,7 +5,7 @@ Public Class UI
 #Region "Global Variables/Declarations"
 
     'Store the version number
-    Dim version_number As String = "020200"
+    Dim version_number As String = "020400"
 
     'Downloader variables
     Dim whereToSave As String 'Where the program save the file
@@ -357,10 +357,11 @@ Public Class UI
             Exit Sub
         End Try
         Dim length As Long = theResponse.ContentLength 'Size of the response (in bytes)
+        'MsgBox(theResponse.ContentLength)
 
         'Hack to prevent negative length exploding shit
         If length < 1 Then
-            length = 450560
+            length = 550000
         End If
 
         Dim safedelegate As New ChangeTextsSafe(AddressOf ChangeTexts)
@@ -627,27 +628,56 @@ Public Class UI
 
                     'Determine which uninstallers to show
                     Try
-                        Dim Software As String = Nothing
-                        Dim SoftwareKey As String = "SOFTWARE\Microsoft\Windows\CurrentVersion\Installer\UserData\S-1-5-18\Products"
-                        Using rk As RegistryKey = Registry.LocalMachine.OpenSubKey(SoftwareKey)
-                            For Each skName In rk.GetSubKeyNames
-                                Dim name = Registry.LocalMachine.OpenSubKey(SoftwareKey).OpenSubKey(skName).OpenSubKey("InstallProperties").GetValue("DisplayName")
-                                Dim uninstallString = Registry.LocalMachine.OpenSubKey(SoftwareKey).OpenSubKey(skName).OpenSubKey("InstallProperties").GetValue("UninstallString")
 
-                                'Check if entry is for Java 6
-                                If name.ToString.StartsWith("Java(TM) 6") Or name.ToString.StartsWith("Java 6 Update") = True Then
-                                    cboVersion.Items.Add(get_string("Java Runtime Environment 6"))
-                                End If
+                        'Create a variable to store value information 
+                        Dim sk As RegistryKey
 
-                                'Check if entry is for Java 7
-                                If name.ToString.StartsWith("Java(TM) 7") Or name.ToString.StartsWith("Java 7") = True Then
-                                    cboVersion.Items.Add(get_string("Java Runtime Environment 7"))
+                        'Create a list of possible installed-programs sources
+                        Dim regpath As New List(Of RegistryKey)
+                        regpath.Add(Registry.LocalMachine.OpenSubKey("SOFTWARE\Microsoft\Windows\CurrentVersion\Uninstall"))
+                        regpath.Add(Registry.CurrentUser.OpenSubKey("SOFTWARE\Microsoft\Windows\CurrentVersion\Uninstall"))
+                        regpath.Add(Registry.LocalMachine.OpenSubKey("SOFTWARE\Wow6432Node\Microsoft\Windows\CurrentVersion\Uninstall"))
+                        regpath.Add(Registry.CurrentUser.OpenSubKey("SOFTWARE\Wow6432Node\Microsoft\Windows\CurrentVersion\Uninstall"))
+
+                        'Keep track of the image index
+                        Dim image_index As Integer = 0
+
+                        'Loop through possible locations for lists of apps
+                        For Each reg_location As RegistryKey In regpath
+
+                            'Declare the path to this individual list of installed programs
+                            Dim rk As RegistryKey = reg_location
+
+                            'The real deal
+                            Dim skname() = rk.GetSubKeyNames
+
+                            'Iterate through the keys located here
+                            For counter As Integer = 0 To skname.Length - 1
+
+                                'Filter out empty keys
+                                sk = rk.OpenSubKey(skname(counter))
+
+                                If sk.GetValue("DisplayName") Is Nothing = False Then
+
+                                    'Write the display name
+                                    Dim name As String = CStr((sk.GetValue("DisplayName")))
+
+                                    'Check if entry is for Java 6
+                                    If name.StartsWith("Java(TM) 6") Or name.ToString.StartsWith("Java 6 Update") = True Then
+                                        cboVersion.Items.Add(get_string("Java Runtime Environment 6"))
+                                    End If
+
+                                    'Check if entry is for Java 7
+                                    If name.StartsWith("Java(TM) 7") Or name.ToString.StartsWith("Java 7") = True Then
+                                        cboVersion.Items.Add(get_string("Java Runtime Environment 7"))
+                                    End If
+
                                 End If
                             Next
-                        End Using
+                        Next
 
                     Catch ex As Exception
-
+                        write_error(ex)
                     End Try
 
                     show_panel(Step1)
@@ -835,7 +865,6 @@ Public Class UI
         End Try
 
     End Sub
-    '
     Private Sub download_defs()
         Me.Cursor = Cursors.WaitCursor
 
