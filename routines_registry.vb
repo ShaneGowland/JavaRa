@@ -1,6 +1,8 @@
 ﻿Option Strict Off
 Imports Microsoft.Win32
 Module routines_registry
+
+    'Delete a registry key
     Public Sub delete_key(ByVal key As String)
         'Check if the key exists first, reducing processing time and potential for errors.
         If RegKeyExists(key) = True Then
@@ -92,6 +94,7 @@ Module routines_registry
         End If
     End Sub
 
+    'Create a text file containing a list of all installed JRE versions
     Public Sub output_jre_version()
         'Define the path for the log
         Dim version_output_path As String = System.IO.Path.GetDirectoryName(System.Reflection.Assembly.GetEntryAssembly().Location) & "\version-output.log"
@@ -107,58 +110,13 @@ Module routines_registry
             SW.WriteLine("Installed JRE Versions:" & Environment.NewLine & "========================")
 
 
-            Dim uninstallkey As String = "SOFTWARE\Microsoft\Windows\CurrentVersion\Uninstall"
-            Dim uninstallkey64 As String = "SOFTWARE\WOW6432Node\Microsoft\Windows\CurrentVersion\Uninstall"
-            Dim rk As RegistryKey = Registry.LocalMachine.OpenSubKey(uninstallkey)
-            Dim rk64 As RegistryKey = Registry.LocalMachine.OpenSubKey(uninstallkey64)
-            Dim sk As RegistryKey
-            Dim skname() = rk.GetSubKeyNames
-            Dim skname64() = rk64.GetSubKeyNames
-
-            'Iterate for x32 installs
-            For counter As Integer = 0 To skname.Length - 1
-
-                sk = rk.OpenSubKey(skname(counter))
-                If sk.GetValue("DisplayName") Is Nothing = False Then
-
-                    'Write the display name
-                    If ((sk.GetValue("DisplayName"))).ToString.StartsWith("Java(TM) 6") Then
-                        SW.WriteLine(sk.GetValue("DisplayName").ToString & " version: " & sk.GetValue("DisplayVersion").ToString)
-                    End If
-                    If ((sk.GetValue("DisplayName"))).ToString.StartsWith("Java(TM) 7") Then
-                        SW.WriteLine(sk.GetValue("DisplayName").ToString & " version: " & sk.GetValue("DisplayVersion").ToString)
-                    End If
-                    If ((sk.GetValue("DisplayName"))).ToString.StartsWith("Java 7") Then
-                        SW.WriteLine(sk.GetValue("DisplayName").ToString & " version: " & sk.GetValue("DisplayVersion").ToString)
-                    End If
-                    If ((sk.GetValue("DisplayName"))).ToString.StartsWith("Java 6") Then
-                        SW.WriteLine(sk.GetValue("DisplayName").ToString & " version: " & sk.GetValue("DisplayVersion").ToString)
-                    End If
-
-                End If
-            Next
-
-            'Iterate for x64 installs
-            For counter As Integer = 0 To skname64.Length - 1
-
-                sk = rk64.OpenSubKey(skname64(counter))
-                If sk.GetValue("DisplayName") Is Nothing = False Then
-
-                    'Write the display name
-                    If ((sk.GetValue("DisplayName"))).ToString.StartsWith("Java(TM) 6") Then
-                        SW.WriteLine(sk.GetValue("DisplayName").ToString & " version: " & sk.GetValue("DisplayVersion").ToString)
-                    End If
-                    If ((sk.GetValue("DisplayName"))).ToString.StartsWith("Java(TM) 7") Then
-                        SW.WriteLine(sk.GetValue("DisplayName").ToString & " version: " & sk.GetValue("DisplayVersion").ToString)
-                    End If
-                    If ((sk.GetValue("DisplayName"))).ToString.StartsWith("Java 6") Then
-                        SW.WriteLine(sk.GetValue("DisplayName").ToString & " version: " & sk.GetValue("DisplayVersion").ToString)
-                    End If
-                    If ((sk.GetValue("DisplayName"))).ToString.StartsWith("Java 7") Then
-                        SW.WriteLine(sk.GetValue("DisplayName").ToString & " version: " & sk.GetValue("DisplayVersion").ToString)
-                    End If
-
-                End If
+            'Loop through all installed JREs
+            For Each InstalledJRE As JREInstallObject In UI.JREObjectList
+                Try
+                    SW.WriteLine(InstalledJRE.Name & " version: " & InstalledJRE.Version)
+                Catch ex As Exception
+                    write_error(ex)
+                End Try
             Next
 
             SW.Close()
@@ -170,6 +128,8 @@ Module routines_registry
             write_error(ex)
         End Try
     End Sub
+
+    'Remove all startup entries corresponding to the JRE
     Public Sub delete_jre_startup_entries()
         Dim startup_reg As New List(Of String) : startup_reg.Add("jusched-Java Quick Start") : startup_reg.Add("SunJavaUpdateSched") : startup_reg.Add("Java(tm) Plug-In 2 SSV Helper")
         For Each item As String In startup_reg
@@ -184,4 +144,80 @@ Module routines_registry
             My.Computer.Registry.CurrentUser.OpenSubKey("Software\WOW6432Node\Microsoft\Windows\CurrentVersion\Run", True).DeleteValue(item)
         Next
     End Sub
+
+    'Enumerate all installed instances of the JRE
+    Public Sub get_jre_uninstallers()
+        'Determine which uninstallers to show
+        Try
+
+            'Create a variable to store value information 
+            Dim sk As RegistryKey
+
+            'Create a list of possible installed-programs sources
+            Dim regpath As New List(Of RegistryKey)
+            regpath.Add(Registry.LocalMachine.OpenSubKey("SOFTWARE\Microsoft\Windows\CurrentVersion\Uninstall"))
+            regpath.Add(Registry.CurrentUser.OpenSubKey("SOFTWARE\Microsoft\Windows\CurrentVersion\Uninstall"))
+            regpath.Add(Registry.LocalMachine.OpenSubKey("SOFTWARE\Wow6432Node\Microsoft\Windows\CurrentVersion\Uninstall"))
+            regpath.Add(Registry.CurrentUser.OpenSubKey("SOFTWARE\Wow6432Node\Microsoft\Windows\CurrentVersion\Uninstall"))
+
+            'Keep track of the image index
+            Dim image_index As Integer = 0
+
+            'Loop through possible locations for lists of apps
+            For Each reg_location As RegistryKey In regpath
+
+                'Declare the path to this individual list of installed programs
+                Dim rk As RegistryKey = reg_location
+
+                'The real deal
+                Dim skname() = rk.GetSubKeyNames
+
+                'Iterate through the keys located here
+                For counter As Integer = 0 To skname.Length - 1
+
+                    'Filter out empty keys
+                    sk = rk.OpenSubKey(skname(counter))
+
+                    If sk.GetValue("DisplayName") Is Nothing = False Then
+
+                        'Write the display name
+                        Dim name As String = CStr((sk.GetValue("DisplayName")))
+                        Dim version As String
+                        Dim uninstall As String
+
+
+                        'Write the version
+                        If sk.GetValue("DisplayVersion") Is Nothing = False Then
+                            version = (CStr((sk.GetValue("DisplayVersion"))))
+                        Else
+                            version = (get_string("Data Unavailable"))
+                        End If
+
+                        'Save the tag for the uninstall path
+                        If sk.GetValue("UninstallString") Is Nothing Then
+                            uninstall = ""
+                        Else
+                            uninstall = (CStr((sk.GetValue("UninstallString"))))
+                        End If
+
+
+                        'Check if entry is for Java 6
+                        If name.StartsWith("Java(TM) 6") Or name.ToString.StartsWith("Java 6 Update") = True Then
+                            UI.JREObjectList.Add(New JREInstallObject(name, version, uninstall))
+                        End If
+
+                        'Check if entry is for Java 7
+                        If name.StartsWith("Java(TM) 7") Or name.ToString.StartsWith("Java 7") = True Then
+                            UI.JREObjectList.Add(New JREInstallObject(name, version, uninstall))
+                        End If
+
+                    End If
+                Next
+            Next
+
+        Catch ex As Exception
+            write_error(ex)
+        End Try
+    End Sub
+
 End Module

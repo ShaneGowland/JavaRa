@@ -32,6 +32,7 @@ Public Class UI
 #End Region
 
 #Region "Opening/Closing JavaRa"
+
     'Form closing/saving event
     Private Sub UI_FormClosing(ByVal sender As Object, ByVal e As System.Windows.Forms.FormClosingEventArgs) Handles Me.FormClosing
         'Save the settins to config.ini
@@ -69,6 +70,7 @@ Public Class UI
         Catch ex As Exception
         End Try
     End Sub
+
     'Form_Load event
     Private Sub Form1_Load(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles MyBase.Load
 
@@ -222,6 +224,7 @@ Public Class UI
         End If
 
     End Sub
+
     'Render the grid of icons on the main GUI
     Private Sub render_ui()
         'Render the user interface
@@ -278,11 +281,13 @@ Public Class UI
 
 
     End Sub
+
     'Perform the reboot
     Public Sub reboot_app()
         reboot = True
         Me.Close()
     End Sub
+
     'After the form has closed, reboot it
     Private Sub UI_FormClosed(ByVal sender As Object, ByVal e As System.Windows.Forms.FormClosedEventArgs) Handles Me.FormClosed
         'Allow for a reboot
@@ -306,9 +311,11 @@ Public Class UI
         End If
 
     End Sub
+
 #End Region
 
 #Region "Additional Tools and cleaning functions"
+
     'Iterates through checkedlistbox and decides which functions need to be run
     Private Sub btnRun_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles btnRun.Click
         'Check if anything is selected
@@ -337,16 +344,19 @@ Public Class UI
         'Show some user feedback
         ToolTip1.Show(get_string(get_string("Selected tasks completed successfully.")), lblTitle)
     End Sub
+
     'Read the list of defs and remove the files and registry keys specified
     Private Sub btnCleanup_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles btnCleanup.Click
         Call cleanup_old_jre()
     End Sub
+
 #End Region
 
 #Region "Update Java Downloader/Backgroundworker"
+
     'Downloads the specified file in a thread.
     Private Sub BackgroundWorker1_DoWork(ByVal sender As System.Object, ByVal e As System.ComponentModel.DoWorkEventArgs) Handles BackgroundWorker1.DoWork
-    'Creating the request and getting the response
+        'Creating the request and getting the response
         Dim theResponse As HttpWebResponse
         Dim theRequest As HttpWebRequest = WebRequest.Create(Me.txtFileName.Text)
 
@@ -354,9 +364,9 @@ Public Class UI
 
             theResponse = theRequest.GetResponse
         Catch ex As Exception
-                MessageBox.Show(get_string("An error occurred while downloading file. Possible causes:") & ControlChars.CrLf & _
-                                  get_string("1) File doesn't exist") & ControlChars.CrLf & _
-                                  get_string("2) Remote server error"), get_string("Error"), MessageBoxButtons.OK, MessageBoxIcon.Error)
+            MessageBox.Show(get_string("An error occurred while downloading file. Possible causes:") & ControlChars.CrLf & _
+                              get_string("1) File doesn't exist") & ControlChars.CrLf & _
+                              get_string("2) Remote server error"), get_string("Error"), MessageBoxButtons.OK, MessageBoxIcon.Error)
             Dim cancelDelegate As New DownloadCompleteSafe(AddressOf DownloadComplete)
             Me.Invoke(cancelDelegate, True)
 
@@ -411,6 +421,7 @@ Public Class UI
         Dim completeDelegate As New DownloadCompleteSafe(AddressOf DownloadComplete)
         Me.Invoke(completeDelegate, False)
     End Sub
+
     'Code that runs when background worker has completed.
     Public Sub DownloadComplete(ByVal cancelled As Boolean)
         Me.txtFileName.Enabled = True
@@ -436,11 +447,13 @@ Public Class UI
 
         Me.Cursor = Cursors.Default
     End Sub
+
     'Update the progress bar while a file is being downloaded. Shared between multiple downloaders.
     Public Sub ChangeTexts(ByVal length As Long, ByVal position As Integer, ByVal percent As Integer, ByVal speed As Double)
         Me.ProgressBar2.Value = percent
         ProgressBar3.Value = percent
     End Sub
+
     'Start the background worker by supplying essential "what to download?" information.
     Private Sub btnDownload_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles btnDownload.Click
         Me.Cursor = Cursors.WaitCursor
@@ -470,17 +483,21 @@ Public Class UI
         Me.btnDownload.Enabled = False
         Me.BackgroundWorker1.RunWorkerAsync() 'Start download
     End Sub
+
     'Update the JavaRa definitions
     Private Sub btnUpdateDefs_click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles btnUpdateDefs.Click
         download_defs()
     End Sub
+
 #End Region
 
 #Region "Uninstall/Reinstall Java Runtime environment"
+
     'Read the list of defs and remove the files and registry keys specified
     Private Sub btnRemoveKeys_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles btnRemoveKeys.Click
         Call purge_jre()
     End Sub
+
     'Run the uninstaller depending on which combobox item is selected.
     Private Sub btnRunUninstaller_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles btnRunUninstaller.Click
         'Check for blank selection
@@ -526,6 +543,7 @@ Public Class UI
         End Try
 
     End Sub
+
     'Launch the appropriate method for checking the JRE version installed.
     Private Sub btnUpdateNext_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles btnUpdateNext.Click
         'Decide which method the user wishes to check for updates with
@@ -603,6 +621,7 @@ Public Class UI
             End Try
         End If
     End Sub
+
     'Decide which step of the process the downloader should be.
     Private Sub Button1_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles Button1.Click
         If lblDownloadNewVersion.Text = get_string("step 3 - download new version") Then
@@ -613,10 +632,12 @@ Public Class UI
             show_panel(pnlUpdateJRE)
         End If
     End Sub
+
     'This launches the manual download page. Auto-jumped to the Windows section.
     Private Sub LinkLabel1_LinkClicked(ByVal sender As System.Object, ByVal e As System.Windows.Forms.LinkLabelLinkClickedEventArgs) Handles LinkLabel1.LinkClicked
         Process.Start("http://www.java.com/en/download/manual.jsp#win")
     End Sub
+
 #End Region
 
 #Region "User interface navigation"
@@ -660,14 +681,17 @@ Public Class UI
             End If
         Next
     End Sub
+
     'Navigate to step #2 of removal process.
     Private Sub btnStep1_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles btnStep1.Click
         show_panel(pnlRemoval)
     End Sub
+
     'Make sure the correct "step-label" is displayed when moving the step 3
     Private Sub btnStep2_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles btnStep2.Click
         show_panel(pnlDownload)
     End Sub
+
     'Decide if the user wishes to close JavaRa or continue using it
     Private Sub Button7_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles Button7.Click
         If btnCloseWiz.Checked = True Then
@@ -678,6 +702,7 @@ Public Class UI
             Me.Close()
         End If
     End Sub
+
     'Navigate to step #4
     Private Sub Button4_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles Button4.Click
         'Clear progress bars
@@ -693,18 +718,22 @@ Public Class UI
             lblCompleted.Text = get_string("step 3 - completed.")
         End If
     End Sub
+
     'Return to panel #1
     Private Sub btnPrev1_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles btnPrev1.Click
         show_panel(Step1)
     End Sub
+
     'Show the settings panel in the UI
     Private Sub btnSettings_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles btnSettings.Click
         show_panel(PanelSettings)
     End Sub
+
     'Return to the home page whenever a back button is pressed
     Private Sub Return_Button_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles Button9.Click, Button11.Click, Button12.Click, btnUpdateJavaPrevious.Click, Button8.Click, Button2.Click
         Call return_home()
     End Sub
+
     'Load the about page
     Private Sub btnAbout_Click_1(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles btnAbout.Click
         show_panel(pnlAbout)
@@ -715,9 +744,11 @@ Public Class UI
     Private Sub Button5_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles Button5.Click
         show_panel(pnlCompleted)
     End Sub
+
 #End Region
 
 #Region "Configuration & Updating"
+
     'Change the current language selection
     Private Sub btnSaveLang_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles btnSaveLang.Click
         'Temporarily store the previous language
@@ -746,6 +777,7 @@ Public Class UI
             End If
         End If
     End Sub
+
     'Prevent the language settings from doing dumb stuff.
     Private Sub boxLanguage_SelectedIndexChanged(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles boxLanguage.SelectedIndexChanged
         If boxLanguage.Text <> language Then
@@ -754,6 +786,7 @@ Public Class UI
             btnSaveLang.Enabled = False
         End If
     End Sub
+
     'This delegate allows the update notification to show across threads.
     Public Delegate Sub ShowNotification(ByVal data As Boolean)
     Public Sub UI_Thread_Show_Notification(ByVal data As Boolean)
@@ -761,10 +794,12 @@ Public Class UI
             Process.Start("http://singularlabs.com/software/javara/javara-download/")
         End If
     End Sub
+
     'Invokation method so that dialog can be shown on UI thread.
     Public Sub show_threaded_dialog()
         lblTitle.BeginInvoke(New ShowNotification(AddressOf UI_Thread_Show_Notification), False)
     End Sub
+
     'Method that performs the update check
     Public Sub check_for_update()
 
@@ -821,6 +856,8 @@ Public Class UI
         End Try
 
     End Sub
+
+    'Download the definition file without the background worker
     Private Sub download_defs()
         Me.Cursor = Cursors.WaitCursor
 
