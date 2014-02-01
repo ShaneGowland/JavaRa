@@ -113,7 +113,9 @@ Module routines_registry
             'Loop through all installed JREs
             For Each InstalledJRE As JREInstallObject In UI.JREObjectList
                 Try
-                    SW.WriteLine(InstalledJRE.Name & " version: " & InstalledJRE.Version)
+                    If InstalledJRE.Installed Then
+                        SW.WriteLine(InstalledJRE.Name & " version: " & InstalledJRE.Version)
+                    End If
                 Catch ex As Exception
                     write_error(ex)
                 End Try
@@ -147,23 +149,25 @@ Module routines_registry
 
     'Enumerate all installed instances of the JRE
     Public Sub get_jre_uninstallers()
-        'Determine which uninstallers to show
+
+        'Reset the list of installed JRE, allowing this code to be called multiple times
+        UI.JREObjectList.Clear()
+
+        'Create a variable to store value information 
+        Dim sk As RegistryKey
+
+        'Create a list of possible installed-programs sources
+        Dim regpath As New List(Of RegistryKey)
+        regpath.Add(Registry.LocalMachine.OpenSubKey("SOFTWARE\Microsoft\Windows\CurrentVersion\Uninstall"))
+        regpath.Add(Registry.CurrentUser.OpenSubKey("SOFTWARE\Microsoft\Windows\CurrentVersion\Uninstall"))
+        regpath.Add(Registry.LocalMachine.OpenSubKey("SOFTWARE\Wow6432Node\Microsoft\Windows\CurrentVersion\Uninstall"))
+        regpath.Add(Registry.CurrentUser.OpenSubKey("SOFTWARE\Wow6432Node\Microsoft\Windows\CurrentVersion\Uninstall"))
+
+        'Keep track of the image index
+        Dim image_index As Integer = 0
+
+        'Loop through possible locations for lists of apps
         Try
-
-            'Create a variable to store value information 
-            Dim sk As RegistryKey
-
-            'Create a list of possible installed-programs sources
-            Dim regpath As New List(Of RegistryKey)
-            regpath.Add(Registry.LocalMachine.OpenSubKey("SOFTWARE\Microsoft\Windows\CurrentVersion\Uninstall"))
-            regpath.Add(Registry.CurrentUser.OpenSubKey("SOFTWARE\Microsoft\Windows\CurrentVersion\Uninstall"))
-            regpath.Add(Registry.LocalMachine.OpenSubKey("SOFTWARE\Wow6432Node\Microsoft\Windows\CurrentVersion\Uninstall"))
-            regpath.Add(Registry.CurrentUser.OpenSubKey("SOFTWARE\Wow6432Node\Microsoft\Windows\CurrentVersion\Uninstall"))
-
-            'Keep track of the image index
-            Dim image_index As Integer = 0
-
-            'Loop through possible locations for lists of apps
             For Each reg_location As RegistryKey In regpath
 
                 'Declare the path to this individual list of installed programs

@@ -115,23 +115,26 @@ Module routines_interface
         'Loop through all installed JREs
         For Each InstalledJRE As JREInstallObject In UI.JREObjectList
 
-            Try
+            If InstalledJRE.Installed = True Then
 
-                If silent = False Then
+                Try
 
-                    'Uninstall normally
-                    Shell(InstalledJRE.UninstallString, AppWinStyle.NormalFocus, True)
+                    If silent = False Then
 
-                Else
+                        'Uninstall normally
+                        Shell(InstalledJRE.UninstallString, AppWinStyle.NormalFocus, True)
 
-                    'Uninstall silently
-                    Shell(InstalledJRE.UninstallString & " /qn /Norestart", AppWinStyle.Hide, True)
+                    Else
 
-                End If
-            Catch ex As Exception
-                write_error(ex)
-            End Try
+                        'Uninstall silently
+                        Shell(InstalledJRE.UninstallString & " /qn /Norestart", AppWinStyle.Hide, True)
 
+                    End If
+                Catch ex As Exception
+                    write_error(ex)
+                End Try
+
+            End If
         Next
 
     End Sub

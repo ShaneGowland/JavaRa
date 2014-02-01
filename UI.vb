@@ -505,8 +505,6 @@ Public Class UI
             MessageBox.Show(get_string("Please select a version of JRE to remove."))
         End If
 
-        Try
-
             'Uninstall the Java corresponding to the selected combobox item
             For Each InstalledJRE As JREInstallObject In JREObjectList
 
@@ -515,32 +513,34 @@ Public Class UI
 
                     Try
 
-                        'Call the uninstaller
-                        Shell(InstalledJRE.UninstallString, AppWinStyle.NormalFocus, True)
+                        'Don't do this twice
+                        If InstalledJRE.Installed = True Then
 
-                        'Remove the item from the combobox
-                        cboVersion.Items.Remove(InstalledJRE.Name)
-                        JREObjectList.Remove(InstalledJRE)
+                            'Call the uninstaller
+                            Shell(InstalledJRE.UninstallString, AppWinStyle.NormalFocus, True)
 
-                        'Disable the stuff if nothing remaining
-                        If cboVersion.Items.Count = 0 Then
-                            cboVersion.Enabled = False
-                            btnRunUninstaller.Enabled = False
+                            'Remove the item from the combobox
+                            cboVersion.Items.Remove(InstalledJRE.Name)
+                            InstalledJRE.Installed = False
+
+                            'Disable the stuff if nothing remaining
+                            If cboVersion.Items.Count = 0 Then
+                                cboVersion.Enabled = False
+                                btnRunUninstaller.Enabled = False
+                            End If
+
                         End If
 
                     Catch ex As Exception
                         If stay_silent = False Then
                             MessageBox.Show(get_string("Could not locatate uninstaller for") & " " & cboVersion.Text, get_string("Uninstaller not found"), MessageBoxButtons.OK, MessageBoxIcon.Error)
-                        End If
+                    End If
+                    write_error(ex)
                     End Try
 
                 End If
 
             Next
-
-        Catch ex As Exception
-            write_error(ex)
-        End Try
 
     End Sub
 
@@ -641,6 +641,7 @@ Public Class UI
 #End Region
 
 #Region "User interface navigation"
+
     'Open the appropriate subtool
     Private Sub lvTools_Click(ByVal sender As Object, ByVal e As System.EventArgs) Handles lvTools.Click
         'Handles click events on the main GUI and loads the correct panel.
@@ -651,6 +652,9 @@ Public Class UI
                     show_panel(PanelExtra)
                 End If
                 If path = get_string("Remove Java Runtime") Then
+
+                    'Reset the ComboBox control
+                    cboVersion.Items.Clear()
 
                     'Get the list of installed JRE items
                     For Each InstalledJRE As JREInstallObject In JREObjectList
@@ -695,9 +699,16 @@ Public Class UI
     'Decide if the user wishes to close JavaRa or continue using it
     Private Sub Button7_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles Button7.Click
         If btnCloseWiz.Checked = True Then
+
+            'Reset the UI
             Call return_home()
+
+            'Reset the list of uninstallers
+            get_jre_uninstallers()
+
             'Reset the label text
             lblCompleted.Text = get_string("step 4 - completed.")
+
         Else
             Me.Close()
         End If
