@@ -27,7 +27,7 @@ Public Class UI
     Dim config_file As String = System.IO.Path.GetDirectoryName(System.Reflection.Assembly.GetEntryAssembly().Location) & "\config.ini"
 
     'List of uninstall object
-    Dim JREObjectList As New List(Of JREInstallObject)
+    Public JREObjectList As New List(Of JREInstallObject)
 
 #End Region
 
@@ -210,6 +210,9 @@ Public Class UI
             'Render the UI if no command line arguments were used
             Call render_ui()
         End If
+
+        'Acquire the list of installed JREs
+        get_jre_uninstallers()
 
         'Check silently for updates
         If boxUpdateCheck.Checked Then
@@ -509,7 +512,9 @@ Public Class UI
                         End If
 
                     Catch ex As Exception
-                        MessageBox.Show(get_string("Could not locatate uninstaller for") & " " & cboVersion.Text, get_string("Uninstaller not found"), MessageBoxButtons.OK, MessageBoxIcon.Error)
+                        If stay_silent = False Then
+                            MessageBox.Show(get_string("Could not locatate uninstaller for") & " " & cboVersion.Text, get_string("Uninstaller not found"), MessageBoxButtons.OK, MessageBoxIcon.Error)
+                        End If
                     End Try
 
                 End If
@@ -626,79 +631,10 @@ Public Class UI
                 End If
                 If path = get_string("Remove Java Runtime") Then
 
-                    'Determine which uninstallers to show
-                    Try
-
-                        'Create a variable to store value information 
-                        Dim sk As RegistryKey
-
-                        'Create a list of possible installed-programs sources
-                        Dim regpath As New List(Of RegistryKey)
-                        regpath.Add(Registry.LocalMachine.OpenSubKey("SOFTWARE\Microsoft\Windows\CurrentVersion\Uninstall"))
-                        regpath.Add(Registry.CurrentUser.OpenSubKey("SOFTWARE\Microsoft\Windows\CurrentVersion\Uninstall"))
-                        regpath.Add(Registry.LocalMachine.OpenSubKey("SOFTWARE\Wow6432Node\Microsoft\Windows\CurrentVersion\Uninstall"))
-                        regpath.Add(Registry.CurrentUser.OpenSubKey("SOFTWARE\Wow6432Node\Microsoft\Windows\CurrentVersion\Uninstall"))
-
-                        'Keep track of the image index
-                        Dim image_index As Integer = 0
-
-                        'Loop through possible locations for lists of apps
-                        For Each reg_location As RegistryKey In regpath
-
-                            'Declare the path to this individual list of installed programs
-                            Dim rk As RegistryKey = reg_location
-
-                            'The real deal
-                            Dim skname() = rk.GetSubKeyNames
-
-                            'Iterate through the keys located here
-                            For counter As Integer = 0 To skname.Length - 1
-
-                                'Filter out empty keys
-                                sk = rk.OpenSubKey(skname(counter))
-
-                                If sk.GetValue("DisplayName") Is Nothing = False Then
-
-                                    'Write the display name
-                                    Dim name As String = CStr((sk.GetValue("DisplayName")))
-                                    Dim version As String
-                                    Dim uninstall As String
-
-
-                                    'Write the version
-                                    If sk.GetValue("DisplayVersion") Is Nothing = False Then
-                                        version = (CStr((sk.GetValue("DisplayVersion"))))
-                                    Else
-                                        version = (get_string("Data Unavailable"))
-                                    End If
-
-                                    'Save the tag for the uninstall path
-                                    If sk.GetValue("UninstallString") Is Nothing Then
-                                        uninstall = ""
-                                    Else
-                                        uninstall = (CStr((sk.GetValue("UninstallString"))))
-                                    End If
-
-
-                                    'Check if entry is for Java 6
-                                    If name.StartsWith("Java(TM) 6") Or name.ToString.StartsWith("Java 6 Update") = True Then
-                                        JREObjectList.Add(New JREInstallObject(name, version, uninstall))
-                                        cboVersion.Items.Add(name)
-                                    End If
-
-                                    'Check if entry is for Java 7
-                                    If name.StartsWith("Java(TM) 7") Or name.ToString.StartsWith("Java 7") = True Then
-                                        JREObjectList.Add(New JREInstallObject(name, version, uninstall))
-                                        cboVersion.Items.Add(name)
-                                    End If
-
-                                End If
-                            Next
-                        Next
-
-                    Catch ex As Exception
-                        write_error(ex)
-                    End Try
+                    'Get the list of installed JRE items
+                    For Each InstalledJRE As JREInstallObject In JREObjectList
+                        cboVersion.Items.Add(InstalledJRE.Name)
+                    Next
 
                     show_panel(Step1)
 
