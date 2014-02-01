@@ -1,6 +1,7 @@
 ﻿Imports Microsoft.Win32
 
 Module routines_interface
+
     'Shared routine to bring a panel to the front
     Public Sub show_panel(ByVal pnl As Panel, Optional ByVal scrollbar As Boolean = False)
         'Load the correct panel
@@ -10,6 +11,7 @@ Module routines_interface
         'Ensure the page footer is correct
         UI.Panel7.BringToFront()
     End Sub
+
     'Restore the home page UI
     Public Sub return_home()
         'fill with new panel
@@ -18,6 +20,7 @@ Module routines_interface
         UI.lvTools.Dock = DockStyle.Fill
         UI.Panel7.BringToFront()
     End Sub
+
     'Clean JRE related temp files
     Public Sub clean_jre_temp_files()
         write_log(get_string("== Cleaning JRE temporary files =="))
@@ -44,6 +47,7 @@ Module routines_interface
         write_log(" ")
 
     End Sub
+
     'Delete old JRE Firefox extensions
     Public Sub delete_jre_firefox_extensions()
         Try
@@ -104,45 +108,37 @@ Module routines_interface
             write_error(ex)
         End Try
     End Sub
+
     'Uninstall all JRE's with their uninstallers
     Public Sub uninstall_all(Optional ByVal silent As Boolean = False)
-        Try
-            Dim Software As String = Nothing
-            Dim SoftwareKey As String = "SOFTWARE\Microsoft\Windows\CurrentVersion\Installer\UserData\S-1-5-18\Products"
-            Using rk As RegistryKey = Registry.LocalMachine.OpenSubKey(SoftwareKey)
-                For Each skName In rk.GetSubKeyNames
-                    Dim name = Registry.LocalMachine.OpenSubKey(SoftwareKey).OpenSubKey(skName).OpenSubKey("InstallProperties").GetValue("DisplayName")
-                    Dim uninstallString = Registry.LocalMachine.OpenSubKey(SoftwareKey).OpenSubKey(skName).OpenSubKey("InstallProperties").GetValue("UninstallString")
-                    'Check for /SILENT and add appropriate options to uninstallstring
-                    If silent = True Then
-                        uninstallString = uninstallString & " /qn /Norestart"
-                    End If
-                    'Check if entry is for Java 6
-                    If name.ToString.StartsWith("Java(TM) 6") Or name.ToString.StartsWith("Java 6 Update") = True Then
-                        Try
-                            Shell(uninstallString, AppWinStyle.NormalFocus, True)
-                        Catch ex As Exception
-                            write_error(ex)
-                        End Try
-                    End If
 
-                    'Check if entry is for Java 7
-                    If name.ToString.StartsWith("Java(TM) 7") Or name.ToString.StartsWith("Java 7") Then
+        'Loop through all installed JREs
+        For Each InstalledJRE As JREInstallObject In UI.JREObjectList
 
-                        Try
-                            Shell(uninstallString, AppWinStyle.NormalFocus, True)
-                        Catch ex As Exception
-                            write_error(ex)
-                        End Try
+            If InstalledJRE.Installed = True Then
+
+                Try
+
+                    If silent = False Then
+
+                        'Uninstall normally
+                        Shell(InstalledJRE.UninstallString, AppWinStyle.NormalFocus, True)
+
+                    Else
+
+                        'Uninstall silently
+                        Shell(InstalledJRE.UninstallString & " /qn /Norestart", AppWinStyle.Hide, True)
 
                     End If
+                Catch ex As Exception
+                    write_error(ex)
+                End Try
 
-                Next
-            End Using
-        Catch ex As Exception
-            write_error(ex)
-        End Try
+            End If
+        Next
+
     End Sub
+
     'Cleanup old JRE registry keys
     Public Sub cleanup_old_jre()
         Try
@@ -220,6 +216,7 @@ Module routines_interface
             UI.Close()
         End If
     End Sub
+
     'Purge entire JRE install
     Public Sub purge_jre()
         Try
@@ -387,10 +384,10 @@ Module routines_interface
     End Sub
 
     'Sub to loop and delete all files in specified directory
-    Private Sub LoopDelete(ByVal file As String)
+    Private Sub LoopDelete(ByVal dir As String)
 
         'Loop and delete
-        For Each foundFile As String In My.Computer.FileSystem.GetFiles(file)
+        For Each foundFile As String In My.Computer.FileSystem.GetFiles(dir)
             Try
                 If IO.File.Exists(foundFile) Then
                     IO.File.Delete(foundFile)
@@ -400,4 +397,5 @@ Module routines_interface
             End Try
         Next
     End Sub
+
 End Module

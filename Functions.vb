@@ -1,5 +1,7 @@
 ﻿Imports Microsoft.Win32
 Module Functions
+
+    'Determine if a file is in use
     Public Function FileInUse(ByVal sFile As String) As Boolean
         If System.IO.File.Exists(sFile) Then
             Try
@@ -12,6 +14,7 @@ Module Functions
         End If
         Return False
     End Function
+
     'Delete a file if it isn't in use
     Public Sub DeleteIfPermitted(ByVal path As String)
         Try
@@ -23,6 +26,8 @@ Module Functions
         Catch ex As Exception
         End Try
     End Sub
+
+    'Determine if a registry key exists
     Public Function RegKeyExists(ByVal key As String) As Boolean
         Try
 
@@ -95,19 +100,18 @@ Module Functions
             Return False
         End Try
     End Function
+
     'Method for logging important events
     Public Sub write_log(ByVal message As String)
-        If UI.boxSaveLog.Checked Then
             Try
                 Dim SW As IO.TextWriter
-
                 SW = IO.File.AppendText(System.IO.Path.GetDirectoryName(System.Reflection.Assembly.GetEntryAssembly().Location) & "\JavaRa-" & sanitze_str(CStr(Date.Today)) & ".log")
                 SW.WriteLine(message)
                 SW.Close()
             Catch ex As Exception
             End Try
-        End If
     End Sub
+
     'Method that logs exceptions 
     Public Sub write_error(ByVal error_object As Exception)
 
@@ -125,6 +129,8 @@ Module Functions
         Catch ex As Exception
         End Try
     End Sub
+
+    'Remove unsafe characters from a string. Useful for formatting dates as NTFS-compatible filenames.
     Public Function sanitze_str(ByVal filename As String, Optional ByVal allowSpaces As Boolean = False) As String
         filename = filename.Replace("[", "")
         filename = filename.Replace("*]", "")
@@ -144,4 +150,5 @@ Module Functions
 
         Return filename
     End Function
+
 End Module

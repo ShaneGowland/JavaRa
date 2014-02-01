@@ -8,6 +8,7 @@
     'Stores the language to load JavaRa in
     Friend language As String
 
+    'Translate the user interface and all menues
     Public Sub translate_strings()
 
         'Set the language file path to a variable
@@ -57,6 +58,8 @@
             write_error(ex)
         End Try
     End Sub
+
+    'Recursively translate a specific UI control
     Public Sub TranslateControl(ByVal Ctrl As Control)
         For Each ChildCtrl As Control In Ctrl.Controls
             If ChildCtrl.Text <> "" Then
@@ -65,12 +68,16 @@
             TranslateControl(ChildCtrl)
         Next
     End Sub
+
+    'Enumerate all ToolStripMenuItem controls in a given ToolStripMenu
     Public Sub GetMenues(ByVal Current As ToolStripMenuItem, ByRef menues As List(Of ToolStripMenuItem))
         menues.Add(Current)
         For Each menu As ToolStripMenuItem In Current.DropDownItems
             GetMenues(menu, menues)
         Next
     End Sub
+
+    'Return the translated version of a string, depending on language
     Public Function get_string(ByVal initial_string As String) As String
 
         'Don't execute if language is English
@@ -112,4 +119,5 @@
         ' Return the English line.
         Return initial_string
     End Function
+
 End Module

@@ -5,7 +5,7 @@ Public Class UI
 #Region "Global Variables/Declarations"
 
     'Store the version number
-    Dim version_number As String = "020200"
+    Dim version_number As String = "020500"
 
     'Downloader variables
     Dim whereToSave As String 'Where the program save the file
@@ -26,9 +26,13 @@ Public Class UI
     'Variable to store the location of the config file
     Dim config_file As String = System.IO.Path.GetDirectoryName(System.Reflection.Assembly.GetEntryAssembly().Location) & "\config.ini"
 
+    'List of uninstall object
+    Public JREObjectList As New List(Of JREInstallObject)
+
 #End Region
 
 #Region "Opening/Closing JavaRa"
+
     'Form closing/saving event
     Private Sub UI_FormClosing(ByVal sender As Object, ByVal e As System.Windows.Forms.FormClosingEventArgs) Handles Me.FormClosing
         'Save the settins to config.ini
@@ -45,11 +49,13 @@ Public Class UI
             'Do not save log if language is English
             If language = "English" = False Then : SW.WriteLine("Language:" & language) : End If
 
-            'Save the "save log" setting
-            If boxSaveLog.Checked = True Then : SW.WriteLine("SaveLog:True") : End If
-
             'Save the update check settings
             If boxUpdateCheck.Checked = False Then : SW.WriteLine("UpdateCheck:False") : End If
+
+            'Save the window size
+            If boxPreserveUISize.Checked = True Then
+                SW.WriteLine("WindowHeight:" & Me.Height) : SW.WriteLine("WindowWidth:" & Me.Width)
+            End If
 
             'Close the textwriter
             SW.Close()
@@ -64,6 +70,7 @@ Public Class UI
         Catch ex As Exception
         End Try
     End Sub
+
     'Form_Load event
     Private Sub Form1_Load(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles MyBase.Load
 
@@ -81,14 +88,18 @@ Public Class UI
                         language = rule.Replace("Language:", "")
                     End If
 
-                    'Read the "save log" settings
-                    If rule = ("SaveLog:True") Then
-                        boxSaveLog.Checked = True
-                    End If
-
                     'Update check
                     If rule = ("UpdateCheck:False") Then
                         boxUpdateCheck.Checked = False
+                    End If
+
+                    'Window size
+                    If (rule.StartsWith("WindowHeight:")) Then
+                        boxPreserveUISize.Checked = True
+                        Me.Height = CInt(rule.Replace("WindowHeight:", ""))
+                    ElseIf (rule.StartsWith("WindowWidth:")) Then
+                        boxPreserveUISize.Checked = True
+                        Me.Width = CInt(rule.Replace("WindowWidth:", ""))
                     End If
 
                 Loop
@@ -202,6 +213,9 @@ Public Class UI
             Call render_ui()
         End If
 
+        'Acquire the list of installed JREs
+        get_jre_uninstallers()
+
         'Check silently for updates
         If boxUpdateCheck.Checked Then
             Dim trd As Threading.Thread = New Threading.Thread(AddressOf check_for_update)
@@ -210,6 +224,7 @@ Public Class UI
         End If
 
     End Sub
+
     'Render the grid of icons on the main GUI
     Private Sub render_ui()
         'Render the user interface
@@ -257,17 +272,22 @@ Public Class UI
         End Try
 
         'Set the user interface
-        Me.Width = 510
-        Me.Height = 260
+        If boxPreserveUISize.Checked = False Then
+            Me.Width = 460
+            Me.Height = 260
+        End If
+
         Call return_home() 'Sets the GUI to the start position
 
 
     End Sub
+
     'Perform the reboot
     Public Sub reboot_app()
         reboot = True
         Me.Close()
     End Sub
+
     'After the form has closed, reboot it
     Private Sub UI_FormClosed(ByVal sender As Object, ByVal e As System.Windows.Forms.FormClosedEventArgs) Handles Me.FormClosed
         'Allow for a reboot
@@ -291,9 +311,11 @@ Public Class UI
         End If
 
     End Sub
+
 #End Region
 
 #Region "Additional Tools and cleaning functions"
+
     'Iterates through checkedlistbox and decides which functions need to be run
     Private Sub btnRun_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles btnRun.Click
         'Check if anything is selected
@@ -322,77 +344,96 @@ Public Class UI
         'Show some user feedback
         ToolTip1.Show(get_string(get_string("Selected tasks completed successfully.")), lblTitle)
     End Sub
+
     'Read the list of defs and remove the files and registry keys specified
     Private Sub btnCleanup_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles btnCleanup.Click
         Call cleanup_old_jre()
     End Sub
+
 #End Region
 
 #Region "Update Java Downloader/Backgroundworker"
+
     'Downloads the specified file in a thread.
     Private Sub BackgroundWorker1_DoWork(ByVal sender As System.Object, ByVal e As System.ComponentModel.DoWorkEventArgs) Handles BackgroundWorker1.DoWork
+
         'Creating the request and getting the response
         Dim theResponse As HttpWebResponse
-        Dim theRequest As HttpWebRequest
+        Dim theRequest As HttpWebRequest = WebRequest.Create(Me.txtFileName.Text)
+
         Try 'Checks if the file exist
-            theRequest = WebRequest.Create(Me.txtFileName.Text)
+
             theResponse = theRequest.GetResponse
         Catch ex As Exception
             MessageBox.Show(get_string("An error occurred while downloading file. Possible causes:") & ControlChars.CrLf & _
-                            get_string("1) File doesn't exist") & ControlChars.CrLf & _
-                           get_string("2) Remote server error"), get_string("Error"), MessageBoxButtons.OK, MessageBoxIcon.Error)
+                              get_string("1) File doesn't exist") & ControlChars.CrLf & _
+                              get_string("2) Remote server error"), get_string("Error"), MessageBoxButtons.OK, MessageBoxIcon.Error)
             Dim cancelDelegate As New DownloadCompleteSafe(AddressOf DownloadComplete)
             Me.Invoke(cancelDelegate, True)
-
             Exit Sub
         End Try
+
+        'Delete previous instances of Me.whereToSave
+        If IO.File.Exists(Me.whereToSave) Then
+            DeleteIfPermitted(Me.whereToSave)
+        End If
+
         Dim length As Long = theResponse.ContentLength 'Size of the response (in bytes)
+        ' MsgBox(theResponse.ContentLength) 'Used for troubleshooting
+
+        'Hack to prevent negative length exploding shit
+        If length < 1 Then
+            length = 550000
+        End If
+
         Dim safedelegate As New ChangeTextsSafe(AddressOf ChangeTexts)
         Me.Invoke(safedelegate, length, 0, 0, 0) 'Invoke the TreadsafeDelegate
         Dim writeStream As New IO.FileStream(Me.whereToSave, IO.FileMode.Create)
         'Replacement for Stream.Position (webResponse stream doesn't support seek)
         Dim nRead As Integer
         'To calculate the download speed
-        Dim speedtimer As New Stopwatch
         Dim currentspeed As Double = -1
-        Dim readings As Integer = 0
         Do
+
+            'Test for cancellation
             If BackgroundWorker1.CancellationPending Then 'If user abort download
-                Exit Do
+                IO.File.Delete(Me.whereToSave)
+                Dim cancelDelegate As New DownloadCompleteSafe(AddressOf DownloadComplete)
+                Me.Invoke(cancelDelegate, True)
+                Exit Sub
             End If
-            speedtimer.Start()
+
+
             Dim readBytes(4095) As Byte
             Dim bytesread As Integer = theResponse.GetResponseStream.Read(readBytes, 0, 4096)
             nRead += bytesread
-            Dim percent As Short = (nRead * 100) / length
+
+            'Calculate the progress bar
+            Dim percent As Short = ProgressBar2.Value
+            Try
+                percent = (nRead * 100) / length
+            Catch ex As Exception
+            End Try
+
+            'Update the UI
             Me.Invoke(safedelegate, length, nRead, percent, currentspeed)
             If bytesread = 0 Then Exit Do
             writeStream.Write(readBytes, 0, bytesread)
-            speedtimer.Stop()
-            readings += 1
-            If readings >= 5 Then 'For increase precision, the speed it's calculated only every five cycles
-                currentspeed = 20480 / (speedtimer.ElapsedMilliseconds / 1000)
-                speedtimer.Reset()
-                readings = 0
-            End If
+
         Loop
         'Close the streams
         theResponse.GetResponseStream.Close()
         writeStream.Close()
-        If Me.BackgroundWorker1.CancellationPending Then
-            IO.File.Delete(Me.whereToSave)
-            Dim cancelDelegate As New DownloadCompleteSafe(AddressOf DownloadComplete)
-            Me.Invoke(cancelDelegate, True)
-            Exit Sub
-        End If
-        Try
-            Dim completeDelegate As New DownloadCompleteSafe(AddressOf DownloadComplete)
-            Me.Invoke(completeDelegate, False) : Catch ex As Exception : End Try
+
+        Dim completeDelegate As New DownloadCompleteSafe(AddressOf DownloadComplete)
+        Me.Invoke(completeDelegate, False)
     End Sub
+
     'Code that runs when background worker has completed.
     Public Sub DownloadComplete(ByVal cancelled As Boolean)
         Me.txtFileName.Enabled = True
         btnDownload.Enabled = True
+
         If cancelled Then
             MessageBox.Show(get_string("Download has been cancelled."), get_string("Cancelled."), MessageBoxButtons.OK, MessageBoxIcon.Information)
         Else
@@ -401,12 +442,15 @@ Public Class UI
         Me.ProgressBar1.Value = 0 : Me.ProgressBar3.Value = 0
         'Just in case of a minor exception
         Me.lblStep1.Text = ""
-        Me.txtFileName.Enabled = True
 
         'Call the exe on completion
         If Me.whereToSave = My.Computer.FileSystem.SpecialDirectories.Temp & "\java-installer.exe" Then
             If IO.File.Exists(My.Computer.FileSystem.SpecialDirectories.Temp & "\java-installer.exe") Then
+                ProgressBar2.Value = 95
                 Shell(My.Computer.FileSystem.SpecialDirectories.Temp & "\java-installer.exe", AppWinStyle.NormalFocus, True)
+                ProgressBar2.Value = 100
+                Me.Button1.Enabled = True
+                Me.Button4.Enabled = True
             End If
         Else
             ToolTip1.Show(get_string("JavaRa definitions updated successfully"), ToolStrip1)
@@ -414,11 +458,13 @@ Public Class UI
 
         Me.Cursor = Cursors.Default
     End Sub
+
     'Update the progress bar while a file is being downloaded. Shared between multiple downloaders.
     Public Sub ChangeTexts(ByVal length As Long, ByVal position As Integer, ByVal percent As Integer, ByVal speed As Double)
         Me.ProgressBar2.Value = percent
         ProgressBar3.Value = percent
     End Sub
+
     'Start the background worker by supplying essential "what to download?" information.
     Private Sub btnDownload_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles btnDownload.Click
         Me.Cursor = Cursors.WaitCursor
@@ -426,8 +472,15 @@ Public Class UI
         Try
             theRequest = WebRequest.Create("http://content.thewebatom.net/files/confirm.txt")
             theResponse = theRequest.GetResponse
-            'Set the path to the rules
-            txtFileName.Text = "http://javadl.sun.com/webapps/download/AutoDL?BundleId=49024"
+
+            'Set the path to the corrrect JRE url
+            If IO.Directory.Exists("C:\Program Files (x86)") Then
+                txtFileName.Text = "http://singularlabs.com/download/jrex64/latest/"
+            Else
+                txtFileName.Text = "http://singularlabs.com/download/jrex86/latest/"
+            End If
+
+
         Catch ex As Exception
             MessageBox.Show(get_string("Could not make a connection to download server. Please see our online help for assistance.") & Environment.NewLine & get_string("This error can be caused by incorrect proxy settings or a security product conflict."), get_string("An error was encountered."), MessageBoxButtons.OK, MessageBoxIcon.Error)
             Me.Cursor = Cursors.Default
@@ -439,19 +492,25 @@ Public Class UI
         Me.whereToSave = My.Computer.FileSystem.SpecialDirectories.Temp & "\java-installer.exe"
         Me.txtFileName.Enabled = False
         Me.btnDownload.Enabled = False
+        Me.Button1.Enabled = False
+        Me.Button4.Enabled = False
         Me.BackgroundWorker1.RunWorkerAsync() 'Start download
     End Sub
+
     'Update the JavaRa definitions
     Private Sub btnUpdateDefs_click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles btnUpdateDefs.Click
         download_defs()
     End Sub
+
 #End Region
 
 #Region "Uninstall/Reinstall Java Runtime environment"
+
     'Read the list of defs and remove the files and registry keys specified
     Private Sub btnRemoveKeys_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles btnRemoveKeys.Click
         Call purge_jre()
     End Sub
+
     'Run the uninstaller depending on which combobox item is selected.
     Private Sub btnRunUninstaller_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles btnRunUninstaller.Click
         'Check for blank selection
@@ -459,45 +518,45 @@ Public Class UI
             MessageBox.Show(get_string("Please select a version of JRE to remove."))
         End If
 
-        'Iterate through all installed programs and find Java.
-        Try
-            Dim Software As String = Nothing
-            Dim SoftwareKey As String = "SOFTWARE\Microsoft\Windows\CurrentVersion\Installer\UserData\S-1-5-18\Products"
-            Using rk As RegistryKey = Registry.LocalMachine.OpenSubKey(SoftwareKey)
-                For Each skName In rk.GetSubKeyNames
-                    Dim name = Registry.LocalMachine.OpenSubKey(SoftwareKey).OpenSubKey(skName).OpenSubKey("InstallProperties").GetValue("DisplayName")
-                    Dim uninstallString = Registry.LocalMachine.OpenSubKey(SoftwareKey).OpenSubKey(skName).OpenSubKey("InstallProperties").GetValue("UninstallString")
+            'Uninstall the Java corresponding to the selected combobox item
+            For Each InstalledJRE As JREInstallObject In JREObjectList
 
-                    'Check if entry is for Java 6
-                    If cboVersion.Text = get_string("Java Runtime Environment 6") Then
-                        If name.ToString.StartsWith("Java(TM) 6") Or name.ToString.StartsWith("Java 6 Update") = True Then
-                            Try
-                                Shell(uninstallString, AppWinStyle.NormalFocus, True)
-                            Catch ex As Exception
-                                MessageBox.Show(get_string("Could not locatate uninstaller for") & " " & cboVersion.Text, get_string("Uninstaller not found"), MessageBoxButtons.OK, MessageBoxIcon.Error)
-                            End Try
-                        End If
-                    End If
+                'Check if it's the right version
+                If InstalledJRE.Name = cboVersion.Text Then
 
-                    'Check if entry is for Java 7
-                    If cboVersion.Text = get_string("Java Runtime Environment 7") Then
-                        If name.ToString.StartsWith("Java(TM) 7") Or name.ToString.StartsWith("Java 7") Then
+                    Try
 
-                            Try
-                                Shell(uninstallString, AppWinStyle.NormalFocus, True)
-                            Catch ex As Exception
-                                MessageBox.Show(get_string("Could not locatate uninstaller for") & " " & cboVersion.Text, get_string("Uninstaller not found"), MessageBoxButtons.OK, MessageBoxIcon.Error)
-                            End Try
+                        'Don't do this twice
+                        If InstalledJRE.Installed = True Then
+
+                            'Call the uninstaller
+                            Shell(InstalledJRE.UninstallString, AppWinStyle.NormalFocus, True)
+
+                            'Remove the item from the combobox
+                            cboVersion.Items.Remove(InstalledJRE.Name)
+                            InstalledJRE.Installed = False
+
+                            'Disable the stuff if nothing remaining
+                            If cboVersion.Items.Count = 0 Then
+                                cboVersion.Enabled = False
+                                btnRunUninstaller.Enabled = False
+                            End If
 
                         End If
+
+                    Catch ex As Exception
+                        If stay_silent = False Then
+                            MessageBox.Show(get_string("Could not locatate uninstaller for") & " " & cboVersion.Text, get_string("Uninstaller not found"), MessageBoxButtons.OK, MessageBoxIcon.Error)
                     End If
-                Next
-            End Using
-        Catch ex As Exception
-            write_error(ex)
-        End Try
+                    write_error(ex)
+                    End Try
+
+                End If
+
+            Next
 
     End Sub
+
     'Launch the appropriate method for checking the JRE version installed.
     Private Sub btnUpdateNext_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles btnUpdateNext.Click
         'Decide which method the user wishes to check for updates with
@@ -575,6 +634,7 @@ Public Class UI
             End Try
         End If
     End Sub
+
     'Decide which step of the process the downloader should be.
     Private Sub Button1_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles Button1.Click
         If lblDownloadNewVersion.Text = get_string("step 3 - download new version") Then
@@ -585,13 +645,16 @@ Public Class UI
             show_panel(pnlUpdateJRE)
         End If
     End Sub
+
     'This launches the manual download page. Auto-jumped to the Windows section.
     Private Sub LinkLabel1_LinkClicked(ByVal sender As System.Object, ByVal e As System.Windows.Forms.LinkLabelLinkClickedEventArgs) Handles LinkLabel1.LinkClicked
         Process.Start("http://www.java.com/en/download/manual.jsp#win")
     End Sub
+
 #End Region
 
 #Region "User interface navigation"
+
     'Open the appropriate subtool
     Private Sub lvTools_Click(ByVal sender As Object, ByVal e As System.EventArgs) Handles lvTools.Click
         'Handles click events on the main GUI and loads the correct panel.
@@ -603,30 +666,13 @@ Public Class UI
                 End If
                 If path = get_string("Remove Java Runtime") Then
 
-                    'Determine which uninstallers to show
-                    Try
-                        Dim Software As String = Nothing
-                        Dim SoftwareKey As String = "SOFTWARE\Microsoft\Windows\CurrentVersion\Installer\UserData\S-1-5-18\Products"
-                        Using rk As RegistryKey = Registry.LocalMachine.OpenSubKey(SoftwareKey)
-                            For Each skName In rk.GetSubKeyNames
-                                Dim name = Registry.LocalMachine.OpenSubKey(SoftwareKey).OpenSubKey(skName).OpenSubKey("InstallProperties").GetValue("DisplayName")
-                                Dim uninstallString = Registry.LocalMachine.OpenSubKey(SoftwareKey).OpenSubKey(skName).OpenSubKey("InstallProperties").GetValue("UninstallString")
+                    'Reset the ComboBox control
+                    cboVersion.Items.Clear()
 
-                                'Check if entry is for Java 6
-                                If name.ToString.StartsWith("Java(TM) 6") Or name.ToString.StartsWith("Java 6 Update") = True Then
-                                    cboVersion.Items.Add(get_string("Java Runtime Environment 6"))
-                                End If
-
-                                'Check if entry is for Java 7
-                                If name.ToString.StartsWith("Java(TM) 7") Or name.ToString.StartsWith("Java 7") = True Then
-                                    cboVersion.Items.Add(get_string("Java Runtime Environment 7"))
-                                End If
-                            Next
-                        End Using
-
-                    Catch ex As Exception
-
-                    End Try
+                    'Get the list of installed JRE items
+                    For Each InstalledJRE As JREInstallObject In JREObjectList
+                        cboVersion.Items.Add(InstalledJRE.Name)
+                    Next
 
                     show_panel(Step1)
 
@@ -652,24 +698,35 @@ Public Class UI
             End If
         Next
     End Sub
+
     'Navigate to step #2 of removal process.
     Private Sub btnStep1_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles btnStep1.Click
         show_panel(pnlRemoval)
     End Sub
+
     'Make sure the correct "step-label" is displayed when moving the step 3
     Private Sub btnStep2_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles btnStep2.Click
         show_panel(pnlDownload)
     End Sub
+
     'Decide if the user wishes to close JavaRa or continue using it
     Private Sub Button7_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles Button7.Click
         If btnCloseWiz.Checked = True Then
+
+            'Reset the UI
             Call return_home()
+
+            'Reset the list of uninstallers
+            get_jre_uninstallers()
+
             'Reset the label text
             lblCompleted.Text = get_string("step 4 - completed.")
+
         Else
             Me.Close()
         End If
     End Sub
+
     'Navigate to step #4
     Private Sub Button4_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles Button4.Click
         'Clear progress bars
@@ -685,18 +742,22 @@ Public Class UI
             lblCompleted.Text = get_string("step 3 - completed.")
         End If
     End Sub
+
     'Return to panel #1
     Private Sub btnPrev1_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles btnPrev1.Click
         show_panel(Step1)
     End Sub
+
     'Show the settings panel in the UI
     Private Sub btnSettings_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles btnSettings.Click
         show_panel(PanelSettings)
     End Sub
+
     'Return to the home page whenever a back button is pressed
     Private Sub Return_Button_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles Button9.Click, Button11.Click, Button12.Click, btnUpdateJavaPrevious.Click, Button8.Click, Button2.Click
         Call return_home()
     End Sub
+
     'Load the about page
     Private Sub btnAbout_Click_1(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles btnAbout.Click
         show_panel(pnlAbout)
@@ -707,9 +768,11 @@ Public Class UI
     Private Sub Button5_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles Button5.Click
         show_panel(pnlCompleted)
     End Sub
+
 #End Region
 
 #Region "Configuration & Updating"
+
     'Change the current language selection
     Private Sub btnSaveLang_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles btnSaveLang.Click
         'Temporarily store the previous language
@@ -738,6 +801,7 @@ Public Class UI
             End If
         End If
     End Sub
+
     'Prevent the language settings from doing dumb stuff.
     Private Sub boxLanguage_SelectedIndexChanged(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles boxLanguage.SelectedIndexChanged
         If boxLanguage.Text <> language Then
@@ -746,6 +810,7 @@ Public Class UI
             btnSaveLang.Enabled = False
         End If
     End Sub
+
     'This delegate allows the update notification to show across threads.
     Public Delegate Sub ShowNotification(ByVal data As Boolean)
     Public Sub UI_Thread_Show_Notification(ByVal data As Boolean)
@@ -753,10 +818,12 @@ Public Class UI
             Process.Start("http://singularlabs.com/software/javara/javara-download/")
         End If
     End Sub
+
     'Invokation method so that dialog can be shown on UI thread.
     Public Sub show_threaded_dialog()
         lblTitle.BeginInvoke(New ShowNotification(AddressOf UI_Thread_Show_Notification), False)
     End Sub
+
     'Method that performs the update check
     Public Sub check_for_update()
 
@@ -813,19 +880,17 @@ Public Class UI
         End Try
 
     End Sub
-    '
+
+    'Download the definition file without the background worker
     Private Sub download_defs()
         Me.Cursor = Cursors.WaitCursor
 
         'Confirm the connection to the server 
-        Dim sFilename As String, sURI As String
         Try
             theRequest = WebRequest.Create("http://content.thewebatom.net/files/confirm.txt")
             theResponse = theRequest.GetResponse
             'Set the path to the rules
-            sURI = "http://content.thewebatom.net/updates/javara/"
-            sFilename = "JavaRa.def"
-            txtFileName.Text = sURI & sFilename
+            txtFileName.Text = "http://content.thewebatom.net/updates/javara/JavaRa.def"
         Catch ex As Exception
             MessageBox.Show(get_string("Could not make a connection to download server. Please see our online help for assistance.") & Environment.NewLine & get_string("This error can be caused by incorrect proxy settings or a security product conflict."), get_string("An error was encountered."), MessageBoxButtons.OK, MessageBoxIcon.Error)
             Me.Cursor = Cursors.Default
@@ -840,15 +905,16 @@ Public Class UI
         Me.btnDownload.Enabled = False
 
         'If running silently, the background worker does not work correctly.
-        'Use a standard WebClient downloader instaed
+        'Use a standard WebClient downloader instead
         If stay_silent = True Then
-            My.Computer.Network.DownloadFile(txtFileName.Text, Me.whereToSave)
+            My.Computer.Network.DownloadFile(txtFileName.Text, Me.whereToSave, "", "", False, 100, True)
         Else
             Me.BackgroundWorker1.RunWorkerAsync() 'Start download               
         End If
+
+        Me.Cursor = Cursors.Default
     End Sub
 
 #End Region
-
 End Class
 
