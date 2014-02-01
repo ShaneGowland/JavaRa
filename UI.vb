@@ -356,6 +356,7 @@ Public Class UI
 
     'Downloads the specified file in a thread.
     Private Sub BackgroundWorker1_DoWork(ByVal sender As System.Object, ByVal e As System.ComponentModel.DoWorkEventArgs) Handles BackgroundWorker1.DoWork
+
         'Creating the request and getting the response
         Dim theResponse As HttpWebResponse
         Dim theRequest As HttpWebRequest = WebRequest.Create(Me.txtFileName.Text)
@@ -369,11 +370,16 @@ Public Class UI
                               get_string("2) Remote server error"), get_string("Error"), MessageBoxButtons.OK, MessageBoxIcon.Error)
             Dim cancelDelegate As New DownloadCompleteSafe(AddressOf DownloadComplete)
             Me.Invoke(cancelDelegate, True)
-
             Exit Sub
         End Try
+
+        'Delete previous instances of Me.whereToSave
+        If IO.File.Exists(Me.whereToSave) Then
+            DeleteIfPermitted(Me.whereToSave)
+        End If
+
         Dim length As Long = theResponse.ContentLength 'Size of the response (in bytes)
-        'MsgBox(theResponse.ContentLength)
+        ' MsgBox(theResponse.ContentLength) 'Used for troubleshooting
 
         'Hack to prevent negative length exploding shit
         If length < 1 Then
@@ -386,38 +392,39 @@ Public Class UI
         'Replacement for Stream.Position (webResponse stream doesn't support seek)
         Dim nRead As Integer
         'To calculate the download speed
-        Dim speedtimer As New Stopwatch
         Dim currentspeed As Double = -1
-        Dim readings As Integer = 0
         Do
+
+            'Test for cancellation
             If BackgroundWorker1.CancellationPending Then 'If user abort download
-                Exit Do
+                IO.File.Delete(Me.whereToSave)
+                Dim cancelDelegate As New DownloadCompleteSafe(AddressOf DownloadComplete)
+                Me.Invoke(cancelDelegate, True)
+                Exit Sub
             End If
-            speedtimer.Start()
+
+
             Dim readBytes(4095) As Byte
             Dim bytesread As Integer = theResponse.GetResponseStream.Read(readBytes, 0, 4096)
             nRead += bytesread
-            Dim percent As Short = (nRead * 100) / length
+
+            'Calculate the progress bar
+            Dim percent As Short = ProgressBar2.Value
+            Try
+                percent = (nRead * 100) / length
+            Catch ex As Exception
+            End Try
+
+            'Update the UI
             Me.Invoke(safedelegate, length, nRead, percent, currentspeed)
             If bytesread = 0 Then Exit Do
             writeStream.Write(readBytes, 0, bytesread)
-            speedtimer.Stop()
-            readings += 1
-            If readings >= 5 Then 'For increase precision, the speed it's calculated only every five cicles
-                currentspeed = 20480 / (speedtimer.ElapsedMilliseconds / 1000)
-                speedtimer.Reset()
-                readings = 0
-            End If
+
         Loop
         'Close the streams
         theResponse.GetResponseStream.Close()
         writeStream.Close()
-        If Me.BackgroundWorker1.CancellationPending Then
-            IO.File.Delete(Me.whereToSave)
-            Dim cancelDelegate As New DownloadCompleteSafe(AddressOf DownloadComplete)
-            Me.Invoke(cancelDelegate, True)
-            Exit Sub
-        End If
+
         Dim completeDelegate As New DownloadCompleteSafe(AddressOf DownloadComplete)
         Me.Invoke(completeDelegate, False)
     End Sub
@@ -426,6 +433,7 @@ Public Class UI
     Public Sub DownloadComplete(ByVal cancelled As Boolean)
         Me.txtFileName.Enabled = True
         btnDownload.Enabled = True
+
         If cancelled Then
             MessageBox.Show(get_string("Download has been cancelled."), get_string("Cancelled."), MessageBoxButtons.OK, MessageBoxIcon.Information)
         Else
@@ -435,11 +443,14 @@ Public Class UI
         'Just in case of a minor exception
         Me.lblStep1.Text = ""
 
-
         'Call the exe on completion
         If Me.whereToSave = My.Computer.FileSystem.SpecialDirectories.Temp & "\java-installer.exe" Then
             If IO.File.Exists(My.Computer.FileSystem.SpecialDirectories.Temp & "\java-installer.exe") Then
+                ProgressBar2.Value = 95
                 Shell(My.Computer.FileSystem.SpecialDirectories.Temp & "\java-installer.exe", AppWinStyle.NormalFocus, True)
+                ProgressBar2.Value = 100
+                Me.Button1.Enabled = True
+                Me.Button4.Enabled = True
             End If
         Else
             ToolTip1.Show(get_string("JavaRa definitions updated successfully"), ToolStrip1)
@@ -464,9 +475,9 @@ Public Class UI
 
             'Set the path to the corrrect JRE url
             If IO.Directory.Exists("C:\Program Files (x86)") Then
-                txtFileName.Text = "http://javadl.sun.com/webapps/download/AutoDL?BundleId=80814"
+                txtFileName.Text = "http://singularlabs.com/download/jrex64/latest/"
             Else
-                txtFileName.Text = "http://javadl.sun.com/webapps/download/AutoDL?BundleId=80812"
+                txtFileName.Text = "http://singularlabs.com/download/jrex86/latest/"
             End If
 
 
@@ -481,6 +492,8 @@ Public Class UI
         Me.whereToSave = My.Computer.FileSystem.SpecialDirectories.Temp & "\java-installer.exe"
         Me.txtFileName.Enabled = False
         Me.btnDownload.Enabled = False
+        Me.Button1.Enabled = False
+        Me.Button4.Enabled = False
         Me.BackgroundWorker1.RunWorkerAsync() 'Start download
     End Sub
 
