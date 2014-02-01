@@ -106,42 +106,29 @@ Module routines_interface
     End Sub
     'Uninstall all JRE's with their uninstallers
     Public Sub uninstall_all(Optional ByVal silent As Boolean = False)
-        Try
-            Dim Software As String = Nothing
-            Dim SoftwareKey As String = "SOFTWARE\Microsoft\Windows\CurrentVersion\Installer\UserData\S-1-5-18\Products"
-            Using rk As RegistryKey = Registry.LocalMachine.OpenSubKey(SoftwareKey)
-                For Each skName In rk.GetSubKeyNames
-                    Dim name = Registry.LocalMachine.OpenSubKey(SoftwareKey).OpenSubKey(skName).OpenSubKey("InstallProperties").GetValue("DisplayName")
-                    Dim uninstallString = Registry.LocalMachine.OpenSubKey(SoftwareKey).OpenSubKey(skName).OpenSubKey("InstallProperties").GetValue("UninstallString")
-                    'Check for /SILENT and add appropriate options to uninstallstring
-                    If silent = True Then
-                        uninstallString = uninstallString & " /qn /Norestart"
-                    End If
-                    'Check if entry is for Java 6
-                    If name.ToString.StartsWith("Java(TM) 6") Or name.ToString.StartsWith("Java 6 Update") = True Then
-                        Try
-                            Shell(uninstallString, AppWinStyle.NormalFocus, True)
-                        Catch ex As Exception
-                            write_error(ex)
-                        End Try
-                    End If
 
-                    'Check if entry is for Java 7
-                    If name.ToString.StartsWith("Java(TM) 7") Or name.ToString.StartsWith("Java 7") Then
+        'Loop through all installed JREs
+        For Each InstalledJRE As JREInstallObject In UI.JREObjectList
 
-                        Try
-                            Shell(uninstallString, AppWinStyle.NormalFocus, True)
-                        Catch ex As Exception
-                            write_error(ex)
-                        End Try
+            Try
 
-                    End If
+                If silent = False Then
 
-                Next
-            End Using
-        Catch ex As Exception
-            write_error(ex)
-        End Try
+                    'Uninstall normally
+                    Shell(InstalledJRE.UninstallString, AppWinStyle.NormalFocus, True)
+
+                Else
+
+                    'Uninstall silently
+                    Shell(InstalledJRE.UninstallString & " /qn /Norestart", AppWinStyle.Hide, True)
+
+                End If
+            Catch ex As Exception
+                write_error(ex)
+            End Try
+
+        Next
+
     End Sub
     'Cleanup old JRE registry keys
     Public Sub cleanup_old_jre()
