@@ -26,6 +26,9 @@ Public Class UI
     'Variable to store the location of the config file
     Dim config_file As String = System.IO.Path.GetDirectoryName(System.Reflection.Assembly.GetEntryAssembly().Location) & "\config.ini"
 
+    'List of uninstall object
+    Dim JREObjectList As New List(Of JREInstallObject)
+
 #End Region
 
 #Region "Opening/Closing JavaRa"
@@ -482,40 +485,37 @@ Public Class UI
             MessageBox.Show(get_string("Please select a version of JRE to remove."))
         End If
 
-        'Iterate through all installed programs and find Java.
         Try
-            Dim Software As String = Nothing
-            Dim SoftwareKey As String = "SOFTWARE\Microsoft\Windows\CurrentVersion\Installer\UserData\S-1-5-18\Products"
-            Using rk As RegistryKey = Registry.LocalMachine.OpenSubKey(SoftwareKey)
-                For Each skName In rk.GetSubKeyNames
-                    Dim name = Registry.LocalMachine.OpenSubKey(SoftwareKey).OpenSubKey(skName).OpenSubKey("InstallProperties").GetValue("DisplayName")
-                    Dim uninstallString = Registry.LocalMachine.OpenSubKey(SoftwareKey).OpenSubKey(skName).OpenSubKey("InstallProperties").GetValue("UninstallString")
 
-                    'Check if entry is for Java 6
-                    If cboVersion.Text = get_string("Java Runtime Environment 6") Then
-                        If name.ToString.StartsWith("Java(TM) 6") Or name.ToString.StartsWith("Java 6 Update") = True Then
-                            Try
-                                Shell(uninstallString, AppWinStyle.NormalFocus, True)
-                            Catch ex As Exception
-                                MessageBox.Show(get_string("Could not locatate uninstaller for") & " " & cboVersion.Text, get_string("Uninstaller not found"), MessageBoxButtons.OK, MessageBoxIcon.Error)
-                            End Try
+            'Uninstall the Java corresponding to the selected combobox item
+            For Each InstalledJRE As JREInstallObject In JREObjectList
+
+                'Check if it's the right version
+                If InstalledJRE.Name = cboVersion.Text Then
+
+                    Try
+
+                        'Call the uninstaller
+                        Shell(InstalledJRE.UninstallString, AppWinStyle.NormalFocus, True)
+
+                        'Remove the item from the combobox
+                        cboVersion.Items.Remove(InstalledJRE.Name)
+                        JREObjectList.Remove(InstalledJRE)
+
+                        'Disable the stuff if nothing remaining
+                        If cboVersion.Items.Count = 0 Then
+                            cboVersion.Enabled = False
+                            btnRunUninstaller.Enabled = False
                         End If
-                    End If
 
-                    'Check if entry is for Java 7
-                    If cboVersion.Text = get_string("Java Runtime Environment 7") Then
-                        If name.ToString.StartsWith("Java(TM) 7") Or name.ToString.StartsWith("Java 7") Then
+                    Catch ex As Exception
+                        MessageBox.Show(get_string("Could not locatate uninstaller for") & " " & cboVersion.Text, get_string("Uninstaller not found"), MessageBoxButtons.OK, MessageBoxIcon.Error)
+                    End Try
 
-                            Try
-                                Shell(uninstallString, AppWinStyle.NormalFocus, True)
-                            Catch ex As Exception
-                                MessageBox.Show(get_string("Could not locatate uninstaller for") & " " & cboVersion.Text, get_string("Uninstaller not found"), MessageBoxButtons.OK, MessageBoxIcon.Error)
-                            End Try
+                End If
 
-                        End If
-                    End If
-                Next
-            End Using
+            Next
+
         Catch ex As Exception
             write_error(ex)
         End Try
@@ -661,15 +661,35 @@ Public Class UI
 
                                     'Write the display name
                                     Dim name As String = CStr((sk.GetValue("DisplayName")))
+                                    Dim version As String
+                                    Dim uninstall As String
+
+
+                                    'Write the version
+                                    If sk.GetValue("DisplayVersion") Is Nothing = False Then
+                                        version = (CStr((sk.GetValue("DisplayVersion"))))
+                                    Else
+                                        version = (get_string("Data Unavailable"))
+                                    End If
+
+                                    'Save the tag for the uninstall path
+                                    If sk.GetValue("UninstallString") Is Nothing Then
+                                        uninstall = ""
+                                    Else
+                                        uninstall = (CStr((sk.GetValue("UninstallString"))))
+                                    End If
+
 
                                     'Check if entry is for Java 6
                                     If name.StartsWith("Java(TM) 6") Or name.ToString.StartsWith("Java 6 Update") = True Then
-                                        cboVersion.Items.Add(get_string("Java Runtime Environment 6"))
+                                        JREObjectList.Add(New JREInstallObject(name, version, uninstall))
+                                        cboVersion.Items.Add(name)
                                     End If
 
                                     'Check if entry is for Java 7
                                     If name.StartsWith("Java(TM) 7") Or name.ToString.StartsWith("Java 7") = True Then
-                                        cboVersion.Items.Add(get_string("Java Runtime Environment 7"))
+                                        JREObjectList.Add(New JREInstallObject(name, version, uninstall))
+                                        cboVersion.Items.Add(name)
                                     End If
 
                                 End If

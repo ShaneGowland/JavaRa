@@ -101,6 +101,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Functions.vb" />
+    <Compile Include="JREInstallObject.vb" />
     <Compile Include="routines_registry.vb" />
     <Compile Include="routines_locales.vb" />
     <Compile Include="UI.vb">
