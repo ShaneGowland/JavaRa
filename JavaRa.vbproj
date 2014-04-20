@@ -159,6 +159,7 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="JavaRa.ico" />
+    <None Include="Resources\security.png" />
     <None Include="Resources\about.html" />
     <None Include="Resources\credits1.html" />
     <None Include="Resources\credits.html" />

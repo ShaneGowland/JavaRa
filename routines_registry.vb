@@ -211,7 +211,12 @@ Module routines_registry
                         End If
 
                         'Check if entry is for Java 7
-                        If name.StartsWith("Java(TM) 7") Or name.ToString.StartsWith("Java 7") = True Then
+                        If name.StartsWith("Java(TM) 7") Or name.ToString.StartsWith("Java 7 Update") = True Then
+                            UI.JREObjectList.Add(New JREInstallObject(name, version, uninstall))
+                        End If
+
+                        'Check if entry is for Java 8
+                        If name.StartsWith("Java(TM) 8") Or name.ToString.StartsWith("Java 8 Update") = True Then
                             UI.JREObjectList.Add(New JREInstallObject(name, version, uninstall))
                         End If
 

@@ -29,6 +29,8 @@ Public Class UI
     'List of uninstall object
     Public JREObjectList As New List(Of JREInstallObject)
 
+    Dim vendor_integration As Boolean = False
+
 #End Region
 
 #Region "Opening/Closing JavaRa"
@@ -260,6 +262,15 @@ Public Class UI
             ExecutableImages.Images.Add(get_string("Additional Tasks"), i)
             exePath = get_string("Additional Tasks")
             lvTools.Items.Add(get_string("Additional Tasks"), exePath)
+
+            'mockup for security product advertisment
+            If vendor_integration = True Then
+                i = My.Resources.security
+                ExecutableImages.Images.Add(get_string("Upgrade your Anti-Virus"), i)
+                exePath = get_string("Upgrade your Anti-Virus")
+                lvTools.Items.Add(get_string("Upgrade your Anti-Virus"), exePath)
+
+            End If
 
             'Populate the list of tasks
             lbTasks.Items.Add(get_string("Remove startup entry"))
