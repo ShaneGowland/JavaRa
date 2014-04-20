@@ -390,7 +390,7 @@ Public Class UI
         End If
 
         Dim length As Long = theResponse.ContentLength 'Size of the response (in bytes)
-        ' MsgBox(theResponse.ContentLength) 'Used for troubleshooting
+        ' Messagebox.Show(theResponse.ContentLength) 'Used for troubleshooting
 
         'Hack to prevent negative length exploding shit
         If length < 1 Then

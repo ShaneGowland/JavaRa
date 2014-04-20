@@ -190,7 +190,7 @@ Partial Class UI
         Me.lblVersion.Name = "lblVersion"
         Me.lblVersion.Size = New System.Drawing.Size(68, 17)
         Me.lblVersion.TabIndex = 8
-        Me.lblVersion.Text = "version 2.5"
+        Me.lblVersion.Text = "version 2.6"
         '
         'lblTitle
         '
@@ -716,7 +716,7 @@ Partial Class UI
         '
         Me.btnSave.Anchor = CType((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.btnSave.Font = New System.Drawing.Font("Segoe UI", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.btnSave.Location = New System.Drawing.Point(11580, 2)
+        Me.btnSave.Location = New System.Drawing.Point(11959, 2)
         Me.btnSave.Name = "btnSave"
         Me.btnSave.Size = New System.Drawing.Size(166, 24)
         Me.btnSave.TabIndex = 29

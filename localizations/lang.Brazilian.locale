@@ -12,11 +12,11 @@ Remove Outdated JRE Firefox Extensions|Remover extensões desatualizadas do JRE 
 JavaRa 2.0 loaded without incident. Checking system...|JavaRa 2.0 carregado com sucesso. Verificando sistema...
 Operating System:|Sistema Operacional:
 Save|Salvar
-Save Settings|Salvar Configurações
+Save Settings|Salvar configurações
 Back|Voltar
-Program Language|Idioma do Programa
+Program Language|Idioma do programa
 Create a log file|Criar arquivo de log
-program settings|Configurações do Programa
+program settings|Configurações do programa
 Use Jucheck.exe tool|Usar ferramenta Jucheck.exe
 Previous|Anterior
 Next|Próximo
@@ -28,6 +28,7 @@ step 1 - select update method|passo 1 - selecione o método de atualização
 step 1 - run the uninstaller|passo 1 - executar desinstalador
 step 2 - download new version|passo 2 - baixar nova versão
 step 2 - perform removal routine|passo 2 - executar rotina de remoção
+step 2 - perform cleanup routine|passo 2 - executar rotina de limpeza
 step 2 - completed.|passo 2 - completado.
 step 3 - download new version|passo 3 - baixar nova versão
 step 3 - completed.|passo 3 - completado.
@@ -47,17 +48,33 @@ Would you like to download and install the latest version of JRE? |Deseja baixar
 Use this interface.|Usa esta interface.
 Perform Removal Routine|Executar Remoção
 Perform Cleanup Routine|Executar Limpeza
-The removal routine will delete files, folder and registry entries that are known|A rotina de remoção irá apagar arquivos, pastas e entradas do registro conhecidos por
-to be associated with the Java Runtime Environment. It is recommended you |serem associados com versões antigas do Java Runtime Environment. É recomendável
-update the program definitions prior to running.|atualizar as definições do programa antes de executar.
+The removal routine will delete files, folder and registry entries that are known to be associated with the older versions of the Java Runtime Environment|A rotina de remoção irá apagar arquivos, pastas e entradas do registro conhecidos por serem associados com versões antigas do Java Runtime Environment
 Only complete this step if you want to remove the newest JRE version|Somente complete este passo se você deseja remover a última versão do JRE
 Run Uninstaller|Executar Desinstalador
 We recommend that you try running the Java Runtime Environment's built-in|Recomendamos que você execute o desinstalador incluso
 uninstaller before you continue.|do Java Runtime Environment antes de continuar.
 Would you like to open the Oracle online JRE version checker?|Deseja abrir a verificação online do JRE da Oracle?
 Launch online check|Executar verificação online
-version 2.0 beta 3|versão 2.0 beta 3
+version 2.5|versão 2.5
+version|versão
 JavaRa|JavaRa
 Settings|Configurações
 Support|Suporte
 About JavaRa|Sobre o JavaRa
+about JavaRa|sobre o JavaRa
+JavaRa can update JRE by either performing an online version check, or downloading and re-installing the program - regardless of version.|O JavaRa pode atualizar o JRE executando uma verificação online, ou baixando e reinstalando o programa - independente da versão.
+Would you like to download and install the latest version of the JavaRa definitions? These are used to find and remove every last trace of JRE.|Deseja baixar e instalar a última versão das definições do JavaRa? Estas são usadas para localizar e remover qualquer traço restante do JRE.
+JavaRa is designed to simplify the process of deploying, updating and removing the Oracle Java Runtime Environment. The program is developed by SingularLabs and released for free under the liberal GNU General Public License version 2 or later.|O JavaRa foi desenvolvido para simplificar o processo de implementar, atualizar e remover o Oracle Java Runtime Environment. O programa é desenvolvido pela SingularLabs e lançado de graça sob a GNU General Public License versão 2 ou superior.
+Icons: Origami Colored Pencil by Double-J Design.|Ícones: Origami Colored Pencil por Double-J Design.
+Original Idea: Fred De Vries. |Ideia Original: Fred De Vries. 
+Developer: Shane Gowland at SingularLabs.|Devenvolvedor: Shane Gowland em SingularLabs.
+Preserve Window height/width|Lembrar altura/largura da janela
+Automatically check for updates|Verificar automaticamente por atualizações
+Would you like to download and install the latest version of JRE? |Deseja baixar e instalar a última versão do JRE?
+Clean JRE Temp Files|Limpar arquivos temporários do JRE
+JavaRa definitions updated successfully|Definiçõe do JavaRa atualizadas com sucesso!
+== Cleaning JRE temporary files ==|== Limpando arquivos temporários do JRE ==
+Selected tasks completed successfully.|Tarefas selecionadas completadas com sucesso.
+Could not make a connection to download server. Please see our online help for assistance.|Não foi possível conectar ao servidor de download. Veja nossa ajuda online para assistência.
+This error can be caused by incorrect proxy settings or a security product conflict.|Este erro pode ser causado por ajustes proxy incorretos ou conflito com produto de segurança.
+An error was encountered.|Um erro foi encontrado
