@@ -160,8 +160,14 @@ Module routines_registry
         Dim regpath As New List(Of RegistryKey)
         regpath.Add(Registry.LocalMachine.OpenSubKey("SOFTWARE\Microsoft\Windows\CurrentVersion\Uninstall"))
         regpath.Add(Registry.CurrentUser.OpenSubKey("SOFTWARE\Microsoft\Windows\CurrentVersion\Uninstall"))
-        regpath.Add(Registry.LocalMachine.OpenSubKey("SOFTWARE\Wow6432Node\Microsoft\Windows\CurrentVersion\Uninstall"))
-        regpath.Add(Registry.CurrentUser.OpenSubKey("SOFTWARE\Wow6432Node\Microsoft\Windows\CurrentVersion\Uninstall"))
+
+        'Only exist on a x64 operating system
+        If (System.Environment.GetEnvironmentVariable("PROCESSOR_ARCHITECTURE") = "AMD64") Then
+
+            'Add the x64 registry path
+            regpath.Add(Registry.LocalMachine.OpenSubKey("SOFTWARE\Wow6432Node\Microsoft\Windows\CurrentVersion\Uninstall"))
+
+        End If
 
         'Keep track of the image index
         Dim image_index As Integer = 0
