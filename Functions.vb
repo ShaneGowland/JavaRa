@@ -5,7 +5,7 @@ Module Functions
     Public Function FileInUse(ByVal sFile As String) As Boolean
         If System.IO.File.Exists(sFile) Then
             Try
-                Dim F As Short = FreeFile()
+                Dim F As Short = CShort(FreeFile())
                 FileOpen(F, sFile, OpenMode.Binary, OpenAccess.ReadWrite, OpenShare.LockReadWrite)
                 FileClose(F)
             Catch
@@ -78,7 +78,7 @@ Module Functions
                 End If
 
                 'Work out the valuename and subkey
-                Dim last_index As String = original_key.LastIndexOf("\")
+                Dim last_index As Integer = original_key.LastIndexOf("\")
                 Dim valueName As String = original_key.Remove(0, (last_index + 1))
                 original_key = original_key.Remove(last_index)
 

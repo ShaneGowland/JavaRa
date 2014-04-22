@@ -370,11 +370,11 @@ Public Class UI
 
         'Creating the request and getting the response
         Dim theResponse As HttpWebResponse
-        Dim theRequest As HttpWebRequest = WebRequest.Create(Me.txtFileName.Text)
+        Dim theRequest As HttpWebRequest = CType(WebRequest.Create(Me.txtFileName.Text), HttpWebRequest)
 
         Try 'Checks if the file exist
 
-            theResponse = theRequest.GetResponse
+            theResponse = CType(theRequest.GetResponse, HttpWebResponse)
         Catch ex As Exception
             MessageBox.Show(get_string("An error occurred while downloading file. Possible causes:") & ControlChars.CrLf & _
                               get_string("1) File doesn't exist") & ControlChars.CrLf & _
@@ -420,9 +420,9 @@ Public Class UI
             nRead += bytesread
 
             'Calculate the progress bar
-            Dim percent As Short = ProgressBar2.Value
+            Dim percent As Integer = ProgressBar2.Value
             Try
-                percent = (nRead * 100) / length
+                percent = CInt((nRead * 100) / length)
             Catch ex As Exception
             End Try
 
@@ -481,8 +481,8 @@ Public Class UI
         Me.Cursor = Cursors.WaitCursor
         'Confirm the connection to the server  
         Try
-            theRequest = WebRequest.Create("http://content.thewebatom.net/files/confirm.txt")
-            theResponse = theRequest.GetResponse
+            theRequest = CType(WebRequest.Create("http://content.thewebatom.net/files/confirm.txt"), HttpWebRequest)
+            theResponse = CType(theRequest.GetResponse, HttpWebResponse)
 
             'Set the path to the corrrect JRE url
             If IO.Directory.Exists("C:\Program Files (x86)") Then
@@ -898,8 +898,8 @@ Public Class UI
 
         'Confirm the connection to the server 
         Try
-            theRequest = WebRequest.Create("http://content.thewebatom.net/files/confirm.txt")
-            theResponse = theRequest.GetResponse
+            theRequest = CType(WebRequest.Create("http://content.thewebatom.net/files/confirm.txt"), HttpWebRequest)
+            theResponse = CType(theRequest.GetResponse, HttpWebResponse)
             'Set the path to the rules
             txtFileName.Text = "http://content.thewebatom.net/updates/javara/JavaRa.def"
         Catch ex As Exception

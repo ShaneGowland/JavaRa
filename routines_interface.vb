@@ -63,7 +63,7 @@ Module routines_interface
             End If
 
             'Create a variable to contain the highest version folder
-            Dim version_to_keep As String = 0
+            Dim version_to_keep As Integer = 0
 
             'scan extensions folder for jre
             For Each foundFolder As String In My.Computer.FileSystem.GetDirectories(folder_base_path)
@@ -79,8 +79,8 @@ Module routines_interface
                     foundFolder = foundFolder.Replace("{CAFEEFAC-0016-0000-", "")
 
                     'Store only the highest version
-                    If foundFolder > version_to_keep Then
-                        version_to_keep = foundFolder
+                    If CDbl(foundFolder) > version_to_keep Then
+                        version_to_keep = CInt(foundFolder)
                     End If
 
                 End If
@@ -192,7 +192,7 @@ Module routines_interface
                 If UI.stay_silent = False Then
                     'Ensure does not overflow
                     If current_line < total_lines Then
-                        UI.ProgressBar1.Value = (current_line / total_lines) * 100
+                        UI.ProgressBar1.Value = CInt((current_line / total_lines) * 100)
                     Else
                         'ProgressBar1.Value = 100
                     End If

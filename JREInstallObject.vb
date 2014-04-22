@@ -16,32 +16,32 @@
     End Sub
 
     'Return the version number
-    Public ReadOnly Property Version
+    Public ReadOnly Property Version As String
         Get
             Return version_number
         End Get
     End Property
 
     'Return the Application Name
-    Public ReadOnly Property Name
+    Public ReadOnly Property Name As String
         Get
             Return app_name
         End Get
     End Property
 
     'Get the MSI uninstall string
-    Public ReadOnly Property UninstallString
+    Public ReadOnly Property UninstallString As String
         Get
             Return uninstall_string
         End Get
     End Property
 
     'Allow an object to be marked as uninstalled without removing it from the collection
-    Public Property Installed
+    Public Property Installed As Boolean
         Get
             Return _installed
         End Get
-        Set(value)
+        Set(value As Boolean)
             _installed = value
         End Set
     End Property
