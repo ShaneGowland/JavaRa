@@ -1,3 +1,5 @@
+## JavaRa is no longer receiving updates. Please see the [Retiring JavaRa](https://singularlabs.com/news/site/retiring-javara/) post for more information.
+
 JavaRa
 -----------
 
