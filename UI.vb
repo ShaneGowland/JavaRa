@@ -130,13 +130,45 @@ Public Class UI
             write_error(ex)
         End Try
 
+        'Get Current Windows UI Language
+        If (language = Nothing Or language = "") Then
+            Dim languageName = System.Globalization.CultureInfo.CurrentCulture.Name
+            If languageName = "zh-CN" Then
+                language = "Chinese (Simplified)"
+            ElseIf languageName.StartsWith("zh") Then
+                language = "Chinese (Traditional)"
+            ElseIf languageName = "en" Then
+                language = "English"
+            ElseIf languageName.StartsWith("pt") Then
+                language = "Brazilian"
+            ElseIf languageName = "cs" Then
+                language = "Czech"
+            ElseIf languageName = "fi" Then
+                language = "Finnish"
+            ElseIf languageName = "fr" Then
+                language = "French"
+            ElseIf languageName = "de" Then
+                language = "German"
+            ElseIf languageName = "hu" Then
+                language = "Hungarian"
+            ElseIf languageName = "it" Then
+                language = "Italian"
+            ElseIf languageName = "pl" Then
+                language = "Polish"
+            ElseIf languageName = "ru" Then
+                language = "Russian"
+            ElseIf languageName = "es" Then
+                language = "Spanish"
+            End If
+        End If
+
         'Define the language JavaRa should load in
-        If language = Nothing Then
+        Dim translated = translate_strings()
+        If translated = True Then
+            boxLanguage.Text = language
+        Else
             language = "English"
             boxLanguage.Text = "English"
-        Else
-            boxLanguage.Text = language
-            Call translate_strings()
         End If
 
         'Decide if UI should be displayed
@@ -576,6 +608,10 @@ Public Class UI
                     Process.Start("http://www.java.com/ru/download/installed.jsp")
                 ElseIf language = "Spanish" Then
                     Process.Start("http://www.java.com/es/download/installed.jsp")
+                ElseIf language = "Chinese (Simplified)" Then
+                    Process.Start("http://www.java.com/zh_CN/download/installed.jsp")
+                ElseIf language = "Chinese (Traditional)" Then
+                    Process.Start("http://www.java.com/zh_TW/download/installed.jsp")
                 Else
                     Process.Start("http://java.com/en/download/installed.jsp")
                 End If
