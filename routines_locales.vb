@@ -9,15 +9,15 @@
     Friend language As String
 
     'Translate the user interface and all menues
-    Public Sub translate_strings()
+    Public Function translate_strings() As Boolean
 
         'Set the language file path to a variable
         Dim lang_path As String = System.IO.Path.GetDirectoryName(System.Reflection.Assembly.GetEntryAssembly().Location) & "\localizations\lang." & language & ".locale"
-
+        'Check if selected language still exists
+        Dim localization_support = IO.File.Exists(lang_path)
 
         Try
-            'Check if selected language still exists
-            If IO.File.Exists(lang_path) = True Then
+            If localization_support = True Then
 
                 'Clear previous language
                 current_language_array.Clear()
@@ -57,7 +57,8 @@
         Catch ex As Exception
             write_error(ex)
         End Try
-    End Sub
+        Return localization_support
+    End Function
 
     'Recursively translate a specific UI control
     Public Sub TranslateControl(ByVal Ctrl As Control)
